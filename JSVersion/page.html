@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script type="text/javascript" src="src/buildScripts.js"></script>
+<script type="text/javascript" src="src/classes.js"></script>
+<h2>stats</h2>
+<!--<button type="button" onclick="alert(obj.str)">Click Me!</button> -->
+<input type="text" id="input1" />
+<button onclick="myJsFunction()"></button>
+<script type="text/javascript">
+    function myJsFunction(){
+        var text=document.getElementById('input1').value;
+    }
+</script>
+<table>
+    <tr>
+        <td>str: </td>
+        <td id="str"></td>
+    </tr>
+    <tr>
+        <td>con: </td>
+        <td id="con"></td>
+    </tr>
+    <tr>
+        <td>int: </td>
+        <td id="int"></td>
+    </tr>
+    <tr>
+        <td>wil: </td>
+        <td id="wil"></td>
+    </tr>
+    <tr>
+        <td>spd: </td>
+        <td id="spd"></td>
+    </tr>
+    <tr>
+        <td>acc: </td>
+        <td id="acc"></td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    player = Player();
+    //document.getElementById("str").innerHTML = player.baseStats.str.base;
+    //alert(3)//player.baseStats.str.base);
+    alert("4");
+</script>
+</body>
+</html>
