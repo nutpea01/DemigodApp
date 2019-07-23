@@ -112,3 +112,7 @@ fun SPHeal(player: Player, heal: Int) {
     player.resources.setCurrentSP(sp+heal)
     displayStats(player)
 }
+
+
+//TODO: Ability
+class Ability
