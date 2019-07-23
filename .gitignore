@@ -4,6 +4,8 @@
 !/Documentation
 !/README.md
 !/JSVersion
+!/KotlinVersion
+!/KotlinVersion/out
 
 /JSVersion/.idea
 
