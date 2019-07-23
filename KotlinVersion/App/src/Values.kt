@@ -15,7 +15,7 @@ open class Value(private var base: Int = 0) {
         return temp
     }
 
-    fun setBase(newBase: Int) {this.base = newBase}
+    fun setBase(base: Int) {this.base = base}
     fun addBase(add: Int): Int {
         this.base += add
         return this.base

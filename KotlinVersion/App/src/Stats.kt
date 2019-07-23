@@ -11,56 +11,101 @@ class BaseStats (
     val combatStats: CombatStats = CombatStats()
 
     fun updateCombat() {
-        combatStats.at.setBase(str.getValue()*2)
-        combatStats.df.setBase(con.getValue()*1)
-        combatStats.ma.setBase(int.getValue()*2)
-        combatStats.md.setBase(wil.getValue()*1)
+        combatStats.setATBase(str.getValue()*2)
+        combatStats.setDFBase(con.getValue()*1)
+        combatStats.setMABase(int.getValue()*2)
+        combatStats.setMDBase(wil.getValue()*1)
     }
-    fun setSTR(str: Int) {
-        this.str.setBase(str)
+    fun setSTR(value: Int) {
+        this.str.setBase(value)
         updateCombat()
     }
-    fun setCON(con: Int) {
-        this.con.setBase(con)
+    fun setCON(value: Int) {
+        this.con.setBase(value)
         updateCombat()
     }
-    fun setINT(int: Int) {
-        this.int.setBase(int)
+    fun setINT(value: Int) {
+        this.int.setBase(value)
         updateCombat()
     }
-    fun setWIL(wil: Int) {
-        this.wil.setBase(wil)
+    fun setWIL(value: Int) {
+        this.wil.setBase(value)
         updateCombat()
     }
-    fun setSPD(spd: Int) {this.spd.setBase(spd)}
-    fun setACC(acc: Int) {this.acc.setBase(acc)}
+    fun setSPD(value: Int) {this.spd.setBase(value)}
+    fun setACC(value: Int) {this.acc.setBase(value)}
+
+    fun getSTR(): Int {return this.str.getValue()}
+    fun getCON(): Int {return this.con.getValue()}
+    fun getINT(): Int {return this.int.getValue()}
+    fun getWIL(): Int {return this.wil.getValue()}
+    fun getSPD(): Int {return this.spd.getValue()}
+    fun getACC(): Int {return this.acc.getValue()}
 }
 
 data class Resources (
-    val hp: DynamicValue = DynamicValue(150,150),
-    val sp: DynamicValue = DynamicValue(150,150),
-    val mp: DynamicValue = DynamicValue(150,150)
+    private val hp: DynamicValue = DynamicValue(150,150),
+    private val sp: DynamicValue = DynamicValue(150,150),
+    private val mp: DynamicValue = DynamicValue(150,150)
 ) {
-    fun setHP(hp: Int) {
-        this.hp.current.setBase(hp)
-        this.hp.max.setBase(hp)
+    fun setMaxHP(value: Int) { this.hp.max.setBase(value) }
+    fun setMaxMP(value: Int) { this.mp.max.setBase(value) }
+    fun setMaxSP(value: Int) { this.sp.max.setBase(value) }
+
+    fun setCurrentHP(value: Int) {
+        this.hp.current.setBase(value)
+        if (this.hp.current.getValue() > this.hp.max.getValue()) {
+            this.hp.current.setBase(this.hp.max.getValue())
+        }
     }
-    fun setMP(mp: Int) {
-        this.mp.current.setBase(mp)
-        this.mp.max.setBase(mp)
+    fun setCurrentMP(value: Int) {
+        this.mp.current.setBase(value)
+        if (this.mp.current.getValue() > this.mp.max.getValue()) {
+            this.mp.current.setBase(this.mp.max.getValue())
+        }
     }
-    fun setSP(sp: Int) {
-        this.sp.current.setBase(sp)
-        this.sp.max.setBase(sp)
+    fun setCurrentSP(value: Int) {
+        this.sp.current.setBase(value)
+        if (this.sp.current.getValue() > this.sp.max.getValue()) {
+            this.sp.current.setBase(this.sp.max.getValue())
+        }
     }
+
+    fun getMaxHP(): Int { return this.hp.max.getValue() }
+    fun getMaxMP(): Int { return this.mp.max.getValue() }
+    fun getMaxSP(): Int { return this.sp.max.getValue() }
+
+    fun getCurrentHP(): Int { return this.hp.current.getValue() }
+    fun getCurrentMP(): Int { return this.mp.current.getValue() }
+    fun getCurrentSP(): Int { return this.sp.current.getValue() }
 }
 
 data class CombatStats (
-    val at: Value = Value(0),
-    val df: Value = Value(0),
-    val ma: Value = Value(0),
-    val md: Value = Value(0)
+    private val at: Value = Value(0),
+    private val df: Value = Value(0),
+    private val ma: Value = Value(0),
+    private val md: Value = Value(0)
+) {
+    fun getAT(): Int {return this.at.getValue()}
+    fun getDF(): Int {return this.df.getValue()}
+    fun getMA(): Int {return this.ma.getValue()}
+    fun getMD(): Int {return this.md.getValue()}
+
+    fun setATBase(base: Int) {this.at.setBase(base)}
+    fun setDFBase(base: Int) {this.df.setBase(base)}
+    fun setMABase(base: Int) {this.ma.setBase(base)}
+    fun setMDBase(base: Int) {this.md.setBase(base)}
+}
+
+//TODO: Skills
+data class Skills (val temp: Int = 0)
+data class Traits (
+    var name: String,
+    var age: Int,
+    var species: String,
+    val _class: Class,
+    var level: Int = 1
 )
 
-data class Skills (val temp: Int = 0)
-data class Traits (val temp: Int = 0)
+//TODO: class
+class Class {val TEMP = 0}

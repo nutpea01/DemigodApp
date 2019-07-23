@@ -5,41 +5,73 @@
     <title>Test</title>
 </head>
 <body>
-<table id="data" class="display" cellspacing="50">
+<table id="data" class="display" cellspacing="5">
     <thead>
     <tr>
         <th>Stat</th>
-        <th>Base</th>
+        <th>Value</th>
+        <th>Stat</th>
+        <th>Value</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td>AT:</td>
+        <td>STR:</td>
         <td id="b1"></td>
+        <td>AT:</td>
+        <td id="c1"></td>
     </tr>
     <tr>
-        <td>DF:</td>
+        <td>CON:</td>
         <td id="b2"></td>
+        <td>DF:</td>
+        <td id="c2"></td>
     </tr>
     <tr>
-        <td>MA:</td>
+        <td>INT:</td>
         <td id="b3"></td>
+        <td>MA:</td>
+        <td id="c3"></td>
     </tr>
     <tr>
-        <td>MD:</td>
+        <td>WIL:</td>
         <td id="b4"></td>
+        <td>MD:</td>
+        <td id="c4"></td>
     </tr>
+    <tr>
+        <td>SPD:</td>
+        <td id="a1"></td>
+        <td>ACC:</td>
+        <td id="a2"></td>
+    </tr>
+    <tr><td>----</td></tr>
     <tr>
         <td>HP:</td>
         <td id="b5"></td>
+        <td>/</td>
+        <td id="c5"></td>
+        <td><button id="hpHeal" type="button">Heal</button></td>
+        <td><input id="hpInput"></td>
+        <td><button id="hpDamage" type="button">Damage</button></td>
     </tr>
     <tr>
         <td>MP:</td>
         <td id="b6"></td>
+        <td>/</td>
+        <td id="c6"></td>
+        <td><button id="mpHeal" type="button">Heal</button></td>
+        <td><input id="mpInput"></td>
+        <td><button id="mpDamage" type="button">Damage</button></td>
     </tr>
     <tr>
         <td>SP:</td>
         <td id="b7"></td>
+        <td>/</td>
+        <td id="c7"></td>
+        <td><button id="spHeal" type="button">Heal</button></td>
+        <td><input id="spInput"></td>
+        <td><button id="spDamage" type="button">Damage</button></td>
     </tr>
 
     </tbody>
@@ -47,27 +79,5 @@
 
 <script type="text/javascript" src="out/production/App/lib/kotlin.js"></script>
 <script type="text/javascript" src="out/production/App/App.js"></script>
-<script type="text/javascript">
-    tester = new App.Player();
-
-    tester.baseStats.setSTR(35);
-    tester.baseStats.setCON(50);
-    tester.baseStats.setINT(10);
-    tester.baseStats.setWIL(50);
-    tester.baseStats.setACC(20);
-    tester.baseStats.setSPD(15);
-    tester.resources.setHP(300);
-    tester.resources.setMP(250);
-    tester.resources.setSP(200);
-
-    document.getElementById("b1").innerHTML = tester.at;
-    document.getElementById("b2").innerHTML = tester.df;
-    document.getElementById("b3").innerHTML = tester.ma;
-    document.getElementById("b4").innerHTML = tester.md;
-    document.getElementById("b5").innerHTML = tester.hp;
-    document.getElementById("b6").innerHTML = tester.hp;
-    document.getElementById("b7").innerHTML = tester.hp;
-</script>
-<button type="button" onclick=test.ouch_0();>Ouch!</button>
 </body>
 </html>
