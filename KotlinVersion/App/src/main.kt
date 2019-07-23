@@ -3,7 +3,6 @@ package demigod.main
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLInputElement
 import kotlin.browser.document
-import kotlin.random.Random
 
 //import java.util.UUID
 
@@ -26,24 +25,7 @@ fun main() {
     player.resources.setCurrentSP(200)
 
     displayStats(player)
-
-    val hpInput = document.getElementById("hpInput") as HTMLInputElement
-    val hpHeal = document.getElementById("hpHeal") as HTMLButtonElement
-    hpHeal.addEventListener("click", { HPHeal(player, hpInput.value.toInt()) })
-    val hpDamage = document.getElementById("hpDamage") as HTMLButtonElement
-    hpDamage.addEventListener("click", { HPDamage(player, hpInput.value.toInt())})
-
-    val mpInput = document.getElementById("mpInput") as HTMLInputElement
-    val mpHeal = document.getElementById("mpHeal") as HTMLButtonElement
-    mpHeal.addEventListener("click", { MPHeal(player, mpInput.value.toInt()) })
-    val mpDamage = document.getElementById("mpDamage") as HTMLButtonElement
-    mpDamage.addEventListener("click", { MPDamage(player, mpInput.value.toInt())})
-
-    val spInput = document.getElementById("spInput") as HTMLInputElement
-    val spHeal = document.getElementById("spHeal") as HTMLButtonElement
-    spHeal.addEventListener("click", { SPHeal(player, spInput.value.toInt()) })
-    val spDamage = document.getElementById("spDamage") as HTMLButtonElement
-    spDamage.addEventListener("click", { SPDamage(player, spInput.value.toInt())})
+    setupButtons(player)
 }
 
 fun generateID(): String {
@@ -51,7 +33,7 @@ fun generateID(): String {
     //return UUID.randomUUID().toString()
 }
 
-//testing
+//TODO: testing
 fun displayStats(player: Player) {
     document.getElementById("b1")!!.innerHTML = player.baseStats.getSTR().toString()
     document.getElementById("b2")!!.innerHTML = player.baseStats.getCON().toString()
@@ -73,9 +55,29 @@ fun displayStats(player: Player) {
     document.getElementById("c5")!!.innerHTML = player.resources.getMaxHP().toString()
     document.getElementById("c6")!!.innerHTML = player.resources.getMaxMP().toString()
     document.getElementById("c7")!!.innerHTML = player.resources.getMaxSP().toString()
-
-
 }
+
+//TODO: testing
+fun setupButtons(player: Player) {
+    val hpInput = document.getElementById("hpInput") as HTMLInputElement
+    val hpHeal = document.getElementById("hpHeal") as HTMLButtonElement
+    hpHeal.addEventListener("click", { HPHeal(player, hpInput.value.toInt()) })
+    val hpDamage = document.getElementById("hpDamage") as HTMLButtonElement
+    hpDamage.addEventListener("click", { HPDamage(player, hpInput.value.toInt())})
+
+    val mpInput = document.getElementById("mpInput") as HTMLInputElement
+    val mpHeal = document.getElementById("mpHeal") as HTMLButtonElement
+    mpHeal.addEventListener("click", { MPHeal(player, mpInput.value.toInt()) })
+    val mpDamage = document.getElementById("mpDamage") as HTMLButtonElement
+    mpDamage.addEventListener("click", { MPDamage(player, mpInput.value.toInt())})
+
+    val spInput = document.getElementById("spInput") as HTMLInputElement
+    val spHeal = document.getElementById("spHeal") as HTMLButtonElement
+    spHeal.addEventListener("click", { SPHeal(player, spInput.value.toInt()) })
+    val spDamage = document.getElementById("spDamage") as HTMLButtonElement
+    spDamage.addEventListener("click", { SPDamage(player, spInput.value.toInt())})
+}
+
 
 fun HPDamage(player: Player, damage: Int) {
     val hp = player.resources.getCurrentHP()
@@ -109,16 +111,4 @@ fun SPHeal(player: Player, heal: Int) {
     val sp = player.resources.getCurrentSP()
     player.resources.setCurrentSP(sp+heal)
     displayStats(player)
-}
-object DiceRoller {
-    init {
-
-    }
-    fun roll100(): Pair<Int,String> {return Pair(Random.nextInt(1, 100), "crit success")}
-    fun roll20(): Int  {return Random.nextInt(1, 20)}
-    fun roll12(): Int  {return Random.nextInt(1, 12)}
-    fun roll10(): Int  {return Random.nextInt(1, 10)}
-    fun roll8(): Int   {return Random.nextInt(1, 8)}
-    fun roll6(): Int   {return Random.nextInt(1, 6)}
-    fun roll4(): Int   {return Random.nextInt(1, 4)}
 }
