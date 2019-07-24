@@ -43,7 +43,7 @@ class BaseStats (
     fun getACC(): Int {return this.acc.getValue()}
 }
 
-data class Resources (
+class Resources (
     private val hp: DynamicValue = DynamicValue(150,150),
     private val sp: DynamicValue = DynamicValue(150,150),
     private val mp: DynamicValue = DynamicValue(150,150)
@@ -51,7 +51,6 @@ data class Resources (
     fun setMaxHP(value: Int) { this.hp.max.setBase(value) }
     fun setMaxMP(value: Int) { this.mp.max.setBase(value) }
     fun setMaxSP(value: Int) { this.sp.max.setBase(value) }
-
     fun setCurrentHP(value: Int) {
         this.hp.current.setBase(value)
         if (this.hp.current.getValue() > this.hp.max.getValue()) {
@@ -74,10 +73,37 @@ data class Resources (
     fun getMaxHP(): Int { return this.hp.max.getValue() }
     fun getMaxMP(): Int { return this.mp.max.getValue() }
     fun getMaxSP(): Int { return this.sp.max.getValue() }
-
     fun getCurrentHP(): Int { return this.hp.current.getValue() }
     fun getCurrentMP(): Int { return this.mp.current.getValue() }
     fun getCurrentSP(): Int { return this.sp.current.getValue() }
+
+    //TODO: most of these will become more interesting as we add abilities. eventually, they should likely be able to find damage themselves based on stats...?
+    fun dealDamage(damage: Int, target: Player) {
+        target.resources.setCurrentHP(damage + DiceRoller.roll())
+    }
+    fun takeDamage(damage: Int, defense: Int = 0) {
+        this.setCurrentHP(this.getCurrentHP() - ((damage + DiceRoller.roll()) - defense))
+    }
+    fun calculateDamage(damage: Int, defense: Int): Int {
+        return (damage + DiceRoller.roll()) - defense
+    }
+    fun healHP(heal: Int) { this.setCurrentHP(this.getCurrentHP()+heal) }
+
+    //NOTE: so all the above formulas assume they'll be given the damage stat as is.
+    //this means, something like AT+SPD will be calc BEFORE passing to this class.
+    //versatile, to be sure. Problem is, it forces the burden on other classes. Find
+    //a work around if able. It should be done in here somehow...
+
+    //FUTURE IDEA: We might be able to set up a lookup table in calculateDamage. Handles
+    //every possible action, including a single "custom" action for GM intervention. It
+    //would be how calculateDamage() would know what to do. For instance, pass the keyword
+    //"fire", and the formula would grab player's MA, target's MD, deal damage and return.
+
+    fun spendMP(cost: Int) { this.setCurrentMP(this.getCurrentMP()-cost) }
+    fun spendSP(cost: Int) { this.setCurrentSP(this.getCurrentSP()-cost) }
+
+    fun restoreMP(restore: Int) { this.setCurrentMP(this.getCurrentMP()+restore) }
+    fun restoreSP(restore: Int) { this.setCurrentSP(this.getCurrentSP()+restore) }
 }
 
 data class CombatStats (

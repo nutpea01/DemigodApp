@@ -3,54 +3,193 @@ if (typeof kotlin === 'undefined') {
 }
 var App = function (_, Kotlin) {
   'use strict';
+  var Kind_CLASS = Kotlin.Kind.CLASS;
+  var Random = Kotlin.kotlin.random.Random;
+  var Kind_OBJECT = Kotlin.Kind.OBJECT;
+  var equals = Kotlin.equals;
+  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
+  var ensureNotNull = Kotlin.ensureNotNull;
   var throwCCE = Kotlin.throwCCE;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
   var Unit = Kotlin.kotlin.Unit;
-  var ensureNotNull = Kotlin.ensureNotNull;
-  var Random = Kotlin.kotlin.random.Random;
-  var Pair = Kotlin.kotlin.Pair;
-  var Kind_OBJECT = Kotlin.Kind.OBJECT;
-  var Kind_CLASS = Kotlin.Kind.CLASS;
-  var equals = Kotlin.equals;
-  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
-  function main$lambda(closure$player, closure$hpInput) {
-    return function (it) {
-      HPHeal(closure$player, toInt(closure$hpInput.value));
-      return Unit;
-    };
+  Wearable.prototype = Object.create(Equipment.prototype);
+  Wearable.prototype.constructor = Wearable;
+  Upgrade.prototype = Object.create(Equipment.prototype);
+  Upgrade.prototype.constructor = Upgrade;
+  Glyph.prototype = Object.create(Upgrade.prototype);
+  Glyph.prototype.constructor = Glyph;
+  Augment.prototype = Object.create(Upgrade.prototype);
+  Augment.prototype.constructor = Augment;
+  Weapon.prototype = Object.create(Wearable.prototype);
+  Weapon.prototype.constructor = Weapon;
+  Armor.prototype = Object.create(Wearable.prototype);
+  Armor.prototype.constructor = Armor;
+  Accessory.prototype = Object.create(Wearable.prototype);
+  Accessory.prototype.constructor = Accessory;
+  function StatChecker(player) {
+    this.player_0 = player;
   }
-  function main$lambda_0(closure$player, closure$hpInput) {
-    return function (it) {
-      HPDamage(closure$player, toInt(closure$hpInput.value));
-      return Unit;
-    };
+  StatChecker.prototype.getPlayer = function () {
+    return this.player_0;
+  };
+  StatChecker.prototype.checkStat_vux9f0$ = function (stat, mod) {
+    return stat + mod + DiceRoller_getInstance().roll_za3lpa$() | 0;
+  };
+  StatChecker.prototype.checkSkill_vux9f0$ = function (skill, mod) {
+    return (skill + mod | 0) >= DiceRoller_getInstance().roll_za3lpa$();
+  };
+  StatChecker.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'StatChecker',
+    interfaces: []
+  };
+  function DiceRoller() {
+    DiceRoller_instance = this;
   }
-  function main$lambda_1(closure$player, closure$mpInput) {
-    return function (it) {
-      MPHeal(closure$player, toInt(closure$mpInput.value));
-      return Unit;
-    };
+  DiceRoller.prototype.roll_za3lpa$ = function (outOf) {
+    if (outOf === void 0)
+      outOf = 100;
+    return Random.Default.nextInt_vux9f0$(1, outOf);
+  };
+  DiceRoller.prototype.displayRoll = function () {
+  };
+  DiceRoller.$metadata$ = {
+    kind: Kind_OBJECT,
+    simpleName: 'DiceRoller',
+    interfaces: []
+  };
+  var DiceRoller_instance = null;
+  function DiceRoller_getInstance() {
+    if (DiceRoller_instance === null) {
+      new DiceRoller();
+    }
+    return DiceRoller_instance;
   }
-  function main$lambda_2(closure$player, closure$mpInput) {
-    return function (it) {
-      MPDamage(closure$player, toInt(closure$mpInput.value));
-      return Unit;
-    };
+  function Equipment(name) {
+    if (name === void 0)
+      name = '';
+    this.name = name;
+    this.id = generateID();
+    this.modifiers = ArrayList_init();
   }
-  function main$lambda_3(closure$player, closure$spInput) {
-    return function (it) {
-      SPHeal(closure$player, toInt(closure$spInput.value));
-      return Unit;
-    };
+  Equipment.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Equipment',
+    interfaces: []
+  };
+  function Wearable(augmentSlots) {
+    if (augmentSlots === void 0)
+      augmentSlots = 0;
+    Equipment.call(this);
+    this.augmentSlots_99daux$_0 = augmentSlots;
+    this.augments_prifc9$_0 = ArrayList_init();
+    this.glyphs_uiqyx0$_0 = ArrayList_init();
+    this.abilities_914tr3$_0 = ArrayList_init();
+    this.linkAugSlots_fxuqhb$_0();
   }
-  function main$lambda_4(closure$player, closure$spInput) {
-    return function (it) {
-      SPDamage(closure$player, toInt(closure$spInput.value));
-      return Unit;
-    };
+  Wearable.prototype.getAugmentSlots = function () {
+    return this.augmentSlots_99daux$_0;
+  };
+  Wearable.prototype.addAugmentSlot = function () {
+    this.augmentSlots_99daux$_0 = this.augmentSlots_99daux$_0 + 1 | 0;
+    this.linkAugSlots_fxuqhb$_0();
+  };
+  Wearable.prototype.equipAugment_ky8fxx$ = function (augment) {
+    var i = 0;
+    while (i < this.augments_prifc9$_0.size) {
+      if (equals(this.augments_prifc9$_0.get_za3lpa$(i), new Augment())) {
+        this.augments_prifc9$_0.set_wxm5ur$(i, augment);
+        return;
+      }
+      i = i + 1 | 0;
+    }
+  };
+  Wearable.prototype.linkAugSlots_fxuqhb$_0 = function () {
+    while (this.augments_prifc9$_0.size < this.augmentSlots_99daux$_0) {
+      this.augments_prifc9$_0.add_11rb$(new Augment());
+    }
+  };
+  Wearable.prototype.getAugmentByID_61zpoe$ = function (ID) {
+    var tmp$;
+    tmp$ = this.augments_prifc9$_0.iterator();
+    while (tmp$.hasNext()) {
+      var aug = tmp$.next();
+      if (equals(aug.id, ID)) {
+        return aug;
+      }
+    }
+    return new Augment();
+  };
+  Wearable.prototype.geGlyphByID_61zpoe$ = function (ID) {
+    var tmp$;
+    tmp$ = this.glyphs_uiqyx0$_0.iterator();
+    while (tmp$.hasNext()) {
+      var gly = tmp$.next();
+      if (equals(gly.id, ID)) {
+        return gly;
+      }
+    }
+    return new Glyph();
+  };
+  Wearable.prototype.getAbiltyByID_61zpoe$ = function (ID) {
+    return new Ability();
+  };
+  Wearable.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Wearable',
+    interfaces: [Equipment]
+  };
+  function Upgrade() {
+    Equipment.call(this);
+    this.isAbility = false;
+    this.effect = new Ability();
   }
+  Upgrade.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Upgrade',
+    interfaces: [Equipment]
+  };
+  function Glyph() {
+    Upgrade.call(this);
+  }
+  Glyph.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Glyph',
+    interfaces: [Upgrade]
+  };
+  function Augment() {
+    Upgrade.call(this);
+  }
+  Augment.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Augment',
+    interfaces: [Upgrade]
+  };
+  function Weapon() {
+    Wearable.call(this);
+  }
+  Weapon.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Weapon',
+    interfaces: [Wearable]
+  };
+  function Armor() {
+    Wearable.call(this);
+  }
+  Armor.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Armor',
+    interfaces: [Wearable]
+  };
+  function Accessory() {
+    Wearable.call(this);
+  }
+  Accessory.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Accessory',
+    interfaces: [Wearable]
+  };
   function main() {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6, tmp$_7;
     var player = new Player();
     player.baseStats.setSTR_za3lpa$(35);
     player.baseStats.setCON_za3lpa$(50);
@@ -64,21 +203,7 @@ var App = function (_, Kotlin) {
     player.resources.setCurrentMP_za3lpa$(250);
     player.resources.setCurrentSP_za3lpa$(200);
     displayStats(player);
-    var hpInput = Kotlin.isType(tmp$ = document.getElementById('hpInput'), HTMLInputElement) ? tmp$ : throwCCE();
-    var hpHeal = Kotlin.isType(tmp$_0 = document.getElementById('hpHeal'), HTMLButtonElement) ? tmp$_0 : throwCCE();
-    hpHeal.addEventListener('click', main$lambda(player, hpInput));
-    var hpDamage = Kotlin.isType(tmp$_1 = document.getElementById('hpDamage'), HTMLButtonElement) ? tmp$_1 : throwCCE();
-    hpDamage.addEventListener('click', main$lambda_0(player, hpInput));
-    var mpInput = Kotlin.isType(tmp$_2 = document.getElementById('mpInput'), HTMLInputElement) ? tmp$_2 : throwCCE();
-    var mpHeal = Kotlin.isType(tmp$_3 = document.getElementById('mpHeal'), HTMLButtonElement) ? tmp$_3 : throwCCE();
-    mpHeal.addEventListener('click', main$lambda_1(player, mpInput));
-    var mpDamage = Kotlin.isType(tmp$_4 = document.getElementById('mpDamage'), HTMLButtonElement) ? tmp$_4 : throwCCE();
-    mpDamage.addEventListener('click', main$lambda_2(player, mpInput));
-    var spInput = Kotlin.isType(tmp$_5 = document.getElementById('spInput'), HTMLInputElement) ? tmp$_5 : throwCCE();
-    var spHeal = Kotlin.isType(tmp$_6 = document.getElementById('spHeal'), HTMLButtonElement) ? tmp$_6 : throwCCE();
-    spHeal.addEventListener('click', main$lambda_3(player, spInput));
-    var spDamage = Kotlin.isType(tmp$_7 = document.getElementById('spDamage'), HTMLButtonElement) ? tmp$_7 : throwCCE();
-    spDamage.addEventListener('click', main$lambda_4(player, spInput));
+    setupButtons(player);
   }
   function generateID() {
     return '';
@@ -101,76 +226,81 @@ var App = function (_, Kotlin) {
     ensureNotNull(document.getElementById('c6')).innerHTML = player.resources.getMaxMP().toString();
     ensureNotNull(document.getElementById('c7')).innerHTML = player.resources.getMaxSP().toString();
   }
-  function HPDamage(player, damage) {
-    var hp = player.resources.getCurrentHP();
-    var df = player.baseStats.combatStats.getDF();
-    player.resources.setCurrentHP_za3lpa$(hp - (damage - df) | 0);
-    displayStats(player);
+  function setupButtons$lambda(closure$player, closure$hpInput) {
+    return function (it) {
+      closure$player.resources.healHP_za3lpa$(toInt(closure$hpInput.value));
+      displayStats(closure$player);
+      return Unit;
+    };
   }
-  function HPHeal(player, heal) {
-    var hp = player.resources.getCurrentHP();
-    player.resources.setCurrentHP_za3lpa$(hp + heal | 0);
-    displayStats(player);
+  function setupButtons$lambda_0(closure$player, closure$hpInput) {
+    return function (it) {
+      closure$player.resources.takeDamage_vux9f0$(toInt(closure$hpInput.value));
+      displayStats(closure$player);
+      return Unit;
+    };
   }
-  function MPDamage(player, damage) {
-    var mp = player.resources.getCurrentMP();
-    player.resources.setCurrentMP_za3lpa$(mp - damage | 0);
-    displayStats(player);
+  function setupButtons$lambda_1(closure$player, closure$mpInput) {
+    return function (it) {
+      closure$player.resources.restoreMP_za3lpa$(toInt(closure$mpInput.value));
+      displayStats(closure$player);
+      return Unit;
+    };
   }
-  function MPHeal(player, heal) {
-    var mp = player.resources.getCurrentMP();
-    player.resources.setCurrentMP_za3lpa$(mp + heal | 0);
-    displayStats(player);
+  function setupButtons$lambda_2(closure$player, closure$mpInput) {
+    return function (it) {
+      closure$player.resources.spendMP_za3lpa$(toInt(closure$mpInput.value));
+      displayStats(closure$player);
+      return Unit;
+    };
   }
-  function SPDamage(player, damage) {
-    var sp = player.resources.getCurrentSP();
-    player.resources.setCurrentSP_za3lpa$(sp - damage | 0);
-    displayStats(player);
+  function setupButtons$lambda_3(closure$player, closure$spInput) {
+    return function (it) {
+      closure$player.resources.restoreSP_za3lpa$(toInt(closure$spInput.value));
+      displayStats(closure$player);
+      return Unit;
+    };
   }
-  function SPHeal(player, heal) {
-    var sp = player.resources.getCurrentSP();
-    player.resources.setCurrentSP_za3lpa$(sp + heal | 0);
-    displayStats(player);
+  function setupButtons$lambda_4(closure$player, closure$spInput) {
+    return function (it) {
+      closure$player.resources.spendSP_za3lpa$(toInt(closure$spInput.value));
+      displayStats(closure$player);
+      return Unit;
+    };
   }
-  function DiceRoller() {
-    DiceRoller_instance = this;
+  function setupButtons(player) {
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6, tmp$_7;
+    var hpInput = Kotlin.isType(tmp$ = document.getElementById('hpInput'), HTMLInputElement) ? tmp$ : throwCCE();
+    var hpHeal = Kotlin.isType(tmp$_0 = document.getElementById('hpHeal'), HTMLButtonElement) ? tmp$_0 : throwCCE();
+    hpHeal.addEventListener('click', setupButtons$lambda(player, hpInput));
+    var hpDamage = Kotlin.isType(tmp$_1 = document.getElementById('hpDamage'), HTMLButtonElement) ? tmp$_1 : throwCCE();
+    hpDamage.addEventListener('click', setupButtons$lambda_0(player, hpInput));
+    var mpInput = Kotlin.isType(tmp$_2 = document.getElementById('mpInput'), HTMLInputElement) ? tmp$_2 : throwCCE();
+    var mpHeal = Kotlin.isType(tmp$_3 = document.getElementById('mpHeal'), HTMLButtonElement) ? tmp$_3 : throwCCE();
+    mpHeal.addEventListener('click', setupButtons$lambda_1(player, mpInput));
+    var mpDamage = Kotlin.isType(tmp$_4 = document.getElementById('mpDamage'), HTMLButtonElement) ? tmp$_4 : throwCCE();
+    mpDamage.addEventListener('click', setupButtons$lambda_2(player, mpInput));
+    var spInput = Kotlin.isType(tmp$_5 = document.getElementById('spInput'), HTMLInputElement) ? tmp$_5 : throwCCE();
+    var spHeal = Kotlin.isType(tmp$_6 = document.getElementById('spHeal'), HTMLButtonElement) ? tmp$_6 : throwCCE();
+    spHeal.addEventListener('click', setupButtons$lambda_3(player, spInput));
+    var spDamage = Kotlin.isType(tmp$_7 = document.getElementById('spDamage'), HTMLButtonElement) ? tmp$_7 : throwCCE();
+    spDamage.addEventListener('click', setupButtons$lambda_4(player, spInput));
   }
-  DiceRoller.prototype.roll100 = function () {
-    return new Pair(Random.Default.nextInt_vux9f0$(1, 100), 'crit success');
-  };
-  DiceRoller.prototype.roll20 = function () {
-    return Random.Default.nextInt_vux9f0$(1, 20);
-  };
-  DiceRoller.prototype.roll12 = function () {
-    return Random.Default.nextInt_vux9f0$(1, 12);
-  };
-  DiceRoller.prototype.roll10 = function () {
-    return Random.Default.nextInt_vux9f0$(1, 10);
-  };
-  DiceRoller.prototype.roll8 = function () {
-    return Random.Default.nextInt_vux9f0$(1, 8);
-  };
-  DiceRoller.prototype.roll6 = function () {
-    return Random.Default.nextInt_vux9f0$(1, 6);
-  };
-  DiceRoller.prototype.roll4 = function () {
-    return Random.Default.nextInt_vux9f0$(1, 4);
-  };
-  DiceRoller.$metadata$ = {
-    kind: Kind_OBJECT,
-    simpleName: 'DiceRoller',
+  function Ability() {
+  }
+  Ability.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Ability',
     interfaces: []
   };
-  var DiceRoller_instance = null;
-  function DiceRoller_getInstance() {
-    if (DiceRoller_instance === null) {
-      new DiceRoller();
-    }
-    return DiceRoller_instance;
-  }
   function Player() {
+    this.traits = new Traits('player', 30, 'Human', new Class());
     this.resources = new Resources();
     this.baseStats = new BaseStats();
+    this.statChecker = new StatChecker(this);
+    this.weapon = new Weapon();
+    this.armor = new Armor();
+    this.accessory = new Accessory();
   }
   Player.$metadata$ = {
     kind: Kind_CLASS,
@@ -305,35 +435,36 @@ var App = function (_, Kotlin) {
   Resources.prototype.getCurrentSP = function () {
     return this.sp_0.current.getValue();
   };
+  Resources.prototype.dealDamage_mwafdv$ = function (damage, target) {
+    target.resources.setCurrentHP_za3lpa$(damage + DiceRoller_getInstance().roll_za3lpa$() | 0);
+  };
+  Resources.prototype.takeDamage_vux9f0$ = function (damage, defense) {
+    if (defense === void 0)
+      defense = 0;
+    this.setCurrentHP_za3lpa$(this.getCurrentHP() - (damage + DiceRoller_getInstance().roll_za3lpa$() - defense) | 0);
+  };
+  Resources.prototype.calculateDamage_vux9f0$ = function (damage, defense) {
+    return damage + DiceRoller_getInstance().roll_za3lpa$() - defense | 0;
+  };
+  Resources.prototype.healHP_za3lpa$ = function (heal) {
+    this.setCurrentHP_za3lpa$(this.getCurrentHP() + heal | 0);
+  };
+  Resources.prototype.spendMP_za3lpa$ = function (cost) {
+    this.setCurrentMP_za3lpa$(this.getCurrentMP() - cost | 0);
+  };
+  Resources.prototype.spendSP_za3lpa$ = function (cost) {
+    this.setCurrentSP_za3lpa$(this.getCurrentSP() - cost | 0);
+  };
+  Resources.prototype.restoreMP_za3lpa$ = function (restore) {
+    this.setCurrentMP_za3lpa$(this.getCurrentMP() + restore | 0);
+  };
+  Resources.prototype.restoreSP_za3lpa$ = function (restore) {
+    this.setCurrentSP_za3lpa$(this.getCurrentSP() + restore | 0);
+  };
   Resources.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Resources',
     interfaces: []
-  };
-  Resources.prototype.component1_0 = function () {
-    return this.hp_0;
-  };
-  Resources.prototype.component2_0 = function () {
-    return this.sp_0;
-  };
-  Resources.prototype.component3_0 = function () {
-    return this.mp_0;
-  };
-  Resources.prototype.copy_nbpdhs$ = function (hp, sp, mp) {
-    return new Resources(hp === void 0 ? this.hp_0 : hp, sp === void 0 ? this.sp_0 : sp, mp === void 0 ? this.mp_0 : mp);
-  };
-  Resources.prototype.toString = function () {
-    return 'Resources(hp=' + Kotlin.toString(this.hp_0) + (', sp=' + Kotlin.toString(this.sp_0)) + (', mp=' + Kotlin.toString(this.mp_0)) + ')';
-  };
-  Resources.prototype.hashCode = function () {
-    var result = 0;
-    result = result * 31 + Kotlin.hashCode(this.hp_0) | 0;
-    result = result * 31 + Kotlin.hashCode(this.sp_0) | 0;
-    result = result * 31 + Kotlin.hashCode(this.mp_0) | 0;
-    return result;
-  };
-  Resources.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.hp_0, other.hp_0) && Kotlin.equals(this.sp_0, other.sp_0) && Kotlin.equals(this.mp_0, other.mp_0)))));
   };
   function CombatStats(at, df, ma, md) {
     if (at === void 0)
@@ -588,18 +719,23 @@ var App = function (_, Kotlin) {
   };
   var package$demigod = _.demigod || (_.demigod = {});
   var package$main = package$demigod.main || (package$demigod.main = {});
-  package$main.main = main;
-  package$main.generateID = generateID;
-  package$main.displayStats_9r44yh$ = displayStats;
-  package$main.HPDamage_1aah15$ = HPDamage;
-  package$main.HPHeal_1aah15$ = HPHeal;
-  package$main.MPDamage_1aah15$ = MPDamage;
-  package$main.MPHeal_1aah15$ = MPHeal;
-  package$main.SPDamage_1aah15$ = SPDamage;
-  package$main.SPHeal_1aah15$ = SPHeal;
+  package$main.StatChecker = StatChecker;
   Object.defineProperty(package$main, 'DiceRoller', {
     get: DiceRoller_getInstance
   });
+  package$main.Equipment = Equipment;
+  package$main.Wearable = Wearable;
+  package$main.Upgrade = Upgrade;
+  package$main.Glyph = Glyph;
+  package$main.Augment = Augment;
+  package$main.Weapon = Weapon;
+  package$main.Armor = Armor;
+  package$main.Accessory = Accessory;
+  package$main.main = main;
+  package$main.generateID = generateID;
+  package$main.displayStats_9r44yh$ = displayStats;
+  package$main.setupButtons_9r44yh$ = setupButtons;
+  package$main.Ability = Ability;
   package$main.Player = Player;
   package$main.BaseStats = BaseStats;
   package$main.Resources = Resources;

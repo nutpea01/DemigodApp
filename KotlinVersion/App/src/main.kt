@@ -61,58 +61,22 @@ fun displayStats(player: Player) {
 fun setupButtons(player: Player) {
     val hpInput = document.getElementById("hpInput") as HTMLInputElement
     val hpHeal = document.getElementById("hpHeal") as HTMLButtonElement
-    hpHeal.addEventListener("click", { HPHeal(player, hpInput.value.toInt()) })
+    hpHeal.addEventListener("click", { player.resources.healHP(hpInput.value.toInt()) ;displayStats(player)})
     val hpDamage = document.getElementById("hpDamage") as HTMLButtonElement
-    hpDamage.addEventListener("click", { HPDamage(player, hpInput.value.toInt())})
+    hpDamage.addEventListener("click", { player.resources.takeDamage(hpInput.value.toInt());displayStats(player)})
 
     val mpInput = document.getElementById("mpInput") as HTMLInputElement
     val mpHeal = document.getElementById("mpHeal") as HTMLButtonElement
-    mpHeal.addEventListener("click", { MPHeal(player, mpInput.value.toInt()) })
+    mpHeal.addEventListener("click", { player.resources.restoreMP(mpInput.value.toInt()) ;displayStats(player)})
     val mpDamage = document.getElementById("mpDamage") as HTMLButtonElement
-    mpDamage.addEventListener("click", { MPDamage(player, mpInput.value.toInt())})
+    mpDamage.addEventListener("click", { player.resources.spendMP(mpInput.value.toInt());displayStats(player)})
 
     val spInput = document.getElementById("spInput") as HTMLInputElement
     val spHeal = document.getElementById("spHeal") as HTMLButtonElement
-    spHeal.addEventListener("click", { SPHeal(player, spInput.value.toInt()) })
+    spHeal.addEventListener("click", { player.resources.restoreSP(spInput.value.toInt());displayStats(player) })
     val spDamage = document.getElementById("spDamage") as HTMLButtonElement
-    spDamage.addEventListener("click", { SPDamage(player, spInput.value.toInt())})
+    spDamage.addEventListener("click", { player.resources.spendSP(spInput.value.toInt());displayStats(player)})
 }
-
-
-fun HPDamage(player: Player, damage: Int) {
-    val hp = player.resources.getCurrentHP()
-    val df = player.baseStats.combatStats.getDF()
-    player.resources.setCurrentHP(hp - (damage - df))
-    displayStats(player)
-}
-fun HPHeal(player: Player, heal: Int) {
-    val hp = player.resources.getCurrentHP()
-    player.resources.setCurrentHP(hp+heal)
-    displayStats(player)
-}
-
-fun MPDamage(player: Player, damage: Int) {
-    val mp = player.resources.getCurrentMP()
-    player.resources.setCurrentMP(mp - damage)
-    displayStats(player)
-}
-fun MPHeal(player: Player, heal: Int) {
-    val mp = player.resources.getCurrentMP()
-    player.resources.setCurrentMP(mp+heal)
-    displayStats(player)
-}
-
-fun SPDamage(player: Player, damage: Int) {
-    val sp = player.resources.getCurrentSP()
-    player.resources.setCurrentSP(sp - damage)
-    displayStats(player)
-}
-fun SPHeal(player: Player, heal: Int) {
-    val sp = player.resources.getCurrentSP()
-    player.resources.setCurrentSP(sp+heal)
-    displayStats(player)
-}
-
 
 //TODO: Ability
 class Ability
