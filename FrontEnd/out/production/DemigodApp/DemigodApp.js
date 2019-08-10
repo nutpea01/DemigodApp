@@ -1,7 +1,7 @@
 if (typeof kotlin === 'undefined') {
-  throw new Error("Error loading module 'App'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'App'.");
+  throw new Error("Error loading module 'DemigodApp'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'DemigodApp'.");
 }
-var App = function (_, Kotlin) {
+var DemigodApp = function (_, Kotlin) {
   'use strict';
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var Random = Kotlin.kotlin.random.Random;
@@ -759,6 +759,6 @@ var App = function (_, Kotlin) {
   package$main.DynamicValue = DynamicValue;
   package$main.Modifier = Modifier;
   main();
-  Kotlin.defineModule('App', _);
+  Kotlin.defineModule('DemigodApp', _);
   return _;
-}(typeof App === 'undefined' ? {} : App, kotlin);
+}(typeof DemigodApp === 'undefined' ? {} : DemigodApp, kotlin);
