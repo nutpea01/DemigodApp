@@ -26,6 +26,21 @@ var App = function (_, Kotlin) {
   Armor.prototype.constructor = Armor;
   Accessory.prototype = Object.create(Wearable.prototype);
   Accessory.prototype.constructor = Accessory;
+  function Ability(name, description) {
+    if (name === void 0)
+      name = '';
+    if (description === void 0)
+      description = '';
+    this.name = name;
+    this.description = description;
+    this.id = generateID();
+    this.icon = 0;
+  }
+  Ability.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Ability',
+    interfaces: []
+  };
   function StatChecker(player) {
     this.player_0 = player;
   }
@@ -65,12 +80,16 @@ var App = function (_, Kotlin) {
     }
     return DiceRoller_instance;
   }
-  function Equipment(name) {
+  function Equipment(name, description) {
     if (name === void 0)
       name = '';
+    if (description === void 0)
+      description = '';
     this.name = name;
+    this.description = description;
     this.id = generateID();
     this.modifiers = ArrayList_init();
+    this.icon = 0;
   }
   Equipment.$metadata$ = {
     kind: Kind_CLASS,
@@ -286,13 +305,6 @@ var App = function (_, Kotlin) {
     var spDamage = Kotlin.isType(tmp$_7 = document.getElementById('spDamage'), HTMLButtonElement) ? tmp$_7 : throwCCE();
     spDamage.addEventListener('click', setupButtons$lambda_4(player, spInput));
   }
-  function Ability() {
-  }
-  Ability.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'Ability',
-    interfaces: []
-  };
   function Player() {
     this.traits = new Traits('player', 30, 'Human', new Class());
     this.resources = new Resources();
@@ -719,6 +731,7 @@ var App = function (_, Kotlin) {
   };
   var package$demigod = _.demigod || (_.demigod = {});
   var package$main = package$demigod.main || (package$demigod.main = {});
+  package$main.Ability = Ability;
   package$main.StatChecker = StatChecker;
   Object.defineProperty(package$main, 'DiceRoller', {
     get: DiceRoller_getInstance
@@ -735,7 +748,6 @@ var App = function (_, Kotlin) {
   package$main.generateID = generateID;
   package$main.displayStats_9r44yh$ = displayStats;
   package$main.setupButtons_9r44yh$ = setupButtons;
-  package$main.Ability = Ability;
   package$main.Player = Player;
   package$main.BaseStats = BaseStats;
   package$main.Resources = Resources;
