@@ -1,5 +1,6 @@
-/KotlinVersion/App/.idea/
+/KotlinVersion/DemigodApp/.idea
 /JSVersion/.idea
+/FrontEnd/.idea
 
 lib-cov
 *.seed
