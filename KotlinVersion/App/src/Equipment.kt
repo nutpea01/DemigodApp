@@ -1,10 +1,12 @@
 package demigod.main
 
 open class Equipment(
-    val name: String = ""
+    val name: String = "",
+    val description: String = ""
 ) {
     val id: String = generateID()
     val modifiers: MutableList<Modifier> = mutableListOf()
+    val icon: Int = 0
 }
 
 open class Wearable(

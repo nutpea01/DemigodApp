@@ -1,13 +1,4 @@
-/*
-/*/
-!.gitignore
-!/Documentation
-!/README.md
-!/JSVersion
-!/KotlinVersion
-!/KotlinVersion/out
-!/FrontEnd/
-
+/KotlinVersion/App/.idea/
 /JSVersion/.idea
 
 lib-cov

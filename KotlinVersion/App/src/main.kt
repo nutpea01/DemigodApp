@@ -77,6 +77,3 @@ fun setupButtons(player: Player) {
     val spDamage = document.getElementById("spDamage") as HTMLButtonElement
     spDamage.addEventListener("click", { player.resources.spendSP(spInput.value.toInt());displayStats(player)})
 }
-
-//TODO: Ability
-class Ability
