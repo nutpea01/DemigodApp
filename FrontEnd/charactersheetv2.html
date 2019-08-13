@@ -11,11 +11,11 @@
 <!-- LEFT SIDE -- LOCKED -->
 <div class="leftside">
 	<!-- Profile Container -->
-	<div>
+	<div class="personal-info">
 
 		<h4 class="banners">Profile</h4>
-		<img src="dragoon profile pic 2pe 200x.png">
-		<form class="personalinfo">
+		<img class="profile-image" src="dragoon profile pic 2pe 200x.png">
+		<form >
 			<table>
 
 				<tr>
@@ -48,47 +48,290 @@
 
 	</div>
 
-	<!-- Stats Container -->
-	<div class="stattable">
+	<!-- HP MP SP TABLE  -->
+	<div class="stat-table">
 		<h4>Stats</h4>
-			<table class="resourcestats">
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>effect</td>
-					<td>calculator</td>
-				</tr>
-				<tr>
-					<td>HP :</td>
-					<td><input type="number" name="lockedhp" placeholder="150" class="HPMPSP"></td>
-					<td>/</td>
-					<td><input type="number" name="lockedhp" placeholder="150" class="HPMPSP"></td>
-					<td><input type="number" name="lockedhp" placeholder="0" class="effect"></td>
-					<td><input type="number" name="lockedhp" placeholder="0" class="effect"></td>
-				</tr>
+			<form>
+				<table class="resourcestats">
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>effect</td>
+						<td>calculator</td>
+					</tr>
 
-				<tr>
-					<td>MP :</td>
-					<td><input type="number" name="lockedhp" placeholder="150" class="HPMPSP"></td>
-					<td>/</td>
-					<td><input type="number" name="lockedhp" placeholder="150" class="HPMPSP"></td>
-					<td><input type="number" name="lockedhp" placeholder="0" class="effect"></td>
-					<td><input type="number" name="lockedhp" placeholder="0" class="effect"></td>
-				</tr>
+					<tr>
+						<td>HP :</td>
+						<td><input type="number" name="lockedhp" placeholder="150" class="HPMPSP"></td>
+						<td>/</td>
+						<td><input type="number" name="lockedhp" placeholder="150" class="HPMPSP"></td>
+						<td><input type="number" name="lockedhp" placeholder="0" class="effect"></td>
+						<td><input type="number" name="lockedhp" placeholder="0" class="effect"></td>
+					</tr>
 
-				<tr>
-					<td>SP :</td>
-					<td><input type="number" name="lockedhp" placeholder="150" class="HPMPSP"></td>
-					<td>/</td>
-					<td><input type="number" name="lockedhp" placeholder="150" class="HPMPSP"></td>
-					<td><input type="number" name="lockedhp" placeholder="0" class="effect"></td>
-					<td><input type="number" name="lockedhp" placeholder="0" class="effect"></td>
-				</tr>
-			</table>
+					<tr>
+						<td>MP :</td>
+						<td><input type="number" name="lockedhp" placeholder="150" class="HPMPSP"></td>
+						<td>/</td>
+						<td><input type="number" name="lockedhp" placeholder="150" class="HPMPSP"></td>
+						<td><input type="number" name="lockedhp" placeholder="0" class="effect"></td>
+						<td><input type="number" name="lockedhp" placeholder="0" class="effect"></td>
+					</tr>
+
+					<tr>
+						<td>SP :</td>
+						<td><input type="number" name="lockedhp" placeholder="150" class="HPMPSP"></td>
+						<td>/</td>
+						<td><input type="number" name="lockedhp" placeholder="150" class="HPMPSP"></td>
+						<td><input type="number" name="lockedhp" placeholder="0" class="effect"></td>
+						<td><input type="number" name="lockedhp" placeholder="0" class="effect"></td>
+					</tr>
+				</table>
+
+	<!-- BASE STATS -->
+				<table class="base-stat-table">
+					<th>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>Modifier</td>
+							<td></td>
+							<td></td>
+							<td>Modifier</td>
+						</tr>
+					</th>
+					<tr>
+						<td>STR  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="effect"></td>
+						<td>AT  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="effect"></td>
+					</tr>
+
+					<tr>
+						<td>CON  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="effect"></td>
+						<td>DF  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="effect"></td>
+					</tr>
+
+					<tr>
+						<td>INT  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="effect"></td>
+						<td>MA  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="effect"></td>
+					</tr>
+
+					<tr>
+						<td>WILL  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="effect"></td>
+						<td>MD  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="effect"></td>
+					</tr>
+
+					<tr>
+						<td>SPD  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="effect"></td>
+						<td>AC  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="effect"></td>
+					</tr>
+
+				</table>
+				<button>GO</button>
+			</form>
 	</div>
+<!-- SKILL TREE -->
+		<h4>Skill Tree</h4>
+			<table class="skill-tree">
+				<tr>
+					<td>Common Sense</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Spell-Craft</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Cartography</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Ancient World</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Study/Reading</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Magic Knowledge</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Herbology</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Advanced Medicine</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Detective</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Awareness</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Disguise</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Puzzle</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Sense Motive</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Escape Artist</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Stealth/Sneak</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Trickery/Stealing</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Lock Picking</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Free Running</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Tracking/Hunting</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Basic Survival</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Advanced Riding</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Cooking</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Beast Taming</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Pain Tolerance</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>First Aid</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Inspiration</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Seduction</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Charm</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Speech</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Persuasion</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Intimidate</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Guile</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Composure/Calm</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>War Tactics</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Group Management</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Hand to Hand Combat</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Weapons Play</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Specialty Weapon</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td>Swimming</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td>Climbing</td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+				<tr>
+					<td><input type="text" name="extra-skill" placeholder="extra skill" class="extra-skill"></td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+					<td><input type="text" name="extra-skill" placeholder="extra skill" class="extra-skill"></td>
+					<td><input type="number" name="skill-number" placeholder="0" class="skill-number"></td>
+				</tr>
+
+			</table>
+	
 </div>
 
+<!-- RIGHT CONTAINTER - FLUID -->
+<div id="right-container">
+	
+	<div class="spells-div">
+		<h4>SPELLS</h4>
+
+		<form>
+			<table>
+				<tr>
+					<td><img src="Hold Primary Logo 240px.png"></td>
+					<td><textarea></textarea></td>
+				</tr>
+				<tr>
+					<td><img src="Hold Primary Logo 240px.png"></td>
+					<td><textarea></textarea></td>
+
+				</tr>
+				<tr>
+					<td><img src="Hold Primary Logo 240px.png"></td>
+					<td><textarea></textarea></td>
+
+				</tr>
+			</table>
+			<button>+</button>
+			<button>-</button>
+		</form>
+	</div>
+</div>
 </body>
 </html>
