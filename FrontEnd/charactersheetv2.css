@@ -1,3 +1,49 @@
+/*ELEMENT EDITS*/
+* {
+	box-sizing: border-box;
+}
+
+table{
+	border-collapse: collapse;
+}
+
+body {
+		background-color: #f2f0f0;
+}
+
+
+/*RIGHT CONTAINER LEFT CONTAINER*/
+
+#right-container {
+	float: right;
+	margin-right: 15%;
+
+
+}
+
+.leftside {
+	float: left;
+	width:40% ;
+	margin: 0px;
+	margin-left: 10%;
+	border-right: solid 1px black;
+
+
+}
+
+/*Personal Info*/
+
+.profile-image {
+	float: left;
+}
+
+.personal-info {
+	margin-bottom: 20%;
+}
+
+
+/*HP MP SP and Base Stats*/
+
 .effect{
 	width: 50px;
 }
@@ -10,6 +56,49 @@
 	width: 100px;
 }
 
-.personalinfo{
-	
+.stat-table > h4 {
+	margin-bottom: 0px;
+
 }
+
+
+/*SKILL TREE EDITS*/
+
+.skill-tree{
+	width: 400px;
+}
+
+.skill-tree td{
+	border: 1px solid black;
+}
+
+.skill-tree input[type="number"]{
+	border: none;
+}
+
+.extra-skill{
+	border: none;
+}
+
+.skill-number{
+	width: 40px;
+}
+
+
+/*SPELLS SPECIALS BASE TABLE*/
+
+td img {
+	width: 100px;
+	border: 1px solid black;
+}
+
+td textarea {
+	height: 100px;
+	width: 300px;
+}
+
+.spells-div button {
+	width: 20px;
+	height: 20px
+}
+
