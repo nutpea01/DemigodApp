@@ -1,0 +1,119 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Crimson Text' , serif;
+}
+
+table{
+	border-collapse: collapse;
+}
+
+.main-navbar {
+	display: inline-block;
+	width: 100%;
+}
+
+.main-navbar__icon {
+	display: inline-block;
+}
+
+.main-navbar__list {
+	display: inline-block;
+	text-align: right;
+	width: calc(100% - 70px);
+}
+
+.main-navbar__items {
+	display: inline-block;
+}
+
+.main-navbar__item {
+	display: inline-block;
+}
+
+.left-side{
+	width: calc(50% - 25px);
+	height: 850px;
+	overflow-y: scroll;
+	display: inline-block;
+}
+
+.personal-info__profile-image{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.personal-info__form{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.resource-stats__title{
+	margin-top: 5px;
+	margin-bottom: 0px;
+}
+
+.resource-stats__HPMPSP{
+	width: 100px;
+}
+
+.resource-stats__effect{
+	width: 50px;
+}
+
+.resource-stats__calculator{
+	width: 50px;
+}
+
+.base-stat-table{
+	margin-top: 5px;
+}
+
+.base-stat-table__HPMPSP{
+	width: 100px;
+}
+
+.base-stat-table__modifier{
+	width: 60px;
+}
+
+.skill-tree__number{
+	width: 60px;
+}
+
+.right-container {
+	width: calc(50%);
+	height: 850px;
+	overflow-y: scroll;
+	display: inline-block;
+}
+
+.spells-div__image {
+	width: 150px;
+}
+
+.spells-div__textarea {
+	width: 400px;
+	height: 100px;
+}
+
+.special-div__image {
+	width: 150px
+}
+
+.special-div__textarea {
+	width:  400px;
+	height: 100px;
+}
+
+.class-abilities-div__image {
+	width: 150px;
+}
+
+.class-abilities-div__textarea {
+	width: 400px;
+	height: 100px;
+}
+
