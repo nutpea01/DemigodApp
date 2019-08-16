@@ -90,8 +90,17 @@ table{
 	display: inline-block;
 }
 
+.equipment-div__image{
+	width: 100px;
+}
+
+.equipment-div__textarea{
+	width: 400px;
+	height: 100px;
+}
+
 .spells-div__image {
-	width: 150px;
+	width: 100px;
 }
 
 .spells-div__textarea {
@@ -100,7 +109,7 @@ table{
 }
 
 .special-div__image {
-	width: 150px
+	width: 100px
 }
 
 .special-div__textarea {
@@ -109,11 +118,16 @@ table{
 }
 
 .class-abilities-div__image {
-	width: 150px;
+	width: 100px;
 }
 
 .class-abilities-div__textarea {
 	width: 400px;
 	height: 100px;
+}
+
+.inventory-div__slot {
+	height: 50px;
+	width: 250px;
 }
 
