@@ -24,8 +24,9 @@ fun main() {
     player.resources.setCurrentMP(250)
     player.resources.setCurrentSP(200)
 
-    displayStats(player)
-    setupButtons(player)
+    //FileHandler.saveJSON("file", player)
+    //displayStats(player)
+    //setupButtons(player)
 }
 
 fun generateID(): String {
@@ -35,26 +36,26 @@ fun generateID(): String {
 
 //TODO: testing
 fun displayStats(player: Player) {
-    document.getElementById("b1")!!.innerHTML = player.baseStats.getSTR().toString()
-    document.getElementById("b2")!!.innerHTML = player.baseStats.getCON().toString()
-    document.getElementById("b3")!!.innerHTML = player.baseStats.getINT().toString()
-    document.getElementById("b4")!!.innerHTML = player.baseStats.getWIL().toString()
+    document.getElementById("b1")?.innerHTML = player.baseStats.getSTR().toString()
+    document.getElementById("b2")?.innerHTML = player.baseStats.getCON().toString()
+    document.getElementById("b3")?.innerHTML = player.baseStats.getINT().toString()
+    document.getElementById("b4")?.innerHTML = player.baseStats.getWIL().toString()
 
-    document.getElementById("c1")!!.innerHTML = player.baseStats.combatStats.getAT().toString()
-    document.getElementById("c2")!!.innerHTML = player.baseStats.combatStats.getDF().toString()
-    document.getElementById("c3")!!.innerHTML = player.baseStats.combatStats.getMA().toString()
-    document.getElementById("c4")!!.innerHTML = player.baseStats.combatStats.getMD().toString()
+    document.getElementById("c1")?.innerHTML = player.baseStats.combatStats.getAT().toString()
+    document.getElementById("c2")?.innerHTML = player.baseStats.combatStats.getDF().toString()
+    document.getElementById("c3")?.innerHTML = player.baseStats.combatStats.getMA().toString()
+    document.getElementById("c4")?.innerHTML = player.baseStats.combatStats.getMD().toString()
 
-    document.getElementById("a1")!!.innerHTML = player.baseStats.getSPD().toString()
-    document.getElementById("a2")!!.innerHTML = player.baseStats.getACC().toString()
+    document.getElementById("a1")?.innerHTML = player.baseStats.getSPD().toString()
+    document.getElementById("a2")?.innerHTML = player.baseStats.getACC().toString()
 
-    document.getElementById("b5")!!.innerHTML = player.resources.getCurrentHP().toString()
-    document.getElementById("b6")!!.innerHTML = player.resources.getCurrentMP().toString()
-    document.getElementById("b7")!!.innerHTML = player.resources.getCurrentSP().toString()
+    document.getElementById("b5")?.innerHTML = player.resources.getCurrentHP().toString()
+    document.getElementById("b6")?.innerHTML = player.resources.getCurrentMP().toString()
+    document.getElementById("b7")?.innerHTML = player.resources.getCurrentSP().toString()
 
-    document.getElementById("c5")!!.innerHTML = player.resources.getMaxHP().toString()
-    document.getElementById("c6")!!.innerHTML = player.resources.getMaxMP().toString()
-    document.getElementById("c7")!!.innerHTML = player.resources.getMaxSP().toString()
+    document.getElementById("c5")?.innerHTML = player.resources.getMaxHP().toString()
+    document.getElementById("c6")?.innerHTML = player.resources.getMaxMP().toString()
+    document.getElementById("c7")?.innerHTML = player.resources.getMaxSP().toString()
 }
 
 //TODO: testing
