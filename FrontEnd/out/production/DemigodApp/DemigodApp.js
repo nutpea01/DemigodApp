@@ -8,7 +8,7 @@ var DemigodApp = function (_, Kotlin) {
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var equals = Kotlin.equals;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
-  var ensureNotNull = Kotlin.ensureNotNull;
+  var trimIndent = Kotlin.kotlin.text.trimIndent_pdl1vz$;
   var throwCCE = Kotlin.throwCCE;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
   var Unit = Kotlin.kotlin.Unit;
@@ -208,6 +208,32 @@ var DemigodApp = function (_, Kotlin) {
     simpleName: 'Accessory',
     interfaces: [Wearable]
   };
+  function FileHandler() {
+    FileHandler_instance = this;
+  }
+  FileHandler.prototype.saveJSON_clabk7$ = function (file, player) {
+    var filename = file + '.json';
+    var text = trimIndent('\n            tester\n        ');
+    var save = document.createElement('a');
+    save.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    save.setAttribute('download', filename);
+    save.style.display = 'none';
+    document.body.appendChild(save);
+    save.click();
+    document.body.removeChild(save);
+  };
+  FileHandler.$metadata$ = {
+    kind: Kind_OBJECT,
+    simpleName: 'FileHandler',
+    interfaces: []
+  };
+  var FileHandler_instance = null;
+  function FileHandler_getInstance() {
+    if (FileHandler_instance === null) {
+      new FileHandler();
+    }
+    return FileHandler_instance;
+  }
   function main() {
     var player = new Player();
     player.baseStats.setSTR_za3lpa$(35);
@@ -221,29 +247,28 @@ var DemigodApp = function (_, Kotlin) {
     player.resources.setCurrentHP_za3lpa$(400);
     player.resources.setCurrentMP_za3lpa$(250);
     player.resources.setCurrentSP_za3lpa$(200);
-    displayStats(player);
-    setupButtons(player);
   }
   function generateID() {
     return '';
   }
   function displayStats(player) {
-    ensureNotNull(document.getElementById('b1')).innerHTML = player.baseStats.getSTR().toString();
-    ensureNotNull(document.getElementById('b2')).innerHTML = player.baseStats.getCON().toString();
-    ensureNotNull(document.getElementById('b3')).innerHTML = player.baseStats.getINT().toString();
-    ensureNotNull(document.getElementById('b4')).innerHTML = player.baseStats.getWIL().toString();
-    ensureNotNull(document.getElementById('c1')).innerHTML = player.baseStats.combatStats.getAT().toString();
-    ensureNotNull(document.getElementById('c2')).innerHTML = player.baseStats.combatStats.getDF().toString();
-    ensureNotNull(document.getElementById('c3')).innerHTML = player.baseStats.combatStats.getMA().toString();
-    ensureNotNull(document.getElementById('c4')).innerHTML = player.baseStats.combatStats.getMD().toString();
-    ensureNotNull(document.getElementById('a1')).innerHTML = player.baseStats.getSPD().toString();
-    ensureNotNull(document.getElementById('a2')).innerHTML = player.baseStats.getACC().toString();
-    ensureNotNull(document.getElementById('b5')).innerHTML = player.resources.getCurrentHP().toString();
-    ensureNotNull(document.getElementById('b6')).innerHTML = player.resources.getCurrentMP().toString();
-    ensureNotNull(document.getElementById('b7')).innerHTML = player.resources.getCurrentSP().toString();
-    ensureNotNull(document.getElementById('c5')).innerHTML = player.resources.getMaxHP().toString();
-    ensureNotNull(document.getElementById('c6')).innerHTML = player.resources.getMaxMP().toString();
-    ensureNotNull(document.getElementById('c7')).innerHTML = player.resources.getMaxSP().toString();
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6, tmp$_7, tmp$_8, tmp$_9, tmp$_10, tmp$_11, tmp$_12, tmp$_13, tmp$_14;
+    (tmp$ = document.getElementById('b1')) != null ? (tmp$.innerHTML = player.baseStats.getSTR().toString()) : null;
+    (tmp$_0 = document.getElementById('b2')) != null ? (tmp$_0.innerHTML = player.baseStats.getCON().toString()) : null;
+    (tmp$_1 = document.getElementById('b3')) != null ? (tmp$_1.innerHTML = player.baseStats.getINT().toString()) : null;
+    (tmp$_2 = document.getElementById('b4')) != null ? (tmp$_2.innerHTML = player.baseStats.getWIL().toString()) : null;
+    (tmp$_3 = document.getElementById('c1')) != null ? (tmp$_3.innerHTML = player.baseStats.combatStats.getAT().toString()) : null;
+    (tmp$_4 = document.getElementById('c2')) != null ? (tmp$_4.innerHTML = player.baseStats.combatStats.getDF().toString()) : null;
+    (tmp$_5 = document.getElementById('c3')) != null ? (tmp$_5.innerHTML = player.baseStats.combatStats.getMA().toString()) : null;
+    (tmp$_6 = document.getElementById('c4')) != null ? (tmp$_6.innerHTML = player.baseStats.combatStats.getMD().toString()) : null;
+    (tmp$_7 = document.getElementById('a1')) != null ? (tmp$_7.innerHTML = player.baseStats.getSPD().toString()) : null;
+    (tmp$_8 = document.getElementById('a2')) != null ? (tmp$_8.innerHTML = player.baseStats.getACC().toString()) : null;
+    (tmp$_9 = document.getElementById('b5')) != null ? (tmp$_9.innerHTML = player.resources.getCurrentHP().toString()) : null;
+    (tmp$_10 = document.getElementById('b6')) != null ? (tmp$_10.innerHTML = player.resources.getCurrentMP().toString()) : null;
+    (tmp$_11 = document.getElementById('b7')) != null ? (tmp$_11.innerHTML = player.resources.getCurrentSP().toString()) : null;
+    (tmp$_12 = document.getElementById('c5')) != null ? (tmp$_12.innerHTML = player.resources.getMaxHP().toString()) : null;
+    (tmp$_13 = document.getElementById('c6')) != null ? (tmp$_13.innerHTML = player.resources.getMaxMP().toString()) : null;
+    (tmp$_14 = document.getElementById('c7')) != null ? (tmp$_14.innerHTML = player.resources.getMaxSP().toString()) : null;
   }
   function setupButtons$lambda(closure$player, closure$hpInput) {
     return function (it) {
@@ -744,6 +769,9 @@ var DemigodApp = function (_, Kotlin) {
   package$main.Weapon = Weapon;
   package$main.Armor = Armor;
   package$main.Accessory = Accessory;
+  Object.defineProperty(package$main, 'FileHandler', {
+    get: FileHandler_getInstance
+  });
   package$main.main = main;
   package$main.generateID = generateID;
   package$main.displayStats_9r44yh$ = displayStats;
