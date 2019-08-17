@@ -12,6 +12,8 @@
 <header class="main-navbar">
 	<div class="main-navbar__icon">
 		<a href="somewhere">DemiGod</a>
+		<button>Save Sheet</button>
+		<button>Load Sheet</button>
 	</div>
 
 	<nav class="main-navbar__list">
@@ -469,7 +471,17 @@
 	<div class="inventory-div">
 		<h4 class="inventory-div__title">INVENTORY</h4>
 		<form>
-			<table>
+
+			<table class="inventory-div__total-slot-table">
+				<tr>
+					<td> <label for="slot-number" name="Total Slots">Total Slots</label></td>
+					<td><input type="text" id="slot-number" name="slot-number" class="inventory-div__item"></td>
+					<td><label for="bag-type" name="bag-type__label" class="inventory-div__item">Bag Type</label></td>
+					<td><input type="text" name="" placeholder="ex. backpack: +4 Slots"></td>
+				</tr>
+			</table>
+
+			<table class="inventory-div__slot-table">
 				<tr>
 					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
 					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
@@ -491,6 +503,8 @@
 					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
 				</tr>
 			</table>
+			<button>+</button>
+			<button>-</button>
 		</form>
 
 		

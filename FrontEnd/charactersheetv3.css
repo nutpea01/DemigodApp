@@ -22,7 +22,7 @@ table{
 .main-navbar__list {
 	display: inline-block;
 	text-align: right;
-	width: calc(100% - 70px);
+	width: calc(100% - 300px);
 }
 
 .main-navbar__items {
