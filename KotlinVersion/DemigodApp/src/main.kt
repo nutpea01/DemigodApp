@@ -1,8 +1,3 @@
-package demigod.main
-
-import org.w3c.dom.*
-import kotlin.browser.document
-
 /**
  * The starting point of EVERYTHING for this app.
  */

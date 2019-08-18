@@ -1,5 +1,3 @@
-package demigod.main
-
 class Ability (
     val name: String = "",
     val description: String = ""

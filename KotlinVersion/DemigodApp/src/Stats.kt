@@ -1,12 +1,10 @@
-package demigod.main
-
 class BaseStats (
-    private val str: Value = Value(0),
-    private val con: Value = Value(0),
-    private val int: Value = Value(0),
-    private val wil: Value = Value(0),
-    private val spd: Value = Value(0),
-    private val acc: Value = Value(0)
+        private val str: Value = Value(0),
+        private val con: Value = Value(0),
+        private val int: Value = Value(0),
+        private val wil: Value = Value(0),
+        private val spd: Value = Value(0),
+        private val acc: Value = Value(0)
 ) {
     val combatStats: CombatStats = CombatStats()
 
@@ -44,9 +42,9 @@ class BaseStats (
 }
 
 class Resources (
-    private val hp: DynamicValue = DynamicValue(150,150),
-    private val sp: DynamicValue = DynamicValue(150,150),
-    private val mp: DynamicValue = DynamicValue(150,150)
+        private val hp: DynamicValue = DynamicValue(150, 150),
+        private val sp: DynamicValue = DynamicValue(150, 150),
+        private val mp: DynamicValue = DynamicValue(150, 150)
 ) {
     fun setMaxHP(value: Int) { this.hp.max.setBase(value) }
     fun setMaxMP(value: Int) { this.mp.max.setBase(value) }
@@ -107,10 +105,10 @@ class Resources (
 }
 
 data class CombatStats (
-    private val at: Value = Value(0),
-    private val df: Value = Value(0),
-    private val ma: Value = Value(0),
-    private val md: Value = Value(0)
+        private val at: Value = Value(0),
+        private val df: Value = Value(0),
+        private val ma: Value = Value(0),
+        private val md: Value = Value(0)
 ) {
     fun getAT(): Int {return this.at.getValue()}
     fun getDF(): Int {return this.df.getValue()}
@@ -126,11 +124,12 @@ data class CombatStats (
 //TODO: Skills
 data class Skills (val temp: Int = 0)
 data class Traits (
-    var name: String,
-    var age: Int,
-    var species: String,
-    val _class: Class,
-    var level: Int = 1
+        var name: String,
+        var age: Int,
+        var species: String,
+        val _class: Class,
+        var level: Int = 1,
+        var icon: Int = 0
 )
 
 //TODO: class

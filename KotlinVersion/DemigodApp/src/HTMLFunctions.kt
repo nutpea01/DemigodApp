@@ -1,5 +1,3 @@
-package demigod.main
-
 import org.w3c.dom.*
 import kotlin.browser.document
 import kotlin.dom.addClass

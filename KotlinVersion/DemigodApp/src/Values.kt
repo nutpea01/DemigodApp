@@ -1,5 +1,3 @@
-package demigod.main
-
 open class Value(private var base: Int = 0) {
     val id: String = generateID()
     val modifiers: MutableList<Modifier> = mutableListOf()

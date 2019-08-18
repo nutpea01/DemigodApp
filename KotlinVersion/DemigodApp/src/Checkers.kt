@@ -1,5 +1,3 @@
-package demigod.main
-
 import kotlin.random.Random
 
 class StatChecker (
