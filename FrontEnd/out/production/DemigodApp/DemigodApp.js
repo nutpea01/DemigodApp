@@ -8,8 +8,8 @@ var DemigodApp = function (_, Kotlin) {
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var equals = Kotlin.equals;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
-  var trimIndent = Kotlin.kotlin.text.trimIndent_pdl1vz$;
   var throwCCE = Kotlin.throwCCE;
+  var addClass = Kotlin.kotlin.dom.addClass_hhb33f$;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
   var Unit = Kotlin.kotlin.Unit;
   Wearable.prototype = Object.create(Equipment.prototype);
@@ -213,14 +213,15 @@ var DemigodApp = function (_, Kotlin) {
   }
   FileHandler.prototype.saveJSON_clabk7$ = function (file, player) {
     var filename = file + '.json';
-    var text = trimIndent('\n            tester\n        ');
     var save = document.createElement('a');
-    save.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    save.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(player));
     save.setAttribute('download', filename);
     save.style.display = 'none';
     document.body.appendChild(save);
     save.click();
     document.body.removeChild(save);
+  };
+  FileHandler.prototype.load = function () {
   };
   FileHandler.$metadata$ = {
     kind: Kind_OBJECT,
@@ -233,6 +234,93 @@ var DemigodApp = function (_, Kotlin) {
       new FileHandler();
     }
     return FileHandler_instance;
+  }
+  function initSlotButtons$lambda(it) {
+    return insertSpellSlot();
+  }
+  function initSlotButtons$lambda_0(it) {
+    return insertSpecialSlot();
+  }
+  function initSlotButtons$lambda_1(it) {
+    return insertClassSlot();
+  }
+  function initSlotButtons$lambda_2(it) {
+    return deleteSpellSlot();
+  }
+  function initSlotButtons$lambda_3(it) {
+    return deleteSpecialSlot();
+  }
+  function initSlotButtons$lambda_4(it) {
+    return deleteClassSlot();
+  }
+  function initSlotButtons() {
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4;
+    (Kotlin.isType(tmp$ = document.getElementById('spell-add'), HTMLButtonElement) ? tmp$ : throwCCE()).onclick = initSlotButtons$lambda;
+    (Kotlin.isType(tmp$_0 = document.getElementById('special-add'), HTMLButtonElement) ? tmp$_0 : throwCCE()).onclick = initSlotButtons$lambda_0;
+    (Kotlin.isType(tmp$_1 = document.getElementById('class-add'), HTMLButtonElement) ? tmp$_1 : throwCCE()).onclick = initSlotButtons$lambda_1;
+    (Kotlin.isType(tmp$_2 = document.getElementById('spell-del'), HTMLButtonElement) ? tmp$_2 : throwCCE()).onclick = initSlotButtons$lambda_2;
+    (Kotlin.isType(tmp$_3 = document.getElementById('special-del'), HTMLButtonElement) ? tmp$_3 : throwCCE()).onclick = initSlotButtons$lambda_3;
+    (Kotlin.isType(tmp$_4 = document.getElementById('class-del'), HTMLButtonElement) ? tmp$_4 : throwCCE()).onclick = initSlotButtons$lambda_4;
+  }
+  function initSlots(spellSlots, specialSlots, classSlots) {
+    for (var index = 0; index < spellSlots; index++) {
+      insertSpellSlot();
+    }
+    for (var index_0 = 0; index_0 < specialSlots; index_0++) {
+      insertSpecialSlot();
+    }
+    for (var index_1 = 0; index_1 < classSlots; index_1++) {
+      insertClassSlot();
+    }
+  }
+  function insertSpellSlot() {
+    var tmp$;
+    var table = Kotlin.isType(tmp$ = document.getElementById('abilities-spell'), HTMLTableElement) ? tmp$ : throwCCE();
+    return insertAbilitySlot(table);
+  }
+  function insertSpecialSlot() {
+    var tmp$;
+    var table = Kotlin.isType(tmp$ = document.getElementById('abilities-special'), HTMLTableElement) ? tmp$ : throwCCE();
+    return insertAbilitySlot(table);
+  }
+  function insertClassSlot() {
+    var tmp$;
+    var table = Kotlin.isType(tmp$ = document.getElementById('abilities-class'), HTMLTableElement) ? tmp$ : throwCCE();
+    return insertAbilitySlot(table);
+  }
+  function insertAbilitySlot(table, image) {
+    if (image === void 0)
+      image = 'Hold Primary Logo 240px.png';
+    var tmp$, tmp$_0;
+    var row = table.insertRow();
+    var icon = row.insertCell(0);
+    var img = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
+    img.src = image;
+    addClass(img, ['equipment-div__image']);
+    icon.appendChild(img);
+    var text = row.insertCell(1);
+    var textarea = Kotlin.isType(tmp$_0 = document.createElement('textarea'), HTMLTextAreaElement) ? tmp$_0 : throwCCE();
+    addClass(textarea, ['spells-div__textarea']);
+    text.appendChild(textarea);
+    return false;
+  }
+  function deleteSpellSlot() {
+    var tmp$;
+    var table = Kotlin.isType(tmp$ = document.getElementById('abilities-spell'), HTMLTableElement) ? tmp$ : throwCCE();
+    table.deleteRow(table.rows.length - 1 | 0);
+    return false;
+  }
+  function deleteSpecialSlot() {
+    var tmp$;
+    var table = Kotlin.isType(tmp$ = document.getElementById('abilities-special'), HTMLTableElement) ? tmp$ : throwCCE();
+    table.deleteRow(table.rows.length - 1 | 0);
+    return false;
+  }
+  function deleteClassSlot() {
+    var tmp$;
+    var table = Kotlin.isType(tmp$ = document.getElementById('abilities-class'), HTMLTableElement) ? tmp$ : throwCCE();
+    table.deleteRow(table.rows.length - 1 | 0);
+    return false;
   }
   function main() {
     var player = new Player();
@@ -247,28 +335,15 @@ var DemigodApp = function (_, Kotlin) {
     player.resources.setCurrentHP_za3lpa$(400);
     player.resources.setCurrentMP_za3lpa$(250);
     player.resources.setCurrentSP_za3lpa$(200);
-  }
-  function generateID() {
-    return '';
+    initSlots(3, 3, 3);
+    initSlotButtons();
   }
   function displayStats(player) {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6, tmp$_7, tmp$_8, tmp$_9, tmp$_10, tmp$_11, tmp$_12, tmp$_13, tmp$_14;
+    var tmp$, tmp$_0, tmp$_1, tmp$_2;
     (tmp$ = document.getElementById('b1')) != null ? (tmp$.innerHTML = player.baseStats.getSTR().toString()) : null;
     (tmp$_0 = document.getElementById('b2')) != null ? (tmp$_0.innerHTML = player.baseStats.getCON().toString()) : null;
     (tmp$_1 = document.getElementById('b3')) != null ? (tmp$_1.innerHTML = player.baseStats.getINT().toString()) : null;
     (tmp$_2 = document.getElementById('b4')) != null ? (tmp$_2.innerHTML = player.baseStats.getWIL().toString()) : null;
-    (tmp$_3 = document.getElementById('c1')) != null ? (tmp$_3.innerHTML = player.baseStats.combatStats.getAT().toString()) : null;
-    (tmp$_4 = document.getElementById('c2')) != null ? (tmp$_4.innerHTML = player.baseStats.combatStats.getDF().toString()) : null;
-    (tmp$_5 = document.getElementById('c3')) != null ? (tmp$_5.innerHTML = player.baseStats.combatStats.getMA().toString()) : null;
-    (tmp$_6 = document.getElementById('c4')) != null ? (tmp$_6.innerHTML = player.baseStats.combatStats.getMD().toString()) : null;
-    (tmp$_7 = document.getElementById('a1')) != null ? (tmp$_7.innerHTML = player.baseStats.getSPD().toString()) : null;
-    (tmp$_8 = document.getElementById('a2')) != null ? (tmp$_8.innerHTML = player.baseStats.getACC().toString()) : null;
-    (tmp$_9 = document.getElementById('b5')) != null ? (tmp$_9.innerHTML = player.resources.getCurrentHP().toString()) : null;
-    (tmp$_10 = document.getElementById('b6')) != null ? (tmp$_10.innerHTML = player.resources.getCurrentMP().toString()) : null;
-    (tmp$_11 = document.getElementById('b7')) != null ? (tmp$_11.innerHTML = player.resources.getCurrentSP().toString()) : null;
-    (tmp$_12 = document.getElementById('c5')) != null ? (tmp$_12.innerHTML = player.resources.getMaxHP().toString()) : null;
-    (tmp$_13 = document.getElementById('c6')) != null ? (tmp$_13.innerHTML = player.resources.getMaxMP().toString()) : null;
-    (tmp$_14 = document.getElementById('c7')) != null ? (tmp$_14.innerHTML = player.resources.getMaxSP().toString()) : null;
   }
   function setupButtons$lambda(closure$player, closure$hpInput) {
     return function (it) {
@@ -284,51 +359,23 @@ var DemigodApp = function (_, Kotlin) {
       return Unit;
     };
   }
-  function setupButtons$lambda_1(closure$player, closure$mpInput) {
-    return function (it) {
-      closure$player.resources.restoreMP_za3lpa$(toInt(closure$mpInput.value));
-      displayStats(closure$player);
-      return Unit;
-    };
-  }
-  function setupButtons$lambda_2(closure$player, closure$mpInput) {
-    return function (it) {
-      closure$player.resources.spendMP_za3lpa$(toInt(closure$mpInput.value));
-      displayStats(closure$player);
-      return Unit;
-    };
-  }
-  function setupButtons$lambda_3(closure$player, closure$spInput) {
-    return function (it) {
-      closure$player.resources.restoreSP_za3lpa$(toInt(closure$spInput.value));
-      displayStats(closure$player);
-      return Unit;
-    };
-  }
-  function setupButtons$lambda_4(closure$player, closure$spInput) {
-    return function (it) {
-      closure$player.resources.spendSP_za3lpa$(toInt(closure$spInput.value));
-      displayStats(closure$player);
-      return Unit;
-    };
-  }
   function setupButtons(player) {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6, tmp$_7;
+    var tmp$, tmp$_0, tmp$_1;
     var hpInput = Kotlin.isType(tmp$ = document.getElementById('hpInput'), HTMLInputElement) ? tmp$ : throwCCE();
     var hpHeal = Kotlin.isType(tmp$_0 = document.getElementById('hpHeal'), HTMLButtonElement) ? tmp$_0 : throwCCE();
     hpHeal.addEventListener('click', setupButtons$lambda(player, hpInput));
     var hpDamage = Kotlin.isType(tmp$_1 = document.getElementById('hpDamage'), HTMLButtonElement) ? tmp$_1 : throwCCE();
     hpDamage.addEventListener('click', setupButtons$lambda_0(player, hpInput));
-    var mpInput = Kotlin.isType(tmp$_2 = document.getElementById('mpInput'), HTMLInputElement) ? tmp$_2 : throwCCE();
-    var mpHeal = Kotlin.isType(tmp$_3 = document.getElementById('mpHeal'), HTMLButtonElement) ? tmp$_3 : throwCCE();
-    mpHeal.addEventListener('click', setupButtons$lambda_1(player, mpInput));
-    var mpDamage = Kotlin.isType(tmp$_4 = document.getElementById('mpDamage'), HTMLButtonElement) ? tmp$_4 : throwCCE();
-    mpDamage.addEventListener('click', setupButtons$lambda_2(player, mpInput));
-    var spInput = Kotlin.isType(tmp$_5 = document.getElementById('spInput'), HTMLInputElement) ? tmp$_5 : throwCCE();
-    var spHeal = Kotlin.isType(tmp$_6 = document.getElementById('spHeal'), HTMLButtonElement) ? tmp$_6 : throwCCE();
-    spHeal.addEventListener('click', setupButtons$lambda_3(player, spInput));
-    var spDamage = Kotlin.isType(tmp$_7 = document.getElementById('spDamage'), HTMLButtonElement) ? tmp$_7 : throwCCE();
-    spDamage.addEventListener('click', setupButtons$lambda_4(player, spInput));
+  }
+  function generateID() {
+    var uuid = '';
+    var dt = (new Date()).getTime();
+    uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = (dt + Math.random() * 16) % 16 | 0;
+      dt = Math.floor(dt / 16);
+      return (c == 'x' ? r : r & 3 | 8).toString(16);
+    });
+    return uuid;
   }
   function Player() {
     this.traits = new Traits('player', 30, 'Human', new Class());
@@ -772,10 +819,19 @@ var DemigodApp = function (_, Kotlin) {
   Object.defineProperty(package$main, 'FileHandler', {
     get: FileHandler_getInstance
   });
+  package$main.initSlotButtons = initSlotButtons;
+  package$main.initSlots_qt1dr2$ = initSlots;
+  package$main.insertSpellSlot = insertSpellSlot;
+  package$main.insertSpecialSlot = insertSpecialSlot;
+  package$main.insertClassSlot = insertClassSlot;
+  package$main.insertAbilitySlot_c2mlqw$ = insertAbilitySlot;
+  package$main.deleteSpellSlot = deleteSpellSlot;
+  package$main.deleteSpecialSlot = deleteSpecialSlot;
+  package$main.deleteClassSlot = deleteClassSlot;
   package$main.main = main;
-  package$main.generateID = generateID;
   package$main.displayStats_9r44yh$ = displayStats;
   package$main.setupButtons_9r44yh$ = setupButtons;
+  package$main.generateID = generateID;
   package$main.Player = Player;
   package$main.BaseStats = BaseStats;
   package$main.Resources = Resources;
