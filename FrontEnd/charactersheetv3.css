@@ -6,8 +6,26 @@ body {
 	font-family: 'Crimson Text' , serif;
 }
 
-table{
+table {
 	border-collapse: collapse;
+}
+
+td{
+	border: solid black 1px;
+}
+
+input [type="text"], textarea,
+input {
+	border:none;
+}
+
+h4 {
+	font-weight: normal;
+	letter-spacing: 2px;
+	color: white;
+	padding-left: 5px;
+	width: 40%;
+	background-image: linear-gradient(to right, rgba(77, 71, 70,1), rgba(77, 71, 70,0));	
 }
 
 .main-navbar {
@@ -17,6 +35,42 @@ table{
 
 .main-navbar__icon {
 	display: inline-block;
+}
+
+.main-navbar__icon a {
+	text-decoration: none;
+	font-size: 20px;
+	color: white;
+	padding: 4px 8px;
+	margin-right: 10px;
+	border-radius: 7px;
+	background-color: rgb(77, 71, 70);
+	vertical-align: middle;
+}
+
+.main-navbar__icon a:hover,
+.main-navbar__icon a:active {
+	background-color: white;
+	color: black;
+	border: solid 1px black;
+}
+
+.main-navbar__icon button{
+	background-color: white;
+	color: black; 
+	border: 1px solid black;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 12px;
+	padding: 8px 8px;
+	border-radius: 5px;
+	vertical-align: middle;
+}
+
+.main-navbar__icon button:hover,
+.main-navbar__icon button:active {
+	background-color: rgb(77, 71, 70);
+	color: white;
 }
 
 .main-navbar__list {
@@ -33,12 +87,48 @@ table{
 	display: inline-block;
 }
 
+.main-navbar__item a {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	margin: 3px 5px;
+	padding: 4px 8px;
+	border: 1px solid black;
+	border-radius: 5px;
+	vertical-align: middle;
+}
+
+.main-navbar__item a:hover,
+.main-navbar__item a:active{
+	background-color: rgb(77, 71, 70);
+	color: white;
+}
+
 .left-side{
+	background-color: 241, 238, 238;
 	width: calc(50% - 25px);
 	height: 850px;
 	overflow-y: scroll;
 	display: inline-block;
 }
+
+.left-side::-webkit-scrollbar-track
+{
+    background-color: #F5F5F5;
+}
+
+.left-side::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: rgb(77, 71, 70);
+}
+
+.left-side::-webkit-scrollbar-thumb
+{
+    background-color: rgb(77, 71, 70);
+    border: 2px solid #555555;
+}
+
 
 .personal-info__profile-image{
 	display: inline-block;
@@ -89,6 +179,24 @@ table{
 	overflow-y: scroll;
 	display: inline-block;
 }
+
+.right-container::-webkit-scrollbar-track
+{
+    background-color: #F5F5F5;
+}
+
+.right-container::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: rgb(77, 71, 70);
+}
+
+.right-container::-webkit-scrollbar-thumb
+{
+    background-color: rgb(77, 71, 70);
+    border: 2px solid #555555;
+}
+
 
 .equipment-div__image{
 	width: 100px;
