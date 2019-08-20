@@ -8,7 +8,6 @@ var DemigodApp = function (_, Kotlin) {
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var equals = Kotlin.equals;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
-  var toString = Kotlin.toString;
   var throwCCE = Kotlin.throwCCE;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
   var Unit = Kotlin.kotlin.Unit;
@@ -222,8 +221,7 @@ var DemigodApp = function (_, Kotlin) {
     text += JSON.stringify(player.armor) + ',';
     text += JSON.stringify(player.accessory);
     text += ']';
-    var poop = JSON.parse(text);
-    text += '\n\n\n' + toString(poop);
+    var test = JSON.parse(text);
     var save = document.createElement('a');
     save.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
     save.setAttribute('download', file);
