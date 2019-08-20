@@ -19,11 +19,11 @@ fun main() {
 
     initSlots(3, 3, 3)
     initSlotButtons()
-    //FileHandler.saveJSON("file", player)
+    initNavigationBar(player)
 }
 
 fun generateID(): String {
-    //maybe randomize 4? can only be between 1-5
+    //TODO: maybe randomize 4? can only be between 1-5
     val uuid = ""
     js("""
     var dt = new Date().getTime();

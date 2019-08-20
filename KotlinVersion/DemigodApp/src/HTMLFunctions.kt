@@ -17,6 +17,11 @@ fun setupButtons(player: Player) {
     hpDamage.addEventListener("click", { player.resources.takeDamage(hpInput.value.toInt());displayStats(player) })
 }
 
+fun initNavigationBar(player: Player) {
+    (document.getElementById("main-navbar__icon__save-button") as HTMLButtonElement).onclick = { FileHandler.save("test", player) }
+    (document.getElementById("main-navbar__icon__load-button") as HTMLButtonElement).onclick = { FileHandler.load() }
+}
+
 fun initSlotButtons() {
     // initialize add buttons to insert a row
     (document.getElementById("spells-div__button-add")   as HTMLButtonElement).onclick = { insertSpellSlot() }

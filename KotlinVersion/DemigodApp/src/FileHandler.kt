@@ -1,15 +1,36 @@
-package demigod.main
-
+import org.w3c.dom.HTMLHyperlinkElementUtils
+import org.w3c.dom.HTMLInputElement
+import kotlin.browser.document
 
 object FileHandler {
     init { }
 
-    fun saveJSON(file: String, player: Player) {
-        val filename = "$file.json"
+    fun save(filename: String, player: Player) {
+        val file = "$filename.demigod"
 
-        val text = """
-            tester
-        """.trimIndent()
+        //val name    = (document.getElementById("Name")    as HTMLInputElement).value
+        //val age     = (document.getElementById("Age")     as HTMLInputElement).value
+        //val species = (document.getElementById("Species") as HTMLInputElement).value
+        //val _class  = (document.getElementById("Class")   as HTMLInputElement).value
+        //val level   = (document.getElementById("Level")   as HTMLInputElement).value
+
+
+        var text = "["
+        text += JSON.stringify(player.traits) + ","
+        text += JSON.stringify(player.resources) + ","
+        text += JSON.stringify(player.baseStats) + ","
+        //TODO: save skills
+        //text += JSON.stringify(player.skills) + ","
+        text += JSON.stringify(player.weapon) + ","
+        text += JSON.stringify(player.armor) + ","
+        text += JSON.stringify(player.accessory)
+        text += "]"
+
+        var poop = JSON.parse<Any>(text)
+
+        text += "\n\n\n" + poop
+        //var save = document.createElement("a")
+        //save.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(player));
 
         // create hyperlink and set it's href and text "defined above"
         js("""
@@ -18,7 +39,7 @@ object FileHandler {
         """)
         // set save as a download and prevent display
         js("""
-            save.setAttribute('download', filename);
+            save.setAttribute('download', file);
             save.style.display = 'none';
         """)
         // add save, click it, and remove it
@@ -30,6 +51,8 @@ object FileHandler {
 
         //s.writeline(document.passForm.input3.value);
     }
+
+    fun load(/*file: String*/) {}
 
 
 }
