@@ -19,14 +19,14 @@ fun setupButtons(player: Player) {
 
 fun initSlotButtons() {
     // initialize add buttons to insert a row
-    (document.getElementById("spell-add")   as HTMLButtonElement).onclick = { insertSpellSlot() }
-    (document.getElementById("special-add") as HTMLButtonElement).onclick = { insertSpecialSlot() }
-    (document.getElementById("class-add")   as HTMLButtonElement).onclick = { insertClassSlot() }
+    (document.getElementById("spells-div__button-add")   as HTMLButtonElement).onclick = { insertSpellSlot() }
+    (document.getElementById("special-div__button-add") as HTMLButtonElement).onclick = { insertSpecialSlot() }
+    (document.getElementById("class-abilities-div__button-add")   as HTMLButtonElement).onclick = { insertClassSlot() }
 
     // initialize delete buttons to remove a row
-    (document.getElementById("spell-del")   as HTMLButtonElement).onclick = { deleteSpellSlot() }
-    (document.getElementById("special-del") as HTMLButtonElement).onclick = { deleteSpecialSlot() }
-    (document.getElementById("class-del")   as HTMLButtonElement).onclick = { deleteClassSlot() }
+    (document.getElementById("spells-div__button-del")   as HTMLButtonElement).onclick = { deleteSpellSlot() }
+    (document.getElementById("special-div__button-del") as HTMLButtonElement).onclick = { deleteSpecialSlot() }
+    (document.getElementById("class-abilities-div__button-del")   as HTMLButtonElement).onclick = { deleteClassSlot() }
 }
 
 fun initSlots(spellSlots: Int, specialSlots: Int, classSlots: Int) {
@@ -41,15 +41,15 @@ fun initSlots(spellSlots: Int, specialSlots: Int, classSlots: Int) {
 
 
 fun insertSpellSlot(): Boolean {
-    val table = document.getElementById("abilities-spell") as HTMLTableElement
+    val table = document.getElementById("spells-div__table") as HTMLTableElement
     return insertAbilitySlot(table)
 }
 fun insertSpecialSlot(): Boolean {
-    val table = document.getElementById("abilities-special") as HTMLTableElement
+    val table = document.getElementById("special-div__table") as HTMLTableElement
     return insertAbilitySlot(table)
 }
 fun insertClassSlot(): Boolean {
-    val table = document.getElementById("abilities-class") as HTMLTableElement
+    val table = document.getElementById("class-abilities-div__table") as HTMLTableElement
     return insertAbilitySlot(table)
 }
 fun insertAbilitySlot(table: HTMLTableElement, image: String = "Hold Primary Logo 240px.png"): Boolean {
@@ -77,17 +77,17 @@ fun insertAbilitySlot(table: HTMLTableElement, image: String = "Hold Primary Log
 
 
 fun deleteSpellSlot(): Boolean {
-    val table = document.getElementById("abilities-spell") as HTMLTableElement
+    val table = document.getElementById("spells-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
     return false
 }
 fun deleteSpecialSlot(): Boolean {
-    val table = document.getElementById("abilities-special") as HTMLTableElement
+    val table = document.getElementById("special-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
     return false
 }
 fun deleteClassSlot(): Boolean {
-    val table = document.getElementById("abilities-class") as HTMLTableElement
+    val table = document.getElementById("class-abilities-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
     return false
 }
