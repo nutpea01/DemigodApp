@@ -9,6 +9,7 @@ var DemigodApp = function (_, Kotlin) {
   var equals = Kotlin.equals;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var throwCCE = Kotlin.throwCCE;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
   var Unit = Kotlin.kotlin.Unit;
   var addClass = Kotlin.kotlin.dom.addClass_hhb33f$;
@@ -210,7 +211,11 @@ var DemigodApp = function (_, Kotlin) {
   };
   function FileHandler() {
     FileHandler_instance = this;
+    this.filename = '';
   }
+  FileHandler.prototype.setFilename_61zpoe$ = function (filename) {
+    this.filename = filename;
+  };
   FileHandler.prototype.save_jj7jqn$ = function (filename, player) {
     var file = filename + '.demigod';
     var text = '[';
@@ -221,7 +226,6 @@ var DemigodApp = function (_, Kotlin) {
     text += JSON.stringify(player.armor) + ',';
     text += JSON.stringify(player.accessory);
     text += ']';
-    var test = JSON.parse(text);
     var save = document.createElement('a');
     save.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
     save.setAttribute('download', file);
@@ -231,6 +235,15 @@ var DemigodApp = function (_, Kotlin) {
     document.body.removeChild(save);
   };
   FileHandler.prototype.load = function () {
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4;
+    var iframe = Kotlin.isType(tmp$ = document.createElement('iframe'), HTMLIFrameElement) ? tmp$ : throwCCE();
+    iframe.id = 'iframe';
+    iframe.style.display = 'none';
+    (tmp$_0 = document.body) != null ? tmp$_0.appendChild(iframe) : null;
+    iframe.src = this.filename;
+    var text = (tmp$_4 = (tmp$_3 = (tmp$_2 = (Kotlin.isType(tmp$_1 = document.getElementById('iframe'), HTMLIFrameElement) ? tmp$_1 : throwCCE()).contentDocument) != null ? tmp$_2.body : null) != null ? tmp$_3.firstChild : null) != null ? tmp$_4.nodeValue : null;
+    println(text);
+    var load = JSON.parse(text);
   };
   FileHandler.$metadata$ = {
     kind: Kind_OBJECT,
@@ -244,33 +257,17 @@ var DemigodApp = function (_, Kotlin) {
     }
     return FileHandler_instance;
   }
-  function displayStats(player) {
-    var tmp$, tmp$_0, tmp$_1;
-    (tmp$ = document.getElementById('b1')) != null ? (tmp$.innerHTML = player.baseStats.getSTR().toString()) : null;
-    (tmp$_0 = document.getElementById('b2')) != null ? (tmp$_0.innerHTML = player.baseStats.getCON().toString()) : null;
-    (tmp$_1 = document.getElementById('b3')) != null ? (tmp$_1.innerHTML = player.baseStats.getINT().toString()) : null;
-  }
   function setupButtons$lambda(closure$player, closure$hpInput) {
     return function (it) {
-      closure$player.resources.healHP_za3lpa$(toInt(closure$hpInput.value));
-      displayStats(closure$player);
-      return Unit;
-    };
-  }
-  function setupButtons$lambda_0(closure$player, closure$hpInput) {
-    return function (it) {
       closure$player.resources.takeDamage_vux9f0$(toInt(closure$hpInput.value));
-      displayStats(closure$player);
       return Unit;
     };
   }
   function setupButtons(player) {
-    var tmp$, tmp$_0, tmp$_1;
+    var tmp$, tmp$_0;
     var hpInput = Kotlin.isType(tmp$ = document.getElementById('hpInput'), HTMLInputElement) ? tmp$ : throwCCE();
-    var hpHeal = Kotlin.isType(tmp$_0 = document.getElementById('hpHeal'), HTMLButtonElement) ? tmp$_0 : throwCCE();
-    hpHeal.addEventListener('click', setupButtons$lambda(player, hpInput));
-    var hpDamage = Kotlin.isType(tmp$_1 = document.getElementById('hpDamage'), HTMLButtonElement) ? tmp$_1 : throwCCE();
-    hpDamage.addEventListener('click', setupButtons$lambda_0(player, hpInput));
+    var hpDamage = Kotlin.isType(tmp$_0 = document.getElementById('hpDamage'), HTMLButtonElement) ? tmp$_0 : throwCCE();
+    hpDamage.addEventListener('click', setupButtons$lambda(player, hpInput));
   }
   function initNavigationBar$lambda(closure$player) {
     return function (it) {
@@ -326,33 +323,30 @@ var DemigodApp = function (_, Kotlin) {
     }
   }
   function insertSpellSlot() {
-    var tmp$;
-    var table = Kotlin.isType(tmp$ = document.getElementById('spells-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
-    return insertAbilitySlot(table);
+    return insertAbilitySlot('spells');
   }
   function insertSpecialSlot() {
-    var tmp$;
-    var table = Kotlin.isType(tmp$ = document.getElementById('special-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
-    return insertAbilitySlot(table);
+    return insertAbilitySlot('special');
   }
   function insertClassSlot() {
-    var tmp$;
-    var table = Kotlin.isType(tmp$ = document.getElementById('class-abilities-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
-    return insertAbilitySlot(table);
+    return insertAbilitySlot('class-abilities');
   }
-  function insertAbilitySlot(table, image) {
+  function insertAbilitySlot(type, image) {
     if (image === void 0)
       image = 'Hold Primary Logo 240px.png';
-    var tmp$, tmp$_0;
+    var tmp$, tmp$_0, tmp$_1;
+    var table = Kotlin.isType(tmp$ = document.getElementById(type + '-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
     var row = table.insertRow();
     var icon = row.insertCell(0);
-    var img = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
+    addClass(icon, [type + '-div__td-image']);
+    var img = Kotlin.isType(tmp$_0 = document.createElement('img'), HTMLImageElement) ? tmp$_0 : throwCCE();
+    addClass(img, [type + '-div__image']);
     img.src = image;
-    addClass(img, ['equipment-div__image']);
     icon.appendChild(img);
     var text = row.insertCell(1);
-    var textarea = Kotlin.isType(tmp$_0 = document.createElement('textarea'), HTMLTextAreaElement) ? tmp$_0 : throwCCE();
-    addClass(textarea, ['spells-div__textarea']);
+    addClass(text, [type + '-div__td-textarea']);
+    var textarea = Kotlin.isType(tmp$_1 = document.createElement('textarea'), HTMLTextAreaElement) ? tmp$_1 : throwCCE();
+    addClass(textarea, [type + '-div__textarea']);
     text.appendChild(textarea);
     return false;
   }
@@ -848,7 +842,6 @@ var DemigodApp = function (_, Kotlin) {
   Object.defineProperty(_, 'FileHandler', {
     get: FileHandler_getInstance
   });
-  _.displayStats_vgc0e7$ = displayStats;
   _.setupButtons_vgc0e7$ = setupButtons;
   _.initNavigationBar_vgc0e7$ = initNavigationBar;
   _.initSlotButtons = initSlotButtons;
@@ -856,7 +849,7 @@ var DemigodApp = function (_, Kotlin) {
   _.insertSpellSlot = insertSpellSlot;
   _.insertSpecialSlot = insertSpecialSlot;
   _.insertClassSlot = insertClassSlot;
-  _.insertAbilitySlot_c2mlqw$ = insertAbilitySlot;
+  _.insertAbilitySlot_puj7f4$ = insertAbilitySlot;
   _.deleteSpellSlot = deleteSpellSlot;
   _.deleteSpecialSlot = deleteSpecialSlot;
   _.deleteClassSlot = deleteClassSlot;
