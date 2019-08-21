@@ -20,7 +20,7 @@
 		<ul class="main-navbar__items">
 			<li class="main-navbar__item"><a href="somewhere">Home</a></li>
 			<li class="main-navbar__item"><a href="somewhere">GmMode</a></li>
-			<li class="main-navbar__item"><a href="somewhere">Rulebook</a></li>
+			<li class="main-navbar__item"><a href="https://docs.google.com/document/d/1qcet53StCBloHWrz750lgj7oHBdoH_moRFhWfyuLM1M/edit?usp=sharing">Rulebook</a></li>
 			<li class="main-navbar__item"><a href="somewhere">Lore</a></li>
 		</ul>
 	</nav>
@@ -71,37 +71,37 @@
 		<h4 class="resource-stats__title">Stats</h4>
 			<form class="resource-stats__form">
 				<table class="resource-stats__table">
-					<tr>
+					<tr class="resource-stats__effect-row">
 						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td>effect</td>
-						<td>calculator</td>
+						<td class="resource-stats__modifiers class="base-stat-table__td-titles"">effect</td>
+						<td class="resource-stats__modifiers class="base-stat-table__td-titles"">calculator</td>
 					</tr>
 
 					<tr>
-						<td>HP :</td>
+						<td class="resource-stats__td-titles">HP:</td>
 						<td><input type="number" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
-						<td>/</td>
+						<td class="resource-stats__slash">/</td>
 						<td><input type="number" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
 						<td><input type="number" name="lockedhp" placeholder="0" class="resource-stats__effect"></td>
 						<td><input type="number" name="lockedhp" placeholder="0" class="resource-stats__calculator"></td>
 					</tr>
 
 					<tr>
-						<td>MP :</td>
+						<td class="resource-stats__td-titles">MP:</td>
 						<td><input type="number" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
-						<td>/</td>
+						<td class="resource-stats__slash">/</td>
 						<td><input type="number" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
 						<td><input type="number" name="lockedhp" placeholder="0" class="resource-stats__effect"></td>
 						<td><input type="number" name="lockedhp" placeholder="0" class="resource-stats__calculator"></td>
 					</tr>
 
 					<tr>
-						<td>SP :</td>
+						<td class="resource-stats__td-titles">SP:</td>
 						<td><input type="number" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
-						<td>/</td>
+						<td class="resource-stats__slash">/</td>
 						<td><input type="number" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
 						<td><input type="number" name="lockedhp" placeholder="0" class="resource-stats__effect"></td>
 						<td><input type="number" name="lockedhp" placeholder="0" class="resource-stats__calculator"></td>
@@ -111,7 +111,7 @@
 	<!-- BASE STATS -->
 				<table class="base-stat-table">
 					<th>
-						<tr>
+						<tr class="base-stat-table__modifier-row">
 							<td></td>
 							<td></td>
 							<td>Modifier</td>
@@ -121,46 +121,46 @@
 						</tr>
 					</th>
 					<tr>
-						<td>STR  :</td>
+						<td class="base-stat-table__td-titles">STR  :</td>
 						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
 						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
-						<td>AT  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
-					</tr>
-
-					<tr>
-						<td>CON  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
-						<td>DF  :</td>
+						<td class="base-stat-table__td-titles">AT  :</td>
 						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
 						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 					</tr>
 
 					<tr>
-						<td>INT  :</td>
+						<td class="base-stat-table__td-titles">CON  :</td>
 						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
 						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
-						<td>MA  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
-					</tr>
-
-					<tr>
-						<td>WILL  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
-						<td>MD  :</td>
+						<td class="base-stat-table__td-titles">DF  :</td>
 						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
 						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 					</tr>
 
 					<tr>
-						<td>SPD  :</td>
+						<td class="base-stat-table__td-titles">INT  :</td>
 						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
 						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
-						<td>AC  :</td>
+						<td class="base-stat-table__td-titles">MA  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+					</tr>
+
+					<tr>
+						<td class="base-stat-table__td-titles">WILL  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+						<td class="base-stat-table__td-titles">MD  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+					</tr>
+
+					<tr>
+						<td class="base-stat-table__td-titles">SPD  :</td>
+						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+						<td class="base-stat-table__td-titles">AC  :</td>
 						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
 						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 					</tr>
@@ -169,197 +169,223 @@
 				<button>GO</button>
 			</form>
 	</div>
+
+	<div class="equipment-div">
+		<h4>Equipment</h4>
+
+		<form>
+			<table>
+				<tr>
+					<td><img class="equipment-div__image" src="Hold Primary Logo 240px.png"></td>
+					<td class="equipment-div__td-textarea"><textarea class="equipment-div__textarea"></textarea></td>
+				</tr>
+				<tr>
+					<td><img class="equipment-div__image" src="Hold Primary Logo 240px.png"></td>
+					<td class="equipment-div__td-textarea"><textarea class="equipment-div__textarea"></textarea></td>
+
+				</tr>
+				<tr>
+					<td><img class="equipment-div__image" src="Hold Primary Logo 240px.png"></td>
+					<td class="equipment-div__td-textarea"><textarea class="equipment-div__textarea"></textarea></td>
+
+				</tr>
+			</table>
+			<button>+</button>
+			<button>-</button>
+		</form>
+	</div>
+
 <!-- SKILL TREE -->
 		<h4>Skill Tree</h4>
 			<table class="skill-tree">
 				<tr>
-					<td>Common Sense</td>
-					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Spell-Craft</td>
-					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Common Sense</td>
+					<td class="skill-tree__td-number"><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Spell-Craft</td>
+					<td class="skill-tree__td-number"><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Cartography</td>
+					<td class="skill-tree__label">Cartography</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Ancient World</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Ancient World</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Study/Reading</td>
+					<td class="skill-tree__label">Study/Reading</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Magic Knowledge</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Magic Knowledge</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Herbology</td>
+					<td class="skill-tree__label">Herbology</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Advanced Medicine</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Advanced Medicine</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Detective</td>
+					<td class="skill-tree__label">Detective</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Awareness</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Awareness</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Disguise</td>
+					<td class="skill-tree__label">Disguise</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Puzzle</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Puzzle</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Sense Motive</td>
+					<td class="skill-tree__label">Sense Motive</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Escape Artist</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Escape Artist</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Stealth/Sneak</td>
+					<td class="skill-tree__label">Stealth/Sneak</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Trickery/Stealing</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Trickery/Stealing</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Lock Picking</td>
+					<td class="skill-tree__label">Lock Picking</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Free Running</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Free Running</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Tracking/Hunting</td>
+					<td class="skill-tree__label">Tracking/Hunting</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Basic Survival</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Basic Survival</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Advanced Riding</td>
+					<td class="skill-tree__label">Advanced Riding</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Cooking</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Cooking</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Beast Taming</td>
+					<td class="skill-tree__label">Beast Taming</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Pain Tolerance</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Pain Tolerance</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>First Aid</td>
+					<td class="skill-tree__label">First Aid</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Inspiration</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Inspiration</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Seduction</td>
+					<td class="skill-tree__label">Seduction</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Charm</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Charm</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Speech</td>
+					<td class="skill-tree__label">Speech</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Persuasion</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Persuasion</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Intimidate</td>
+					<td class="skill-tree__label">Intimidate</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Guile</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Guile</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Composure/Calm</td>
+					<td class="skill-tree__label">Composure/Calm</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>War Tactics</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">War Tactics</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Group Management</td>
+					<td class="skill-tree__label">Group Management</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Hand to Hand Combat</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Hand to Hand Combat</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Weapons Play</td>
+					<td class="skill-tree__label">Weapons Play</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Specialty Weapon</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Specialty Weapon</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
 				<tr>
-					<td>Swimming</td>
+					<td class="skill-tree__label">Swimming</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-					<td>Climbing</td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__label">Climbing</td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 				</tr>
 
-				<tr>
+<!-- 				<tr>
 					<td><input type="text" name="extra-skill" placeholder="extra skill" class="extra-skill"></td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
 					<td><input type="text" name="extra-skill" placeholder="extra skill" class="extra-skill"></td>
 					<td><input type="number" name="skill-number" placeholder="0" class="skill-tree__number"></td>
-					<td><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
-				</tr>
+					<td class="skill-tree__td-checkbox"><input type="checkbox" name="roll-check" class="skill-tree__checkbox"></td>
+				</tr> -->
 
 			</table>
 	
@@ -368,48 +394,24 @@
 <!-- RIGHT CONTAINTER - FLUID -->
 <div class="right-container">
 
-		<div class="equipment-div">
-		<h4>Equipment</h4>
-
-		<form>
-			<table>
-				<tr>
-					<td><img class="equipment-div__image" src="Hold Primary Logo 240px.png"></td>
-					<td><textarea class="equipment-div__textarea"></textarea></td>
-				</tr>
-				<tr>
-					<td><img class="equipment-div__image" src="Hold Primary Logo 240px.png"></td>
-					<td><textarea class="equipment-div__textarea"></textarea></td>
-
-				</tr>
-				<tr>
-					<td><img class="equipment-div__image" src="Hold Primary Logo 240px.png"></td>
-					<td><textarea class="equipment-div__textarea"></textarea></td>
-
-				</tr>
-			</table>
-			<button>+</button>
-			<button>-</button>
-		</form>
-	</div>
 	
 	<div class="spells-div">
 		<h4>Spells</h4>
 
 		<form>
-			<table>
+			<table class="spells-div__table">
 				<tr>
-					<td><img class="spells-div__image" src="Hold Primary Logo 240px.png"></td>
-					<td><textarea class="spells-div__textarea"></textarea></td>
+					<td class="spells-div__td-image"><img class="spells-div__image" src="Hold Primary Logo 240px.png"></td>
+					<td class="spells-div__td-textarea"><textarea class="spells-div__textarea"></textarea></td>
 				</tr>
 				<tr>
-					<td><img class="spells-div__image" src="Hold Primary Logo 240px.png"></td>
-					<td><textarea class="spells-div__textarea"></textarea></td>
-
+					<td class="spells-div__td-image"><img class="spells-div__image" src="Hold Primary Logo 240px.png"></td>
+					<td class="spells-div__td-textarea"><textarea class="spells-div__textarea"></textarea></td>
+ 
 				</tr>
 				<tr>
-					<td><img class="spells-div__image" src="Hold Primary Logo 240px.png"></td>
-					<td><textarea class="spells-div__textarea"></textarea></td>
+					<td class="spells-div__td-image"><img class="spells-div__image" src="Hold Primary Logo 240px.png"></td>
+					<td class="spells-div__td-textarea"><textarea class="spells-div__textarea"></textarea></td>
 
 				</tr>
 			</table>
@@ -422,19 +424,19 @@
 		<h4>Specials</h4>
 
 		<form>
-			<table>
+			<table class="special-div__table">
 				<tr>
-					<td><img class="special-div__image" src="Hold Primary Logo 240px.png"></td>
-					<td><textarea class="special-div__textarea"></textarea></td>
+					<td class="special-div__td-image"><img class="special-div__image" src="Hold Primary Logo 240px.png"></td>
+					<td class="special-div__td-textarea"><textarea class="special-div__textarea"></textarea></td>
 				</tr>
 				<tr>
-					<td><img class="special-div__image" src="Hold Primary Logo 240px.png"></td>
-					<td><textarea class="special-div__textarea"></textarea></td>
+					<td class="special-div__td-image"><img class="special-div__image" src="Hold Primary Logo 240px.png"></td>
+					<td class="special-div__td-textarea"><textarea class="special-div__textarea"></textarea></td>
 
 				</tr>
 				<tr>
-					<td><img class="special-div__image" src="Hold Primary Logo 240px.png"></td>
-					<td><textarea class="special-div__textarea"></textarea></td>
+					<td class="special-div__td-image"><img class="special-div__image" src="Hold Primary Logo 240px.png"></td>
+					<td class="special-div__td-textarea"><textarea class="special-div__textarea"></textarea></td>
 
 				</tr>
 			</table>
@@ -447,19 +449,19 @@
 		<h4>Class Abilities</h4>
 
 		<form>
-			<table>
+			<table class="class-abilities-div__table">
 				<tr>
-					<td><img class="class-abilities-div__image" src="Hold Primary Logo 240px.png"></td>
-					<td><textarea class="class-abilities-div__textarea"></textarea></td>
+					<td class="class-abilities-div__td-image"><img class="class-abilities-div__image" src="Hold Primary Logo 240px.png"></td>
+					<td class="class-abilities-div__td-textarea"><textarea class="class-abilities-div__textarea"></textarea></td>
 				</tr>
 				<tr>
-					<td><img class="class-abilities-div__image" src="Hold Primary Logo 240px.png"></td>
-					<td><textarea class="class-abilities-div__textarea"></textarea></td>
+					<td class="class-abilities-div__td-image"><img class="class-abilities-div__image" src="Hold Primary Logo 240px.png"></td>
+					<td class="class-abilities-div__td-textarea"><textarea class="class-abilities-div__textarea"></textarea></td>
 
 				</tr>
 				<tr>
-					<td><img class="class-abilities-div__image" src="Hold Primary Logo 240px.png"></td>
-					<td><textarea class="class-abilities-div__textarea"></textarea></td>
+					<td class="class-abilities-div__td-image"><img class="class-abilities-div__image" src="Hold Primary Logo 240px.png"></td>
+					<td class="class-abilities-div__td-textarea"><textarea class="class-abilities-div__textarea"></textarea></td>
 
 				</tr>
 			</table>
@@ -474,40 +476,44 @@
 
 			<table class="inventory-div__total-slot-table">
 				<tr>
-					<td> <label for="slot-number" name="Total Slots">Total Slots</label></td>
-					<td><input type="text" id="slot-number" name="slot-number" class="inventory-div__item"></td>
-					<td><label for="bag-type" name="bag-type__label" class="inventory-div__item">Bag Type</label></td>
-					<td><input type="text" name="" placeholder="ex. backpack: +4 Slots"></td>
+					<td class="inventory-div__total-slot-table__td-label"> <label for="slot-number" name="Total Slots">Total Slots</label></td>
+					<td class="inventory-div__total-slot-table__td-textarea"><textarea></textarea></td>
+					<td class="inventory-div__total-slot-table__td-label"><label for="bag-type" name="bag-type__label">Bag Type</label></td>
+					<td class="inventory-div__total-slot-table__td-textarea"><textarea></textarea></td>
 				</tr>
 			</table>
 
 			<table class="inventory-div__slot-table">
 				<tr>
-					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
-					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
-					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
+					<td><textarea class="inventory-div__slot"></textarea></td>
+					<td><textarea class="inventory-div__slot"></textarea></td>
+					<td><textarea class="inventory-div__slot"></textarea></td>
 				</tr>
 				<tr>
-					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
-					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
-					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
+					<td><textarea class="inventory-div__slot"></textarea></td>
+					<td><textarea class="inventory-div__slot"></textarea></td>
+					<td><textarea class="inventory-div__slot"></textarea></td>
 				</tr>
 				<tr>
-					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
-					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
-					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
+					<td><textarea class="inventory-div__slot"></textarea></td>
+					<td><textarea class="inventory-div__slot"></textarea></td>
+					<td><textarea class="inventory-div__slot"></textarea></td>
 				</tr>
 				<tr>
-					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
-					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
-					<td><input type="text" name="iventory-slot" class="inventory-div__slot"></td>
+					<td><textarea class="inventory-div__slot"></textarea></td>
+					<td><textarea class="inventory-div__slot"></textarea></td>
+					<td><textarea class="inventory-div__slot"></textarea></td>
 				</tr>
 			</table>
 			<button>+</button>
 			<button>-</button>
 		</form>
+	</div>
 
-		
+	<div class="notes-div">
+		<h4>Notes</h4>
+
+		<textarea class="notes-div__textarea"></textarea>
 	</div>
 </div>
 </body>
