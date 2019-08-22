@@ -4,6 +4,9 @@
 
 body {
 	font-family: 'Crimson Text' , serif;
+	background: url("Demi God Page Logo.png");
+	background-repeat: no-repeat;
+	background-size: auto;
 }
 
 table {
@@ -19,7 +22,8 @@ textarea, input {
 	text-align: center;
 }
 
-input[type=text], textarea{
+input[type=text], input[type=number], textarea{
+	background-color: transparent;
 	text-align: left;
 }
 
@@ -127,7 +131,6 @@ h4 {
 }
 
 .left-side{
-	background-color: 241, 238, 238;
 	width: calc(50% - 25px);
 	height: 850px;
 	overflow-y: scroll;
@@ -136,7 +139,7 @@ h4 {
 
 .left-side::-webkit-scrollbar-track
 {
-    background-color: #F5F5F5;
+    background-color: rgb(191, 185, 184);
 }
 
 .left-side::-webkit-scrollbar
@@ -224,6 +227,10 @@ h4 {
 	width: 60px;
 }
 
+.equipment-div__td-image{
+	background-color: #564e4e;
+}
+
 .equipment-div__image{
 	width: 50px;
 }
@@ -287,7 +294,7 @@ h4 {
 
 .right-container::-webkit-scrollbar-track
 {
-    background-color: #F5F5F5;
+    background-color: rgb(191, 185, 184);
 }
 
 .right-container::-webkit-scrollbar
@@ -302,8 +309,12 @@ h4 {
     border: 2px solid #555555;
 }
 
+.spells-div__td-image{
+	background-color: #564e4e;
+}
+
 .spells-div__image {
-	width: 75px;
+	width: 80px;
 }
 
 .spells-div__td-textarea {
@@ -312,11 +323,15 @@ h4 {
 
 .spells-div__textarea {
 	width: 100%;
+}
+
+.special-div__td-image{
+	background-color: #564e4e;
 	height: 75px;
 }
 
 .special-div__image {
-	width: 75px
+	width: 80px;
 }
 
 .special-div__td-textarea {
@@ -325,11 +340,15 @@ h4 {
 
 .special-div__textarea {
 	width:  100%;
-	height: 75px;
+	height: 80px;
+}
+
+.class-abilities-div__td-image{
+	background-color: #564e4e;
 }
 
 .class-abilities-div__image {
-	width: 75px;
+	width: 80px;
 }
 
 .class-abilities-div__td-textarea{
