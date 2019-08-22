@@ -133,4 +133,6 @@ data class Traits (
 )
 
 //TODO: class
-class Class {val TEMP = 0}
+data class Class (
+        var name: String = ""
+) {}

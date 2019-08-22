@@ -10,8 +10,8 @@ var DemigodApp = function (_, Kotlin) {
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var throwCCE = Kotlin.throwCCE;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
-  var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
   var Unit = Kotlin.kotlin.Unit;
+  var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
   var addClass = Kotlin.kotlin.dom.addClass_hhb33f$;
   Wearable.prototype = Object.create(Equipment.prototype);
   Wearable.prototype.constructor = Wearable;
@@ -257,17 +257,59 @@ var DemigodApp = function (_, Kotlin) {
     }
     return FileHandler_instance;
   }
-  function setupButtons$lambda(closure$player, closure$hpInput) {
+  function initTraitListeners$lambda(closure$name, closure$player) {
     return function (it) {
-      closure$player.resources.takeDamage_vux9f0$(toInt(closure$hpInput.value));
+      closure$player.traits.name = closure$name.value;
       return Unit;
     };
   }
-  function setupButtons(player) {
-    var tmp$, tmp$_0;
-    var hpInput = Kotlin.isType(tmp$ = document.getElementById('hpInput'), HTMLInputElement) ? tmp$ : throwCCE();
-    var hpDamage = Kotlin.isType(tmp$_0 = document.getElementById('hpDamage'), HTMLButtonElement) ? tmp$_0 : throwCCE();
-    hpDamage.addEventListener('click', setupButtons$lambda(player, hpInput));
+  function initTraitListeners$lambda_0(closure$age, closure$player) {
+    return function (it) {
+      closure$player.traits.age = toInt(closure$age.value);
+      return Unit;
+    };
+  }
+  function initTraitListeners$lambda_1(closure$species, closure$player) {
+    return function (it) {
+      closure$player.traits.species = closure$species.value;
+      return Unit;
+    };
+  }
+  function initTraitListeners$lambda_2(closure$_class, closure$player) {
+    return function (it) {
+      closure$player.traits._class.name = closure$_class.value;
+      return Unit;
+    };
+  }
+  function initTraitListeners$lambda_3(closure$level, closure$player) {
+    return function (it) {
+      closure$player.traits.level = toInt(closure$level.value);
+      return Unit;
+    };
+  }
+  function initTraitListeners(player) {
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
+    var name = Kotlin.isType(tmp$ = document.getElementById('Name'), HTMLInputElement) ? tmp$ : throwCCE();
+    name.addEventListener('change', initTraitListeners$lambda(name, player));
+    var age = Kotlin.isType(tmp$_0 = document.getElementById('Age'), HTMLInputElement) ? tmp$_0 : throwCCE();
+    age.addEventListener('change', initTraitListeners$lambda_0(age, player));
+    var species = Kotlin.isType(tmp$_1 = document.getElementById('Species'), HTMLInputElement) ? tmp$_1 : throwCCE();
+    species.addEventListener('change', initTraitListeners$lambda_1(species, player));
+    var _class = Kotlin.isType(tmp$_2 = document.getElementById('Class'), HTMLInputElement) ? tmp$_2 : throwCCE();
+    _class.addEventListener('change', initTraitListeners$lambda_2(_class, player));
+    var level = Kotlin.isType(tmp$_3 = document.getElementById('Level'), HTMLInputElement) ? tmp$_3 : throwCCE();
+    level.addEventListener('change', initTraitListeners$lambda_3(level, player));
+  }
+  function initStatListener$lambda(closure$level, closure$player) {
+    return function (it) {
+      closure$player.traits.level = toInt(closure$level.value);
+      return Unit;
+    };
+  }
+  function initStatListener(player) {
+    var tmp$;
+    var level = Kotlin.isType(tmp$ = document.getElementById('Level'), HTMLInputElement) ? tmp$ : throwCCE();
+    level.addEventListener('change', initStatListener$lambda(level, player));
   }
   function initNavigationBar$lambda(closure$player) {
     return function (it) {
@@ -370,17 +412,7 @@ var DemigodApp = function (_, Kotlin) {
   }
   function main() {
     var player = new Player();
-    player.baseStats.setSTR_za3lpa$(35);
-    player.baseStats.setCON_za3lpa$(50);
-    player.baseStats.setINT_za3lpa$(10);
-    player.baseStats.setWIL_za3lpa$(50);
-    player.baseStats.setACC_za3lpa$(20);
-    player.resources.setMaxHP_za3lpa$(400);
-    player.resources.setMaxMP_za3lpa$(250);
-    player.resources.setMaxSP_za3lpa$(200);
-    player.resources.setCurrentHP_za3lpa$(400);
-    player.resources.setCurrentMP_za3lpa$(250);
-    player.resources.setCurrentSP_za3lpa$(200);
+    initTraitListeners(player);
     initSlots(3, 3, 3);
     initSlotButtons();
     initNavigationBar(player);
@@ -721,13 +753,32 @@ var DemigodApp = function (_, Kotlin) {
   Traits.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.name, other.name) && Kotlin.equals(this.age, other.age) && Kotlin.equals(this.species, other.species) && Kotlin.equals(this._class, other._class) && Kotlin.equals(this.level, other.level) && Kotlin.equals(this.icon, other.icon)))));
   };
-  function Class() {
-    this.TEMP = 0;
+  function Class(name) {
+    if (name === void 0)
+      name = '';
+    this.name = name;
   }
   Class.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Class',
     interfaces: []
+  };
+  Class.prototype.component1 = function () {
+    return this.name;
+  };
+  Class.prototype.copy_61zpoe$ = function (name) {
+    return new Class(name === void 0 ? this.name : name);
+  };
+  Class.prototype.toString = function () {
+    return 'Class(name=' + Kotlin.toString(this.name) + ')';
+  };
+  Class.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.name) | 0;
+    return result;
+  };
+  Class.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && Kotlin.equals(this.name, other.name))));
   };
   function Value(base) {
     if (base === void 0)
@@ -842,7 +893,8 @@ var DemigodApp = function (_, Kotlin) {
   Object.defineProperty(_, 'FileHandler', {
     get: FileHandler_getInstance
   });
-  _.setupButtons_vgc0e7$ = setupButtons;
+  _.initTraitListeners_vgc0e7$ = initTraitListeners;
+  _.initStatListener_vgc0e7$ = initStatListener;
   _.initNavigationBar_vgc0e7$ = initNavigationBar;
   _.initSlotButtons = initSlotButtons;
   _.initSlots_qt1dr2$ = initSlots;

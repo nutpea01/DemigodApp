@@ -4,26 +4,15 @@
 fun main() {
     //simple testing player
     val player = Player()
-    player.baseStats.setSTR(35)
-    player.baseStats.setCON(50)
-    player.baseStats.setINT(10)
-    player.baseStats.setWIL(50)
-    player.baseStats.setACC(20)
 
-    player.resources.setMaxHP(400)
-    player.resources.setMaxMP(250)
-    player.resources.setMaxSP(200)
-    player.resources.setCurrentHP(400)
-    player.resources.setCurrentMP(250)
-    player.resources.setCurrentSP(200)
-
+    initTraitListeners(player)
     initSlots(3, 3, 3)
     initSlotButtons()
     initNavigationBar(player)
 }
 
 fun generateID(): String {
-    //TODO: maybe randomize 4? can only be between 1-5
+    //TODO: maybe randomize 4? can only be between 1-4
     val uuid = ""
     js("""
     var dt = new Date().getTime();

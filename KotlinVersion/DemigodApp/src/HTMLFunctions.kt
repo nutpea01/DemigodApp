@@ -2,16 +2,38 @@ import org.w3c.dom.*
 import kotlin.browser.document
 import kotlin.dom.addClass
 
+fun initTraitListeners(player: Player) {
+    val name = (document.getElementById("Name") as HTMLInputElement)
+    name.addEventListener("change", {
+        player.traits.name = name.value
+    } )
 
-//TODO: testing, kept as reference
-fun setupButtons(player: Player) {
-    val hpInput = document.getElementById("hpInput") as HTMLInputElement
-    val hpDamage = document.getElementById("hpDamage") as HTMLButtonElement
-    hpDamage.addEventListener("click", { player.resources.takeDamage(hpInput.value.toInt()); })
+    val age = (document.getElementById("Age") as HTMLInputElement)
+    age.addEventListener("change", {
+        player.traits.age = age.value.toInt()
+    } )
+
+    val species = (document.getElementById("Species") as HTMLInputElement)
+    species.addEventListener("change", {
+        player.traits.species = species.value
+    } )
+
+    val _class = (document.getElementById("Class") as HTMLInputElement)
+    _class.addEventListener("change", {
+        player.traits._class.name = _class.value
+    } )
+
+    val level = (document.getElementById("Level") as HTMLInputElement)
+    level.addEventListener("change", {
+        player.traits.level = level.value.toInt()
+    } )
 }
-
-
-
+fun initStatListener(player: Player) {
+    val level = (document.getElementById("Level") as HTMLInputElement)
+    level.addEventListener("change", {
+        player.traits.level = level.value.toInt()
+    } )
+}
 fun initNavigationBar(player: Player) {
     (document.getElementById("main-navbar__icon__save-button") as HTMLButtonElement).onclick = { FileHandler.save("test", player) }
     (document.getElementById("main-navbar__icon__load-button") as HTMLButtonElement).onclick = { FileHandler.load() }
@@ -31,7 +53,6 @@ fun initSlots(spellSlots: Int, specialSlots: Int, classSlots: Int) {
     repeat(spellSlots) { insertSpellSlot() }
     repeat(specialSlots) { insertSpecialSlot() }
     repeat(classSlots) { insertClassSlot() }
-
 }
 
 
