@@ -8,10 +8,11 @@ var DemigodApp = function (_, Kotlin) {
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var equals = Kotlin.equals;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
-  var trimIndent = Kotlin.kotlin.text.trimIndent_pdl1vz$;
   var throwCCE = Kotlin.throwCCE;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
   var Unit = Kotlin.kotlin.Unit;
+  var addClass = Kotlin.kotlin.dom.addClass_hhb33f$;
   Wearable.prototype = Object.create(Equipment.prototype);
   Wearable.prototype.constructor = Wearable;
   Upgrade.prototype = Object.create(Equipment.prototype);
@@ -100,37 +101,37 @@ var DemigodApp = function (_, Kotlin) {
     if (augmentSlots === void 0)
       augmentSlots = 0;
     Equipment.call(this);
-    this.augmentSlots_99daux$_0 = augmentSlots;
-    this.augments_prifc9$_0 = ArrayList_init();
-    this.glyphs_uiqyx0$_0 = ArrayList_init();
-    this.abilities_914tr3$_0 = ArrayList_init();
-    this.linkAugSlots_fxuqhb$_0();
+    this.augmentSlots_661rdt$_0 = augmentSlots;
+    this.augments_uf0hx9$_0 = ArrayList_init();
+    this.glyphs_4vz6xq$_0 = ArrayList_init();
+    this.abilities_p4dwg7$_0 = ArrayList_init();
+    this.linkAugSlots_vd9sq1$_0();
   }
   Wearable.prototype.getAugmentSlots = function () {
-    return this.augmentSlots_99daux$_0;
+    return this.augmentSlots_661rdt$_0;
   };
   Wearable.prototype.addAugmentSlot = function () {
-    this.augmentSlots_99daux$_0 = this.augmentSlots_99daux$_0 + 1 | 0;
-    this.linkAugSlots_fxuqhb$_0();
+    this.augmentSlots_661rdt$_0 = this.augmentSlots_661rdt$_0 + 1 | 0;
+    this.linkAugSlots_vd9sq1$_0();
   };
-  Wearable.prototype.equipAugment_ky8fxx$ = function (augment) {
+  Wearable.prototype.equipAugment_gn419t$ = function (augment) {
     var i = 0;
-    while (i < this.augments_prifc9$_0.size) {
-      if (equals(this.augments_prifc9$_0.get_za3lpa$(i), new Augment())) {
-        this.augments_prifc9$_0.set_wxm5ur$(i, augment);
+    while (i < this.augments_uf0hx9$_0.size) {
+      if (equals(this.augments_uf0hx9$_0.get_za3lpa$(i), new Augment())) {
+        this.augments_uf0hx9$_0.set_wxm5ur$(i, augment);
         return;
       }
       i = i + 1 | 0;
     }
   };
-  Wearable.prototype.linkAugSlots_fxuqhb$_0 = function () {
-    while (this.augments_prifc9$_0.size < this.augmentSlots_99daux$_0) {
-      this.augments_prifc9$_0.add_11rb$(new Augment());
+  Wearable.prototype.linkAugSlots_vd9sq1$_0 = function () {
+    while (this.augments_uf0hx9$_0.size < this.augmentSlots_661rdt$_0) {
+      this.augments_uf0hx9$_0.add_11rb$(new Augment());
     }
   };
   Wearable.prototype.getAugmentByID_61zpoe$ = function (ID) {
     var tmp$;
-    tmp$ = this.augments_prifc9$_0.iterator();
+    tmp$ = this.augments_uf0hx9$_0.iterator();
     while (tmp$.hasNext()) {
       var aug = tmp$.next();
       if (equals(aug.id, ID)) {
@@ -141,7 +142,7 @@ var DemigodApp = function (_, Kotlin) {
   };
   Wearable.prototype.geGlyphByID_61zpoe$ = function (ID) {
     var tmp$;
-    tmp$ = this.glyphs_uiqyx0$_0.iterator();
+    tmp$ = this.glyphs_4vz6xq$_0.iterator();
     while (tmp$.hasNext()) {
       var gly = tmp$.next();
       if (equals(gly.id, ID)) {
@@ -210,17 +211,39 @@ var DemigodApp = function (_, Kotlin) {
   };
   function FileHandler() {
     FileHandler_instance = this;
+    this.filename = '';
   }
-  FileHandler.prototype.saveJSON_clabk7$ = function (file, player) {
-    var filename = file + '.json';
-    var text = trimIndent('\n            tester\n        ');
+  FileHandler.prototype.setFilename_61zpoe$ = function (filename) {
+    this.filename = filename;
+  };
+  FileHandler.prototype.save_jj7jqn$ = function (filename, player) {
+    var file = filename + '.demigod';
+    var text = '[';
+    text += JSON.stringify(player.traits) + ',';
+    text += JSON.stringify(player.resources) + ',';
+    text += JSON.stringify(player.baseStats) + ',';
+    text += JSON.stringify(player.weapon) + ',';
+    text += JSON.stringify(player.armor) + ',';
+    text += JSON.stringify(player.accessory);
+    text += ']';
     var save = document.createElement('a');
     save.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-    save.setAttribute('download', filename);
+    save.setAttribute('download', file);
     save.style.display = 'none';
     document.body.appendChild(save);
     save.click();
     document.body.removeChild(save);
+  };
+  FileHandler.prototype.load = function () {
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4;
+    var iframe = Kotlin.isType(tmp$ = document.createElement('iframe'), HTMLIFrameElement) ? tmp$ : throwCCE();
+    iframe.id = 'iframe';
+    iframe.style.display = 'none';
+    (tmp$_0 = document.body) != null ? tmp$_0.appendChild(iframe) : null;
+    iframe.src = this.filename;
+    var text = (tmp$_4 = (tmp$_3 = (tmp$_2 = (Kotlin.isType(tmp$_1 = document.getElementById('iframe'), HTMLIFrameElement) ? tmp$_1 : throwCCE()).contentDocument) != null ? tmp$_2.body : null) != null ? tmp$_3.firstChild : null) != null ? tmp$_4.nodeValue : null;
+    println(text);
+    var load = JSON.parse(text);
   };
   FileHandler.$metadata$ = {
     kind: Kind_OBJECT,
@@ -234,101 +257,162 @@ var DemigodApp = function (_, Kotlin) {
     }
     return FileHandler_instance;
   }
+  function initTraitListeners$lambda(closure$player) {
+    return function (it) {
+      var tmp$;
+      var trait = Kotlin.isType(tmp$ = it.target, HTMLInputElement) ? tmp$ : throwCCE();
+      switch (trait.id) {
+        case 'Name':
+          closure$player.traits.name = trait.value;
+          break;
+        case 'Age':
+          closure$player.traits.age = toInt(trait.value);
+          break;
+        case 'Species':
+          closure$player.traits.species = trait.value;
+          break;
+        case 'Class':
+          closure$player.traits._class.name = trait.value;
+          break;
+        case 'Level':
+          closure$player.traits.level = toInt(trait.value);
+          break;
+        case 'Icon':
+          closure$player.traits.icon = toInt(trait.value);
+          break;
+      }
+      return Unit;
+    };
+  }
+  function initTraitListeners(player) {
+    document.addEventListener('change', initTraitListeners$lambda(player));
+  }
+  function initStatListener$lambda(closure$level, closure$player) {
+    return function (it) {
+      closure$player.traits.level = toInt(closure$level.value);
+      return Unit;
+    };
+  }
+  function initStatListener(player) {
+    var tmp$;
+    var level = Kotlin.isType(tmp$ = document.getElementById('Level'), HTMLInputElement) ? tmp$ : throwCCE();
+    level.addEventListener('change', initStatListener$lambda(level, player));
+  }
+  function initNavigationBar$lambda(closure$player) {
+    return function (it) {
+      FileHandler_getInstance().save_jj7jqn$('test', closure$player);
+      return Unit;
+    };
+  }
+  function initNavigationBar$lambda_0(it) {
+    FileHandler_getInstance().load();
+    return Unit;
+  }
+  function initNavigationBar(player) {
+    var tmp$, tmp$_0;
+    (Kotlin.isType(tmp$ = document.getElementById('main-navbar__icon__save-button'), HTMLButtonElement) ? tmp$ : throwCCE()).onclick = initNavigationBar$lambda(player);
+    (Kotlin.isType(tmp$_0 = document.getElementById('main-navbar__icon__load-button'), HTMLButtonElement) ? tmp$_0 : throwCCE()).onclick = initNavigationBar$lambda_0;
+  }
+  function initSlotButtons$lambda(it) {
+    return insertSpellSlot();
+  }
+  function initSlotButtons$lambda_0(it) {
+    return insertSpecialSlot();
+  }
+  function initSlotButtons$lambda_1(it) {
+    return insertClassSlot();
+  }
+  function initSlotButtons$lambda_2(it) {
+    return deleteSpellSlot();
+  }
+  function initSlotButtons$lambda_3(it) {
+    return deleteSpecialSlot();
+  }
+  function initSlotButtons$lambda_4(it) {
+    return deleteClassSlot();
+  }
+  function initSlotButtons() {
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4;
+    (Kotlin.isType(tmp$ = document.getElementById('spells-div__button-add'), HTMLButtonElement) ? tmp$ : throwCCE()).onclick = initSlotButtons$lambda;
+    (Kotlin.isType(tmp$_0 = document.getElementById('special-div__button-add'), HTMLButtonElement) ? tmp$_0 : throwCCE()).onclick = initSlotButtons$lambda_0;
+    (Kotlin.isType(tmp$_1 = document.getElementById('class-abilities-div__button-add'), HTMLButtonElement) ? tmp$_1 : throwCCE()).onclick = initSlotButtons$lambda_1;
+    (Kotlin.isType(tmp$_2 = document.getElementById('spells-div__button-del'), HTMLButtonElement) ? tmp$_2 : throwCCE()).onclick = initSlotButtons$lambda_2;
+    (Kotlin.isType(tmp$_3 = document.getElementById('special-div__button-del'), HTMLButtonElement) ? tmp$_3 : throwCCE()).onclick = initSlotButtons$lambda_3;
+    (Kotlin.isType(tmp$_4 = document.getElementById('class-abilities-div__button-del'), HTMLButtonElement) ? tmp$_4 : throwCCE()).onclick = initSlotButtons$lambda_4;
+  }
+  function initSlots(spellSlots, specialSlots, classSlots) {
+    for (var index = 0; index < spellSlots; index++) {
+      insertSpellSlot();
+    }
+    for (var index_0 = 0; index_0 < specialSlots; index_0++) {
+      insertSpecialSlot();
+    }
+    for (var index_1 = 0; index_1 < classSlots; index_1++) {
+      insertClassSlot();
+    }
+  }
+  function insertSpellSlot() {
+    return insertAbilitySlot('spells');
+  }
+  function insertSpecialSlot() {
+    return insertAbilitySlot('special');
+  }
+  function insertClassSlot() {
+    return insertAbilitySlot('class-abilities');
+  }
+  function insertAbilitySlot(type, image) {
+    if (image === void 0)
+      image = 'Hold Primary Logo 240px.png';
+    var tmp$, tmp$_0, tmp$_1;
+    var table = Kotlin.isType(tmp$ = document.getElementById(type + '-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
+    var row = table.insertRow();
+    var icon = row.insertCell(0);
+    addClass(icon, [type + '-div__td-image']);
+    var img = Kotlin.isType(tmp$_0 = document.createElement('img'), HTMLImageElement) ? tmp$_0 : throwCCE();
+    addClass(img, [type + '-div__image']);
+    img.src = image;
+    icon.appendChild(img);
+    var text = row.insertCell(1);
+    addClass(text, [type + '-div__td-textarea']);
+    var textarea = Kotlin.isType(tmp$_1 = document.createElement('textarea'), HTMLTextAreaElement) ? tmp$_1 : throwCCE();
+    addClass(textarea, [type + '-div__textarea']);
+    text.appendChild(textarea);
+    return false;
+  }
+  function deleteSpellSlot() {
+    var tmp$;
+    var table = Kotlin.isType(tmp$ = document.getElementById('spells-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
+    table.deleteRow(table.rows.length - 1 | 0);
+    return false;
+  }
+  function deleteSpecialSlot() {
+    var tmp$;
+    var table = Kotlin.isType(tmp$ = document.getElementById('special-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
+    table.deleteRow(table.rows.length - 1 | 0);
+    return false;
+  }
+  function deleteClassSlot() {
+    var tmp$;
+    var table = Kotlin.isType(tmp$ = document.getElementById('class-abilities-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
+    table.deleteRow(table.rows.length - 1 | 0);
+    return false;
+  }
   function main() {
     var player = new Player();
-    player.baseStats.setSTR_za3lpa$(35);
-    player.baseStats.setCON_za3lpa$(50);
-    player.baseStats.setINT_za3lpa$(10);
-    player.baseStats.setWIL_za3lpa$(50);
-    player.baseStats.setACC_za3lpa$(20);
-    player.resources.setMaxHP_za3lpa$(400);
-    player.resources.setMaxMP_za3lpa$(250);
-    player.resources.setMaxSP_za3lpa$(200);
-    player.resources.setCurrentHP_za3lpa$(400);
-    player.resources.setCurrentMP_za3lpa$(250);
-    player.resources.setCurrentSP_za3lpa$(200);
+    initTraitListeners(player);
+    initSlots(0, 0, 0);
+    initSlotButtons();
+    initNavigationBar(player);
   }
   function generateID() {
-    return '';
-  }
-  function displayStats(player) {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6, tmp$_7, tmp$_8, tmp$_9, tmp$_10, tmp$_11, tmp$_12, tmp$_13, tmp$_14;
-    (tmp$ = document.getElementById('b1')) != null ? (tmp$.innerHTML = player.baseStats.getSTR().toString()) : null;
-    (tmp$_0 = document.getElementById('b2')) != null ? (tmp$_0.innerHTML = player.baseStats.getCON().toString()) : null;
-    (tmp$_1 = document.getElementById('b3')) != null ? (tmp$_1.innerHTML = player.baseStats.getINT().toString()) : null;
-    (tmp$_2 = document.getElementById('b4')) != null ? (tmp$_2.innerHTML = player.baseStats.getWIL().toString()) : null;
-    (tmp$_3 = document.getElementById('c1')) != null ? (tmp$_3.innerHTML = player.baseStats.combatStats.getAT().toString()) : null;
-    (tmp$_4 = document.getElementById('c2')) != null ? (tmp$_4.innerHTML = player.baseStats.combatStats.getDF().toString()) : null;
-    (tmp$_5 = document.getElementById('c3')) != null ? (tmp$_5.innerHTML = player.baseStats.combatStats.getMA().toString()) : null;
-    (tmp$_6 = document.getElementById('c4')) != null ? (tmp$_6.innerHTML = player.baseStats.combatStats.getMD().toString()) : null;
-    (tmp$_7 = document.getElementById('a1')) != null ? (tmp$_7.innerHTML = player.baseStats.getSPD().toString()) : null;
-    (tmp$_8 = document.getElementById('a2')) != null ? (tmp$_8.innerHTML = player.baseStats.getACC().toString()) : null;
-    (tmp$_9 = document.getElementById('b5')) != null ? (tmp$_9.innerHTML = player.resources.getCurrentHP().toString()) : null;
-    (tmp$_10 = document.getElementById('b6')) != null ? (tmp$_10.innerHTML = player.resources.getCurrentMP().toString()) : null;
-    (tmp$_11 = document.getElementById('b7')) != null ? (tmp$_11.innerHTML = player.resources.getCurrentSP().toString()) : null;
-    (tmp$_12 = document.getElementById('c5')) != null ? (tmp$_12.innerHTML = player.resources.getMaxHP().toString()) : null;
-    (tmp$_13 = document.getElementById('c6')) != null ? (tmp$_13.innerHTML = player.resources.getMaxMP().toString()) : null;
-    (tmp$_14 = document.getElementById('c7')) != null ? (tmp$_14.innerHTML = player.resources.getMaxSP().toString()) : null;
-  }
-  function setupButtons$lambda(closure$player, closure$hpInput) {
-    return function (it) {
-      closure$player.resources.healHP_za3lpa$(toInt(closure$hpInput.value));
-      displayStats(closure$player);
-      return Unit;
-    };
-  }
-  function setupButtons$lambda_0(closure$player, closure$hpInput) {
-    return function (it) {
-      closure$player.resources.takeDamage_vux9f0$(toInt(closure$hpInput.value));
-      displayStats(closure$player);
-      return Unit;
-    };
-  }
-  function setupButtons$lambda_1(closure$player, closure$mpInput) {
-    return function (it) {
-      closure$player.resources.restoreMP_za3lpa$(toInt(closure$mpInput.value));
-      displayStats(closure$player);
-      return Unit;
-    };
-  }
-  function setupButtons$lambda_2(closure$player, closure$mpInput) {
-    return function (it) {
-      closure$player.resources.spendMP_za3lpa$(toInt(closure$mpInput.value));
-      displayStats(closure$player);
-      return Unit;
-    };
-  }
-  function setupButtons$lambda_3(closure$player, closure$spInput) {
-    return function (it) {
-      closure$player.resources.restoreSP_za3lpa$(toInt(closure$spInput.value));
-      displayStats(closure$player);
-      return Unit;
-    };
-  }
-  function setupButtons$lambda_4(closure$player, closure$spInput) {
-    return function (it) {
-      closure$player.resources.spendSP_za3lpa$(toInt(closure$spInput.value));
-      displayStats(closure$player);
-      return Unit;
-    };
-  }
-  function setupButtons(player) {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6, tmp$_7;
-    var hpInput = Kotlin.isType(tmp$ = document.getElementById('hpInput'), HTMLInputElement) ? tmp$ : throwCCE();
-    var hpHeal = Kotlin.isType(tmp$_0 = document.getElementById('hpHeal'), HTMLButtonElement) ? tmp$_0 : throwCCE();
-    hpHeal.addEventListener('click', setupButtons$lambda(player, hpInput));
-    var hpDamage = Kotlin.isType(tmp$_1 = document.getElementById('hpDamage'), HTMLButtonElement) ? tmp$_1 : throwCCE();
-    hpDamage.addEventListener('click', setupButtons$lambda_0(player, hpInput));
-    var mpInput = Kotlin.isType(tmp$_2 = document.getElementById('mpInput'), HTMLInputElement) ? tmp$_2 : throwCCE();
-    var mpHeal = Kotlin.isType(tmp$_3 = document.getElementById('mpHeal'), HTMLButtonElement) ? tmp$_3 : throwCCE();
-    mpHeal.addEventListener('click', setupButtons$lambda_1(player, mpInput));
-    var mpDamage = Kotlin.isType(tmp$_4 = document.getElementById('mpDamage'), HTMLButtonElement) ? tmp$_4 : throwCCE();
-    mpDamage.addEventListener('click', setupButtons$lambda_2(player, mpInput));
-    var spInput = Kotlin.isType(tmp$_5 = document.getElementById('spInput'), HTMLInputElement) ? tmp$_5 : throwCCE();
-    var spHeal = Kotlin.isType(tmp$_6 = document.getElementById('spHeal'), HTMLButtonElement) ? tmp$_6 : throwCCE();
-    spHeal.addEventListener('click', setupButtons$lambda_3(player, spInput));
-    var spDamage = Kotlin.isType(tmp$_7 = document.getElementById('spDamage'), HTMLButtonElement) ? tmp$_7 : throwCCE();
-    spDamage.addEventListener('click', setupButtons$lambda_4(player, spInput));
+    var uuid = '';
+    var dt = (new Date()).getTime();
+    uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = (dt + Math.random() * 16) % 16 | 0;
+      dt = Math.floor(dt / 16);
+      return (c == 'x' ? r : r & 3 | 8).toString(16);
+    });
+    return uuid;
   }
   function Player() {
     this.traits = new Traits('player', 30, 'Human', new Class());
@@ -472,7 +556,7 @@ var DemigodApp = function (_, Kotlin) {
   Resources.prototype.getCurrentSP = function () {
     return this.sp_0.current.getValue();
   };
-  Resources.prototype.dealDamage_mwafdv$ = function (damage, target) {
+  Resources.prototype.dealDamage_zih9xn$ = function (damage, target) {
     target.resources.setCurrentHP_za3lpa$(damage + DiceRoller_getInstance().roll_za3lpa$() | 0);
   };
   Resources.prototype.takeDamage_vux9f0$ = function (damage, defense) {
@@ -558,7 +642,7 @@ var DemigodApp = function (_, Kotlin) {
   CombatStats.prototype.component4_0 = function () {
     return this.md_0;
   };
-  CombatStats.prototype.copy_6znzmc$ = function (at, df, ma, md) {
+  CombatStats.prototype.copy_5uymv4$ = function (at, df, ma, md) {
     return new CombatStats(at === void 0 ? this.at_0 : at, df === void 0 ? this.df_0 : df, ma === void 0 ? this.ma_0 : ma, md === void 0 ? this.md_0 : md);
   };
   CombatStats.prototype.toString = function () {
@@ -602,14 +686,17 @@ var DemigodApp = function (_, Kotlin) {
   Skills.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && Kotlin.equals(this.temp, other.temp))));
   };
-  function Traits(name, age, species, _class, level) {
+  function Traits(name, age, species, _class, level, icon) {
     if (level === void 0)
       level = 1;
+    if (icon === void 0)
+      icon = 0;
     this.name = name;
     this.age = age;
     this.species = species;
     this._class = _class;
     this.level = level;
+    this.icon = icon;
   }
   Traits.$metadata$ = {
     kind: Kind_CLASS,
@@ -631,11 +718,14 @@ var DemigodApp = function (_, Kotlin) {
   Traits.prototype.component5 = function () {
     return this.level;
   };
-  Traits.prototype.copy_so35aq$ = function (name, age, species, _class, level) {
-    return new Traits(name === void 0 ? this.name : name, age === void 0 ? this.age : age, species === void 0 ? this.species : species, _class === void 0 ? this._class : _class, level === void 0 ? this.level : level);
+  Traits.prototype.component6 = function () {
+    return this.icon;
+  };
+  Traits.prototype.copy_46c0s2$ = function (name, age, species, _class, level, icon) {
+    return new Traits(name === void 0 ? this.name : name, age === void 0 ? this.age : age, species === void 0 ? this.species : species, _class === void 0 ? this._class : _class, level === void 0 ? this.level : level, icon === void 0 ? this.icon : icon);
   };
   Traits.prototype.toString = function () {
-    return 'Traits(name=' + Kotlin.toString(this.name) + (', age=' + Kotlin.toString(this.age)) + (', species=' + Kotlin.toString(this.species)) + (', _class=' + Kotlin.toString(this._class)) + (', level=' + Kotlin.toString(this.level)) + ')';
+    return 'Traits(name=' + Kotlin.toString(this.name) + (', age=' + Kotlin.toString(this.age)) + (', species=' + Kotlin.toString(this.species)) + (', _class=' + Kotlin.toString(this._class)) + (', level=' + Kotlin.toString(this.level)) + (', icon=' + Kotlin.toString(this.icon)) + ')';
   };
   Traits.prototype.hashCode = function () {
     var result = 0;
@@ -644,28 +734,48 @@ var DemigodApp = function (_, Kotlin) {
     result = result * 31 + Kotlin.hashCode(this.species) | 0;
     result = result * 31 + Kotlin.hashCode(this._class) | 0;
     result = result * 31 + Kotlin.hashCode(this.level) | 0;
+    result = result * 31 + Kotlin.hashCode(this.icon) | 0;
     return result;
   };
   Traits.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.name, other.name) && Kotlin.equals(this.age, other.age) && Kotlin.equals(this.species, other.species) && Kotlin.equals(this._class, other._class) && Kotlin.equals(this.level, other.level)))));
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.name, other.name) && Kotlin.equals(this.age, other.age) && Kotlin.equals(this.species, other.species) && Kotlin.equals(this._class, other._class) && Kotlin.equals(this.level, other.level) && Kotlin.equals(this.icon, other.icon)))));
   };
-  function Class() {
-    this.TEMP = 0;
+  function Class(name) {
+    if (name === void 0)
+      name = '';
+    this.name = name;
   }
   Class.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Class',
     interfaces: []
   };
+  Class.prototype.component1 = function () {
+    return this.name;
+  };
+  Class.prototype.copy_61zpoe$ = function (name) {
+    return new Class(name === void 0 ? this.name : name);
+  };
+  Class.prototype.toString = function () {
+    return 'Class(name=' + Kotlin.toString(this.name) + ')';
+  };
+  Class.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.name) | 0;
+    return result;
+  };
+  Class.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && Kotlin.equals(this.name, other.name))));
+  };
   function Value(base) {
     if (base === void 0)
       base = 0;
-    this.base_f0nuyu$_0 = base;
+    this.base_ds0yms$_0 = base;
     this.id = generateID();
     this.modifiers = ArrayList_init();
   }
   Value.prototype.getValue = function () {
-    return this.base_f0nuyu$_0 + this.getModTotalValue() | 0;
+    return this.base_ds0yms$_0 + this.getModTotalValue() | 0;
   };
   Value.prototype.getModTotalValue = function () {
     var tmp$;
@@ -679,11 +789,11 @@ var DemigodApp = function (_, Kotlin) {
     return temp;
   };
   Value.prototype.setBase_za3lpa$ = function (base) {
-    this.base_f0nuyu$_0 = base;
+    this.base_ds0yms$_0 = base;
   };
   Value.prototype.addBase_za3lpa$ = function (add) {
-    this.base_f0nuyu$_0 = this.base_f0nuyu$_0 + add | 0;
-    return this.base_f0nuyu$_0;
+    this.base_ds0yms$_0 = this.base_ds0yms$_0 + add | 0;
+    return this.base_ds0yms$_0;
   };
   Value.prototype.getModBySource_61zpoe$ = function (SourceID) {
     var tmp$;
@@ -754,38 +864,46 @@ var DemigodApp = function (_, Kotlin) {
     simpleName: 'Modifier',
     interfaces: []
   };
-  var package$demigod = _.demigod || (_.demigod = {});
-  var package$main = package$demigod.main || (package$demigod.main = {});
-  package$main.Ability = Ability;
-  package$main.StatChecker = StatChecker;
-  Object.defineProperty(package$main, 'DiceRoller', {
+  _.Ability = Ability;
+  _.StatChecker = StatChecker;
+  Object.defineProperty(_, 'DiceRoller', {
     get: DiceRoller_getInstance
   });
-  package$main.Equipment = Equipment;
-  package$main.Wearable = Wearable;
-  package$main.Upgrade = Upgrade;
-  package$main.Glyph = Glyph;
-  package$main.Augment = Augment;
-  package$main.Weapon = Weapon;
-  package$main.Armor = Armor;
-  package$main.Accessory = Accessory;
-  Object.defineProperty(package$main, 'FileHandler', {
+  _.Equipment = Equipment;
+  _.Wearable = Wearable;
+  _.Upgrade = Upgrade;
+  _.Glyph = Glyph;
+  _.Augment = Augment;
+  _.Weapon = Weapon;
+  _.Armor = Armor;
+  _.Accessory = Accessory;
+  Object.defineProperty(_, 'FileHandler', {
     get: FileHandler_getInstance
   });
-  package$main.main = main;
-  package$main.generateID = generateID;
-  package$main.displayStats_9r44yh$ = displayStats;
-  package$main.setupButtons_9r44yh$ = setupButtons;
-  package$main.Player = Player;
-  package$main.BaseStats = BaseStats;
-  package$main.Resources = Resources;
-  package$main.CombatStats = CombatStats;
-  package$main.Skills = Skills;
-  package$main.Traits = Traits;
-  package$main.Class = Class;
-  package$main.Value = Value;
-  package$main.DynamicValue = DynamicValue;
-  package$main.Modifier = Modifier;
+  _.initTraitListeners_vgc0e7$ = initTraitListeners;
+  _.initStatListener_vgc0e7$ = initStatListener;
+  _.initNavigationBar_vgc0e7$ = initNavigationBar;
+  _.initSlotButtons = initSlotButtons;
+  _.initSlots_qt1dr2$ = initSlots;
+  _.insertSpellSlot = insertSpellSlot;
+  _.insertSpecialSlot = insertSpecialSlot;
+  _.insertClassSlot = insertClassSlot;
+  _.insertAbilitySlot_puj7f4$ = insertAbilitySlot;
+  _.deleteSpellSlot = deleteSpellSlot;
+  _.deleteSpecialSlot = deleteSpecialSlot;
+  _.deleteClassSlot = deleteClassSlot;
+  _.main = main;
+  _.generateID = generateID;
+  _.Player = Player;
+  _.BaseStats = BaseStats;
+  _.Resources = Resources;
+  _.CombatStats = CombatStats;
+  _.Skills = Skills;
+  _.Traits = Traits;
+  _.Class = Class;
+  _.Value = Value;
+  _.DynamicValue = DynamicValue;
+  _.Modifier = Modifier;
   main();
   Kotlin.defineModule('DemigodApp', _);
   return _;

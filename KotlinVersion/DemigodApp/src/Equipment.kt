@@ -1,5 +1,3 @@
-package demigod.main
-
 open class Equipment(
     val name: String = "",
     val description: String = ""
