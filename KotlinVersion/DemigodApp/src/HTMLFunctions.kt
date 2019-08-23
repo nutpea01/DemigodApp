@@ -3,30 +3,18 @@ import kotlin.browser.document
 import kotlin.dom.addClass
 
 fun initTraitListeners(player: Player) {
-    val name = (document.getElementById("Name") as HTMLInputElement)
-    name.addEventListener("change", {
-        player.traits.name = name.value
-    } )
-
-    val age = (document.getElementById("Age") as HTMLInputElement)
-    age.addEventListener("change", {
-        player.traits.age = age.value.toInt()
-    } )
-
-    val species = (document.getElementById("Species") as HTMLInputElement)
-    species.addEventListener("change", {
-        player.traits.species = species.value
-    } )
-
-    val _class = (document.getElementById("Class") as HTMLInputElement)
-    _class.addEventListener("change", {
-        player.traits._class.name = _class.value
-    } )
-
-    val level = (document.getElementById("Level") as HTMLInputElement)
-    level.addEventListener("change", {
-        player.traits.level = level.value.toInt()
-    } )
+    document.addEventListener("change", {
+        val trait = it.target as HTMLInputElement
+        when (trait.id) {
+            "Name" -> player.traits.name = trait.value
+            "Age" -> player.traits.age = trait.value.toInt()
+            "Species" -> player.traits.species = trait.value
+            "Class" -> player.traits._class.name = trait.value
+            "Level" -> player.traits.level = trait.value.toInt()
+            //TODO: not in sheet (specifically) yet, also doesn't need to be int
+            "Icon" -> player.traits.icon = trait.value.toInt()
+        }
+    })
 }
 fun initStatListener(player: Player) {
     val level = (document.getElementById("Level") as HTMLInputElement)

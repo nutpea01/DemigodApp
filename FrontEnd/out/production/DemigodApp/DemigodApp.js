@@ -10,8 +10,8 @@ var DemigodApp = function (_, Kotlin) {
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var throwCCE = Kotlin.throwCCE;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
-  var Unit = Kotlin.kotlin.Unit;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
+  var Unit = Kotlin.kotlin.Unit;
   var addClass = Kotlin.kotlin.dom.addClass_hhb33f$;
   Wearable.prototype = Object.create(Equipment.prototype);
   Wearable.prototype.constructor = Wearable;
@@ -257,48 +257,35 @@ var DemigodApp = function (_, Kotlin) {
     }
     return FileHandler_instance;
   }
-  function initTraitListeners$lambda(closure$name, closure$player) {
+  function initTraitListeners$lambda(closure$player) {
     return function (it) {
-      closure$player.traits.name = closure$name.value;
-      return Unit;
-    };
-  }
-  function initTraitListeners$lambda_0(closure$age, closure$player) {
-    return function (it) {
-      closure$player.traits.age = toInt(closure$age.value);
-      return Unit;
-    };
-  }
-  function initTraitListeners$lambda_1(closure$species, closure$player) {
-    return function (it) {
-      closure$player.traits.species = closure$species.value;
-      return Unit;
-    };
-  }
-  function initTraitListeners$lambda_2(closure$_class, closure$player) {
-    return function (it) {
-      closure$player.traits._class.name = closure$_class.value;
-      return Unit;
-    };
-  }
-  function initTraitListeners$lambda_3(closure$level, closure$player) {
-    return function (it) {
-      closure$player.traits.level = toInt(closure$level.value);
+      var tmp$, tmp$_0;
+      if ((Kotlin.isType(tmp$ = it.target, HTMLInputElement) ? tmp$ : throwCCE()).matches('personal-info__user-input')) {
+        console.log('wow');
+      }
+      var trait = Kotlin.isType(tmp$_0 = it.target, HTMLInputElement) ? tmp$_0 : throwCCE();
+      switch (trait.id) {
+        case 'Name':
+          closure$player.traits.name = trait.value;
+          break;
+        case 'Age':
+          closure$player.traits.age = toInt(trait.value);
+          break;
+        case 'Species':
+          closure$player.traits.species = trait.value;
+          break;
+        case 'Class':
+          closure$player.traits._class.name = trait.value;
+          break;
+        case 'Level':
+          closure$player.traits.level = toInt(trait.value);
+          break;
+      }
       return Unit;
     };
   }
   function initTraitListeners(player) {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
-    var name = Kotlin.isType(tmp$ = document.getElementById('Name'), HTMLInputElement) ? tmp$ : throwCCE();
-    name.addEventListener('change', initTraitListeners$lambda(name, player));
-    var age = Kotlin.isType(tmp$_0 = document.getElementById('Age'), HTMLInputElement) ? tmp$_0 : throwCCE();
-    age.addEventListener('change', initTraitListeners$lambda_0(age, player));
-    var species = Kotlin.isType(tmp$_1 = document.getElementById('Species'), HTMLInputElement) ? tmp$_1 : throwCCE();
-    species.addEventListener('change', initTraitListeners$lambda_1(species, player));
-    var _class = Kotlin.isType(tmp$_2 = document.getElementById('Class'), HTMLInputElement) ? tmp$_2 : throwCCE();
-    _class.addEventListener('change', initTraitListeners$lambda_2(_class, player));
-    var level = Kotlin.isType(tmp$_3 = document.getElementById('Level'), HTMLInputElement) ? tmp$_3 : throwCCE();
-    level.addEventListener('change', initTraitListeners$lambda_3(level, player));
+    document.addEventListener('change', initTraitListeners$lambda(player));
   }
   function initStatListener$lambda(closure$level, closure$player) {
     return function (it) {
