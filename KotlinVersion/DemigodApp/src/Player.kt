@@ -6,4 +6,7 @@ class Player {
     val weapon: Weapon = Weapon()
     val armor: Armor = Armor()
     val accessory: Accessory = Accessory()
+    val spells: MutableList<Spell> = mutableListOf()
+    val specials: MutableList<Special> = mutableListOf()
+    val classAbilities: MutableList<ClassAbility> = mutableListOf()
 }

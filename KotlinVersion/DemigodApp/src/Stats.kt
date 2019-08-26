@@ -1,3 +1,6 @@
+import org.w3c.dom.HTMLInputElement
+import kotlin.browser.document
+
 class BaseStats (
         private val str: Value = Value(0),
         private val con: Value = Value(0),
@@ -13,6 +16,7 @@ class BaseStats (
         combatStats.setDFBase(con.getValue()*1)
         combatStats.setMABase(int.getValue()*2)
         combatStats.setMDBase(wil.getValue()*1)
+
     }
     fun setSTR(value: Int) {
         this.str.setBase(value)
@@ -30,15 +34,27 @@ class BaseStats (
         this.wil.setBase(value)
         updateCombat()
     }
-    fun setSPD(value: Int) {this.spd.setBase(value)}
-    fun setACC(value: Int) {this.acc.setBase(value)}
+    fun setSPD(value: Int) { this.spd.setBase(value) }
+    fun setACC(value: Int) { this.acc.setBase(value) }
 
-    fun getSTR(): Int {return this.str.getValue()}
-    fun getCON(): Int {return this.con.getValue()}
-    fun getINT(): Int {return this.int.getValue()}
-    fun getWIL(): Int {return this.wil.getValue()}
-    fun getSPD(): Int {return this.spd.getValue()}
-    fun getACC(): Int {return this.acc.getValue()}
+    fun getSTR(): Int { return this.str.getValue() }
+    fun getCON(): Int { return this.con.getValue() }
+    fun getINT(): Int { return this.int.getValue() }
+    fun getWIL(): Int { return this.wil.getValue() }
+    fun getSPD(): Int { return this.spd.getValue() }
+    fun getACC(): Int { return this.acc.getValue() }
+
+    fun setSTRMOD() {
+        this.str.modifiers[0]
+    }
+
+    fun getSTRModifiers(): MutableList<Modifier> { return this.str.modifiers }
+    fun getCONModifiers(): MutableList<Modifier> { return this.con.modifiers }
+    fun getINTModifiers(): MutableList<Modifier> { return this.int.modifiers }
+    fun getWILModifiers(): MutableList<Modifier> { return this.wil.modifiers }
+    fun getSPDModifiers(): MutableList<Modifier> { return this.spd.modifiers }
+    fun getACCModifiers(): MutableList<Modifier> { return this.acc.modifiers }
+
 }
 
 class Resources (
@@ -75,6 +91,13 @@ class Resources (
     fun getCurrentMP(): Int { return this.mp.current.getValue() }
     fun getCurrentSP(): Int { return this.sp.current.getValue() }
 
+    fun getMaxHPModifiers(): MutableList<Modifier> { return this.hp.max.modifiers }
+    fun getMaxMPModifiers(): MutableList<Modifier> { return this.mp.max.modifiers }
+    fun getMaxSPModifiers(): MutableList<Modifier> { return this.sp.max.modifiers }
+    fun getCurrentHPModifiers(): MutableList<Modifier> { return this.hp.current.modifiers }
+    fun getCurrentMPModifiers(): MutableList<Modifier> { return this.mp.current.modifiers }
+    fun getCurrentSPModifiers(): MutableList<Modifier> { return this.sp.current.modifiers }
+
     //TODO: most of these will become more interesting as we add abilities. eventually, they should likely be able to find damage themselves based on stats...?
     fun dealDamage(damage: Int, target: Player) {
         target.resources.setCurrentHP(damage + DiceRoller.roll())
@@ -110,15 +133,20 @@ data class CombatStats (
         private val ma: Value = Value(0),
         private val md: Value = Value(0)
 ) {
-    fun getAT(): Int {return this.at.getValue()}
-    fun getDF(): Int {return this.df.getValue()}
-    fun getMA(): Int {return this.ma.getValue()}
-    fun getMD(): Int {return this.md.getValue()}
+    fun getAT(): Int { return this.at.getValue() }
+    fun getDF(): Int { return this.df.getValue() }
+    fun getMA(): Int { return this.ma.getValue() }
+    fun getMD(): Int { return this.md.getValue() }
 
-    fun setATBase(base: Int) {this.at.setBase(base)}
-    fun setDFBase(base: Int) {this.df.setBase(base)}
-    fun setMABase(base: Int) {this.ma.setBase(base)}
-    fun setMDBase(base: Int) {this.md.setBase(base)}
+    fun setATBase(base: Int) { this.at.setBase(base) }
+    fun setDFBase(base: Int) { this.df.setBase(base) }
+    fun setMABase(base: Int) { this.ma.setBase(base) }
+    fun setMDBase(base: Int) { this.md.setBase(base) }
+
+    fun getATModifiers(): MutableList<Modifier> { return this.at.modifiers }
+    fun getDFModifiers(): MutableList<Modifier> { return this.df.modifiers }
+    fun getMAModifiers(): MutableList<Modifier> { return this.ma.modifiers }
+    fun getMDModifiers(): MutableList<Modifier> { return this.md.modifiers }
 }
 
 //TODO: Skills

@@ -1,10 +1,10 @@
 open class Equipment(
-    val name: String = "",
-    val description: String = ""
+    var name: String = "",
+    var description: String = ""
 ) {
     val id: String = generateID()
     val modifiers: MutableList<Modifier> = mutableListOf()
-    val icon: Int = 0
+    var icon: Int = 0
 }
 
 open class Wearable(

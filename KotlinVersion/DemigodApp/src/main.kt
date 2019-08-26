@@ -4,11 +4,32 @@
 fun main() {
     //simple testing player
     val player = Player()
+    tempSheetLogic(player)
 
-    initTraitListeners(player)
-    initSlots(0, 0, 0)
-    initSlotButtons()
+    initCharacterSheetListeners(player)
+    initSlots(player, 0, 0, 0)
+    initSlotButtons(player)
     initNavigationBar(player)
+}
+
+fun tempSheetLogic(player: Player) {
+    //TODO: Init a single modifier that will be editable by the current sheet
+    player.baseStats.getSTRModifiers().add(Modifier(""))
+    player.baseStats.getCONModifiers().add(Modifier(""))
+    player.baseStats.getINTModifiers().add(Modifier(""))
+    player.baseStats.getWILModifiers().add(Modifier(""))
+    player.baseStats.getSPDModifiers().add(Modifier(""))
+    player.baseStats.getACCModifiers().add(Modifier(""))
+    player.baseStats.combatStats.getATModifiers().add(Modifier(""))
+    player.baseStats.combatStats.getDFModifiers().add(Modifier(""))
+    player.baseStats.combatStats.getMAModifiers().add(Modifier(""))
+    player.baseStats.combatStats.getMDModifiers().add(Modifier(""))
+    player.resources.getMaxHPModifiers().add(Modifier(""))
+    player.resources.getMaxMPModifiers().add(Modifier(""))
+    player.resources.getMaxSPModifiers().add(Modifier(""))
+    player.spells.add(Spell())
+    player.specials.add(Special())
+    player.classAbilities.add(ClassAbility())
 }
 
 fun generateID(): String {

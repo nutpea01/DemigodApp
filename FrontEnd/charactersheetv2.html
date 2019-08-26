@@ -76,34 +76,34 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td class="resource-stats__modifiers class="base-stat-table__td-titles">effect</td>
-						<td class="resource-stats__modifiers class="base-stat-table__td-titles">calculator</td>
+						<td class="resource-stats__modifiers base-stat-table__td-titles">effect</td>
+						<td class="resource-stats__modifiers base-stat-table__td-titles">calculator</td>
 					</tr>
 
 					<tr>
 						<td class="resource-stats__td-titles">HP:</td>
-						<td><input type="number" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
+						<td><input type="number" id="currentHP" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
 						<td class="resource-stats__slash">/</td>
-						<td><input type="number" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
-						<td><input type="number" name="lockedhp" placeholder="0" class="resource-stats__effect"></td>
+						<td><input type="number" id="maxHP" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
+						<td><input type="number" id="maxHP-MOD" name="lockedhp" placeholder="0" class="resource-stats__effect"></td>
 						<td><input type="number" name="lockedhp" placeholder="0" class="resource-stats__calculator"></td>
 					</tr>
 
 					<tr>
 						<td class="resource-stats__td-titles">MP:</td>
-						<td><input type="number" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
+						<td><input type="number" id="currentMP" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
 						<td class="resource-stats__slash">/</td>
-						<td><input type="number" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
-						<td><input type="number" name="lockedhp" placeholder="0" class="resource-stats__effect"></td>
+						<td><input type="number" id="maxMP" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
+						<td><input type="number" id="maxMP-MOD"  name="lockedhp" placeholder="0" class="resource-stats__effect"></td>
 						<td><input type="number" name="lockedhp" placeholder="0" class="resource-stats__calculator"></td>
 					</tr>
 
 					<tr>
 						<td class="resource-stats__td-titles">SP:</td>
-						<td><input type="number" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
+						<td><input type="number" id="currentSP" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
 						<td class="resource-stats__slash">/</td>
-						<td><input type="number" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
-						<td><input type="number" name="lockedhp" placeholder="0" class="resource-stats__effect"></td>
+						<td><input type="number" id="maxSP" name="lockedhp" placeholder="150" class="resource-stats__HPMPSP"></td>
+						<td><input type="number" id="maxSP-MOD"  name="lockedhp" placeholder="0" class="resource-stats__effect"></td>
 						<td><input type="number" name="lockedhp" placeholder="0" class="resource-stats__calculator"></td>
 					</tr>
 				</table>
@@ -122,51 +122,51 @@
 					</th>
 					<tr>
 						<td class="base-stat-table__td-titles">STR  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+						<td><input type="number" id="STR" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" id="STR-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 						<td class="base-stat-table__td-titles">AT  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+						<td><input type="number" id="AT" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" id="AT-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 					</tr>
 
 					<tr>
 						<td class="base-stat-table__td-titles">CON  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+						<td><input type="number" id="CON" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" id="CON-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 						<td class="base-stat-table__td-titles">DF  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+						<td><input type="number" id="DF" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" id="DF-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 					</tr>
 
 					<tr>
 						<td class="base-stat-table__td-titles">INT  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+						<td><input type="number" id="INT" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" id="INT-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 						<td class="base-stat-table__td-titles">MA  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+						<td><input type="number" id="MA" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" id="MA-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 					</tr>
 
 					<tr>
 						<td class="base-stat-table__td-titles">WILL  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+						<td><input type="number" id="WILL" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" id="WILL-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 						<td class="base-stat-table__td-titles">MD  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+						<td><input type="number" id="MD" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" id="MD-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 					</tr>
 
 					<tr>
 						<td class="base-stat-table__td-titles">SPD  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+						<td><input type="number" id="SPD" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" id="SPD-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 						<td class="base-stat-table__td-titles">AC  :</td>
-						<td><input type="number" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
-						<td><input type="number" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
+						<td><input type="number" id="AC" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td><input type="number" id="AC-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 					</tr>
 
 				</table>
-				<button>GO</button>
+				<!--button>GO</button-->
 			</form>
 	</div>
 
@@ -177,21 +177,21 @@
 			<table>
 				<tr>
 					<td class="equipment-div__td-image"><img class="equipment-div__image" src="Sword-Icon-DemiGod50px.png"></td>
-					<td class="equipment-div__td-textarea"><textarea class="equipment-div__textarea" placeholder="weapon"></textarea></td>
+					<td class="equipment-div__td-textarea"><textarea id = "weapon" class="equipment-div__textarea" placeholder="weapon"></textarea></td>
 				</tr>
 				<tr>
 					<td class="equipment-div__td-image"><img class="equipment-div__image" src="shield-icon-demigod50px.png"></td>
-					<td class="equipment-div__td-textarea"><textarea class="equipment-div__textarea" placeholder="armor"></textarea></td>
+					<td class="equipment-div__td-textarea"><textarea id = "armor"  class="equipment-div__textarea" placeholder="armor"></textarea></td>
 
 				</tr>
 				<tr>
 					<td class="equipment-div__td-image"><img class="equipment-div__image" src="accessory-demigod50px.png"></td>
-					<td class="equipment-div__td-textarea"><textarea class="equipment-div__textarea" placeholder="accessory"></textarea></td>
+					<td class="equipment-div__td-textarea"><textarea id = "accessory"  class="equipment-div__textarea" placeholder="accessory"></textarea></td>
 
 				</tr>
 			</table>
-			<button>+</button>
-			<button>-</button>
+			<!--button>+</button-->
+			<!--button>-</button-->
 		</form>
 	</div>
 
@@ -398,8 +398,8 @@
 		<form>
 			<table class = "spells-div__table" id = "spells-div__table">
 				<tr>
-					<td class="spells-div__td-image"><img class="spells-div__image" src="Spell-Circle-Icon-Web-Dev80px.png"></td>
-					<td class="spells-div__td-textarea"><textarea class="spells-div__textarea"></textarea></td>
+					<td class="spells-div__td-image"><img class="spells-div__image" src="Spell-Circle-Icon-Web-Dev80px.png" id = "spells-img-1"></td>
+					<td class="spells-div__td-textarea"><textarea class="spells-div__textarea" id = "spells-textarea-1"></textarea></td>
 				</tr>
 			</table>
 			<button id = "spells-div__button-add">+</button>
@@ -411,8 +411,8 @@
 		<form>
 			<table class = "special-div__table" id = "special-div__table">
 				<tr>
-					<td class="special-div__td-image"><img class="special-div__image" src="Triangle Icon - Web Dev.png"></td>
-					<td class="special-div__td-textarea"><textarea class="special-div__textarea"></textarea></td>
+					<td class="special-div__td-image"><img class="special-div__image" src="Triangle Icon - Web Dev.png" id = "special-img-1"></td>
+					<td class="special-div__td-textarea"><textarea class="special-div__textarea" id = "special-textarea-1"></textarea></td>
 				</tr>
 			</table>
 			<button id = "special-div__button-add">+</button>
@@ -424,8 +424,8 @@
 		<form>
 			<table class = "class-abilities-div__table" id = "class-abilities-div__table">
 				<tr>
-					<td class="class-abilities-div__td-image"><img class="class-abilities-div__image" src="class-abilities-demigod100px.png"></td>
-					<td class="class-abilities-div__td-textarea"><textarea class="class-abilities-div__textarea"></textarea></td>
+					<td class="class-abilities-div__td-image"><img class="class-abilities-div__image" src="class-abilities-demigod100px.png" id = "class-abilities-img-1"></td>
+					<td class="class-abilities-div__td-textarea"><textarea class="class-abilities-div__textarea" id = "class-abilities-textarea-1"></textarea></td>
 				</tr>
 			</table>
 			<button id = "class-abilities-div__button-add">+</button>

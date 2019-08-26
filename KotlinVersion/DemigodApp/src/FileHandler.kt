@@ -23,11 +23,14 @@ object FileHandler {
         text += JSON.stringify(player.traits) + ","
         text += JSON.stringify(player.resources) + ","
         text += JSON.stringify(player.baseStats) + ","
-        //TODO: save skills
-        //text += JSON.stringify(player.skills) + ","
         text += JSON.stringify(player.weapon) + ","
         text += JSON.stringify(player.armor) + ","
-        text += JSON.stringify(player.accessory)
+        text += JSON.stringify(player.accessory) + ","
+        //TODO: save skills
+        //text += JSON.stringify(player.skills) + ","
+        text += JSON.stringify(player.spells) + ","
+        text += JSON.stringify(player.specials) + ","
+        text += JSON.stringify(player.classAbilities)
         text += "]"
 
         // create hyperlink and set it's href and text "defined above"
