@@ -49,22 +49,25 @@ fun initStatListener(player: Player) {
     document.addEventListener("change", {
         val stat = (it.target as HTMLInputElement).value.toInt()
         when ((it.target as HTMLInputElement).id) {
-            "STR"  -> player.baseStats.setSTR(stat)
-            "CON"  -> player.baseStats.setCON(stat)
-            "INT"  -> player.baseStats.setINT(stat)
-            "WILL" -> player.baseStats.setWIL(stat)
-            "SPD"  -> player.baseStats.setSPD(stat)
-            "AC"   -> player.baseStats.setACC(stat)
+            "STR" -> player.baseStats.setSTR(stat)
+            "CON" -> player.baseStats.setCON(stat)
+            "INT" -> player.baseStats.setINT(stat)
+            "WILL"-> player.baseStats.setWIL(stat)
+            "SPD" -> player.baseStats.setSPD(stat)
+            "AC"  -> player.baseStats.setACC(stat)
+
             //"AT" -> player.baseStats.combatStats.setATBase(stat)
             //"DF" -> player.baseStats.combatStats.setDFBase(stat)
             //"MA" -> player.baseStats.combatStats.setMABase(stat)
             //"MD" -> player.baseStats.combatStats.setMDBase(stat)
+
             "STR-MOD" -> player.baseStats.getSTRModifiers()[0].value = stat
             "CON-MOD" -> player.baseStats.getCONModifiers()[0].value = stat
             "INT-MOD" -> player.baseStats.getINTModifiers()[0].value = stat
-            "WIL-MOD" -> player.baseStats.getWILModifiers()[0].value = stat
+            "WILL-MOD"-> player.baseStats.getWILModifiers()[0].value = stat
             "SPD-MOD" -> player.baseStats.getSPDModifiers()[0].value = stat
-            "ACC-MOD" -> player.baseStats.getACCModifiers()[0].value = stat
+            "AC-MOD"  -> player.baseStats.getACCModifiers()[0].value = stat
+
             "AT-MOD" -> player.baseStats.combatStats.getATModifiers()[0].value = stat
             "DF-MOD" -> player.baseStats.combatStats.getDFModifiers()[0].value = stat
             "MA-MOD" -> player.baseStats.combatStats.getMAModifiers()[0].value = stat
@@ -80,9 +83,9 @@ fun initStatListener(player: Player) {
         (document.getElementById("STR") as HTMLInputElement).value = player.baseStats.getSTR().toString()
         (document.getElementById("CON") as HTMLInputElement).value = player.baseStats.getCON().toString()
         (document.getElementById("INT") as HTMLInputElement).value = player.baseStats.getINT().toString()
-        (document.getElementById("WIL") as HTMLInputElement).value = player.baseStats.getWIL().toString()
+        (document.getElementById("WILL") as HTMLInputElement).value = player.baseStats.getWIL().toString()
         (document.getElementById("SPD") as HTMLInputElement).value = player.baseStats.getSPD().toString()
-        (document.getElementById("ACC") as HTMLInputElement).value = player.baseStats.getACC().toString()
+        (document.getElementById("AC") as HTMLInputElement).value = player.baseStats.getACC().toString()
     })
 }
 fun initEquipmentListener(player: Player) {

@@ -44,10 +44,6 @@ class BaseStats (
     fun getSPD(): Int { return this.spd.getValue() }
     fun getACC(): Int { return this.acc.getValue() }
 
-    fun setSTRMOD() {
-        this.str.modifiers[0]
-    }
-
     fun getSTRModifiers(): MutableList<Modifier> { return this.str.modifiers }
     fun getCONModifiers(): MutableList<Modifier> { return this.con.modifiers }
     fun getINTModifiers(): MutableList<Modifier> { return this.int.modifiers }
@@ -67,21 +63,27 @@ class Resources (
     fun setMaxSP(value: Int) { this.sp.max.setBase(value) }
     fun setCurrentHP(value: Int) {
         this.hp.current.setBase(value)
+        /* TODO: useful for future calculations, but not right now
         if (this.hp.current.getValue() > this.hp.max.getValue()) {
             this.hp.current.setBase(this.hp.max.getValue())
         }
+        */
     }
     fun setCurrentMP(value: Int) {
         this.mp.current.setBase(value)
+        /* TODO: useful for future calculations, but not right now
         if (this.mp.current.getValue() > this.mp.max.getValue()) {
             this.mp.current.setBase(this.mp.max.getValue())
         }
+        */
     }
     fun setCurrentSP(value: Int) {
         this.sp.current.setBase(value)
+        /* TODO: useful for future calculations, but not right now
         if (this.sp.current.getValue() > this.sp.max.getValue()) {
             this.sp.current.setBase(this.sp.max.getValue())
         }
+        */
     }
 
     fun getMaxHP(): Int { return this.hp.max.getValue() }
