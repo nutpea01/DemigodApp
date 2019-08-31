@@ -3,6 +3,7 @@ class Inventory {
     var gold: Int = 0
     var bagType: String = ""
     var size: Int = 0
+    var notes: String = ""
 
     fun addItem(item: Item) {
         this.items.add(item)

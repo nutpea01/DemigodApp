@@ -122,6 +122,14 @@ fun initItemListener(player: Player) {
             player.inventory.getItem(index).description = (it.target as HTMLTextAreaElement).value
         })
     }
+    val bagType = document.getElementById("bag-type__textarea") as HTMLTextAreaElement
+    bagType.addEventListener("change", {
+        player.inventory.bagType = bagType.value
+    })
+    val notes = document.getElementById("notes-div__textarea") as HTMLTextAreaElement
+    notes.addEventListener("change", {
+        player.inventory.notes = notes.value
+    })
 }
 
 

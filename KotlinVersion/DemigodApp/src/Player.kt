@@ -11,7 +11,6 @@ class Player {
     val specials: MutableList<Special> = mutableListOf()
     val classAbilities: MutableList<ClassAbility> = mutableListOf()
     val inventory: Inventory = Inventory()
-    var notes: String = ""
 
     private fun initSkills(): MutableList<Skill> {
         val list: MutableList<Skill> = mutableListOf()
