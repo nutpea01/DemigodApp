@@ -30,6 +30,9 @@ fun tempSheetLogic(player: Player) {
     player.spells.add(Spell())
     player.specials.add(Special())
     player.classAbilities.add(ClassAbility())
+    player.inventory.addItem(Item())
+    player.inventory.addItem(Item())
+    player.inventory.addItem(Item())
 }
 
 fun generateID(): String {

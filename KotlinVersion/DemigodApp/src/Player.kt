@@ -9,4 +9,5 @@ class Player {
     val spells: MutableList<Spell> = mutableListOf()
     val specials: MutableList<Special> = mutableListOf()
     val classAbilities: MutableList<ClassAbility> = mutableListOf()
+    val inventory: Inventory = Inventory()
 }

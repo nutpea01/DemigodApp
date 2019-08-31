@@ -30,7 +30,8 @@ object FileHandler {
         //text += JSON.stringify(player.skills) + ","
         text += JSON.stringify(player.spells) + ","
         text += JSON.stringify(player.specials) + ","
-        text += JSON.stringify(player.classAbilities)
+        text += JSON.stringify(player.classAbilities) + ","
+        text += JSON.stringify(player.inventory)
         text += "]"
 
         // create hyperlink and set it's href and text "defined above"

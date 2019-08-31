@@ -125,20 +125,34 @@ fun initAbilityListener(player: Player) {
         player.classAbilities[0].description = (it.target as HTMLTextAreaElement).value
     })
 }
+fun initItemListener(player: Player) {
+    //TODO: used to init the default 3 - search for a better option.
+    repeat(3) {
+        val textarea = document.getElementById("inventory-slot-" + (it+1)) as HTMLTextAreaElement
+        val index = it
+        textarea.addEventListener("change", {
+            player.inventory.getItem(index).description = (it.target as HTMLTextAreaElement).value
+        })
+    }
+}
+
+
 fun initNavigationBar(player: Player) {
     (document.getElementById("main-navbar__icon__save-button") as HTMLButtonElement).onclick = { FileHandler.save("test", player) }
     (document.getElementById("main-navbar__icon__load-button") as HTMLButtonElement).onclick = { FileHandler.load() }
 }
 fun initSlotButtons(player: Player) {
     // initialize add buttons to insert a row
-    (document.getElementById("spells-div__button-add")   as HTMLButtonElement).onclick = { insertSpellSlot(player) }
+    (document.getElementById("spells-div__button-add") as HTMLButtonElement).onclick = { insertSpellSlot(player) }
     (document.getElementById("special-div__button-add") as HTMLButtonElement).onclick = { insertSpecialSlot(player) }
-    (document.getElementById("class-abilities-div__button-add")   as HTMLButtonElement).onclick = { insertClassSlot(player) }
+    (document.getElementById("class-abilities-div__button-add") as HTMLButtonElement).onclick = { insertClassSlot(player) }
+    (document.getElementById("inventory-div__button-add") as HTMLButtonElement).onclick = { insertItemSlot(player) }
 
     // initialize delete buttons to remove a row
     (document.getElementById("spells-div__button-del")   as HTMLButtonElement).onclick = { deleteSpellSlot(player) }
     (document.getElementById("special-div__button-del") as HTMLButtonElement).onclick = { deleteSpecialSlot(player) }
     (document.getElementById("class-abilities-div__button-del")   as HTMLButtonElement).onclick = { deleteClassSlot(player) }
+    (document.getElementById("inventory-div__button-del") as HTMLButtonElement).onclick = { deleteItemSlot(player) }
 }
 fun initSlots(player: Player, spellSlots: Int, specialSlots: Int, classSlots: Int) {
     repeat(spellSlots) { insertSpellSlot(player) }
@@ -205,11 +219,9 @@ fun insertAbilitySlot(player: Player, type: String, image: String = "Hold Primar
         }
     }
 
-    //"false" keeps page from refreshing on button press
+    // "false" keeps page from refreshing on button press
     return false
 }
-
-
 
 fun deleteSpellSlot(player: Player): Boolean {
     val table = document.getElementById("spells-div__table") as HTMLTableElement
@@ -227,5 +239,71 @@ fun deleteClassSlot(player: Player): Boolean {
     val table = document.getElementById("class-abilities-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
     player.classAbilities.removeAt(player.spells.size -1)
+    return false
+}
+
+
+
+fun insertItemSlot(player: Player): Boolean {
+    val table = document.getElementById("inventory-div__slot-table") as HTMLTableElement
+    var row: HTMLTableRowElement
+    // check for empty table exception
+    if (table.rows.length == 0) {
+        row = table.insertRow()
+    }
+    // table has at least one row
+    else {
+        // default - row is last row in table
+        row = table.rows[table.rows.length-1] as HTMLTableRowElement
+        if (row.cells.length == 3) {
+            // create new row if at 3 cells in current
+            row = table.insertRow()
+        }
+    }
+
+    row.insertCell().appendChild(createItemSlot(player))
+
+    // "false" keeps page from refreshing on button press
+    return false
+}
+fun createItemSlot(player: Player): HTMLTextAreaElement {
+    // update player
+    player.inventory.addItem(Item())
+
+    // create textarea cell
+    val textarea = document.createElement("textarea") as HTMLTextAreaElement
+    textarea.name = "inventory-slot"
+    textarea.addClass("inventory-div__slot")
+    textarea.id = "inventory-slot-" + player.inventory.size
+
+    // add EventListener
+    textarea.addEventListener("change", {
+        player.inventory.getItem(player.inventory.size).description = (it.target as HTMLTextAreaElement).value
+    })
+
+    return textarea
+}
+
+fun deleteItemSlot(player: Player): Boolean {
+    // update player
+    if (player.inventory.size > 0) {
+        player.inventory.removeLastItem()
+    }
+
+    val table = document.getElementById("inventory-div__slot-table") as HTMLTableElement
+    // check for empty table exception
+    if (table.rows.length == 0) return false
+
+    // else, assign "row" as last row in table
+    val row = table.rows[table.rows.length-1] as HTMLTableRowElement
+
+    // if there is only one cell in the table...
+    if (row.cells.length == 1) {
+        table.deleteRow(table.rows.length-1)
+    } else {
+        row.deleteCell(row.cells.length-1)
+    }
+
+    // "false" keeps page from refreshing on button press
     return false
 }
