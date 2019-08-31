@@ -7,7 +7,6 @@ fun initCharacterSheetListeners(player: Player) {
     initResourceListener(player)
     initStatListener(player)
     initEquipmentListener(player)
-    initSkillsListener(player)
     initAbilityListener(player)
     initItemListener(player)
 }
@@ -99,20 +98,8 @@ fun initEquipmentListener(player: Player) {
         }
     })
 }
-fun initSkillsListener(player: Player) {
-    //todo:
-}
 fun initAbilityListener(player: Player) {
-    /*
-    document.addEventListener("change", {
-        val description = (it.target as HTMLTextAreaElement).value
-        when ((it.target as HTMLInputElement).id) {
-            "spells-textarea-1" -> player.spells[0].description = description
-            "special-textarea-1" -> player.specials[0].description = description
-            "class-abilities-textarea-1" -> player.classAbilities[0].description = description
-        }
-    })
-     */
+    //TODO: used to init the default 3 - search for a better option.
     val spell = document.getElementById("spells-textarea-1") as HTMLTextAreaElement
     val special = document.getElementById("special-textarea-1") as HTMLTextAreaElement
     val classAbility = document.getElementById("class-abilities-textarea-1") as HTMLTextAreaElement
@@ -138,6 +125,7 @@ fun initItemListener(player: Player) {
 }
 
 
+
 fun initNavigationBar(player: Player) {
     (document.getElementById("main-navbar__icon__save-button") as HTMLButtonElement).onclick = { FileHandler.save("test", player) }
     (document.getElementById("main-navbar__icon__load-button") as HTMLButtonElement).onclick = { FileHandler.load() }
@@ -160,7 +148,51 @@ fun initSlots(player: Player, spellSlots: Int, specialSlots: Int, classSlots: In
     repeat(specialSlots) { insertSpecialSlot(player) }
     repeat(classSlots) { insertClassSlot(player) }
 }
+fun initSkills(player: Player) {
+    val table = document.getElementById("skill-tree") as HTMLTableElement
+    var index = 0
+    while (index < player.skills.size) {
+        // add row
+        val row = table.insertRow()
 
+        // two skills per row
+        repeat(2) {
+            val skillName = player.skills[index].name
+            // first cell - skill name
+            val label = row.insertCell()
+            label.addClass("skill-tree__label")
+            label.innerText = skillName
+
+            // second cell - skill number
+            val value = row.insertCell()
+            val input = document.createElement("input") as HTMLInputElement
+            input.type = "number"
+            input.name = "skill-number"
+            input.placeholder = "0"
+            input.addClass("skill-tree__number")
+            input.addEventListener("change", {
+                player.getSkill(skillName)!!.value.setBase((it.target as HTMLInputElement).value.toInt())
+            })
+            value.appendChild(input)
+
+
+            // third cell - skill checkbox
+            val check = row.insertCell()
+            check.addClass("skill-tree__td-checkbox")
+            val checkbox = document.createElement("input") as HTMLInputElement
+            checkbox.type = "checkbox"
+            checkbox.name = "roll-check"
+            checkbox.addClass("skill-tree__checkbox")
+            checkbox.addEventListener("change", {
+                player.getSkill(skillName)!!.check = checkbox.checked
+            })
+            check.appendChild(checkbox)
+
+            // update index
+            index++
+        }
+    }
+}
 
 
 fun insertSpellSlot(player: Player): Boolean {

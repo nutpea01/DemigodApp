@@ -26,8 +26,7 @@ object FileHandler {
         text += JSON.stringify(player.weapon) + ","
         text += JSON.stringify(player.armor) + ","
         text += JSON.stringify(player.accessory) + ","
-        //TODO: save skills
-        //text += JSON.stringify(player.skills) + ","
+        text += JSON.stringify(player.skills) + ","
         text += JSON.stringify(player.spells) + ","
         text += JSON.stringify(player.specials) + ","
         text += JSON.stringify(player.classAbilities) + ","

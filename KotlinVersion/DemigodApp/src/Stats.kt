@@ -151,8 +151,12 @@ data class CombatStats (
     fun getMDModifiers(): MutableList<Modifier> { return this.md.modifiers }
 }
 
-//TODO: Skills
-data class Skills (val temp: Int = 0)
+class Skill (
+        val name: String
+){
+    var check: Boolean = false  // used for if the player succeeds roll
+    val value: Value = Value(0)
+}
 data class Traits (
         var name: String,
         var age: Int,

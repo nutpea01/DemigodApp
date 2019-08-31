@@ -8,6 +8,7 @@ fun main() {
 
     initCharacterSheetListeners(player)
     initSlots(player, 0, 0, 0)
+    initSkills(player)
     initSlotButtons(player)
     initNavigationBar(player)
 }
