@@ -12,7 +12,9 @@ var DemigodApp = function (_, Kotlin) {
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
   var Unit = Kotlin.kotlin.Unit;
+  var toString = Kotlin.toString;
   var addClass = Kotlin.kotlin.dom.addClass_hhb33f$;
+  var ensureNotNull = Kotlin.ensureNotNull;
   Spell.prototype = Object.create(Ability.prototype);
   Spell.prototype.constructor = Spell;
   Special.prototype = Object.create(Ability.prototype);
@@ -247,7 +249,7 @@ var DemigodApp = function (_, Kotlin) {
     this.filename = filename;
   };
   FileHandler.prototype.save_jj7jqn$ = function (filename, player) {
-    var file = filename + '.json';
+    var file = filename + '.demigod';
     var text = '[';
     text += JSON.stringify(player.traits) + ',';
     text += JSON.stringify(player.resources) + ',';
@@ -255,9 +257,11 @@ var DemigodApp = function (_, Kotlin) {
     text += JSON.stringify(player.weapon) + ',';
     text += JSON.stringify(player.armor) + ',';
     text += JSON.stringify(player.accessory) + ',';
+    text += JSON.stringify(player.skills) + ',';
     text += JSON.stringify(player.spells) + ',';
     text += JSON.stringify(player.specials) + ',';
-    text += JSON.stringify(player.classAbilities);
+    text += JSON.stringify(player.classAbilities) + ',';
+    text += JSON.stringify(player.inventory);
     text += ']';
     var save = document.createElement('a');
     save.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -295,8 +299,8 @@ var DemigodApp = function (_, Kotlin) {
     initResourceListener(player);
     initStatListener(player);
     initEquipmentListener(player);
-    initSkillsListener(player);
     initAbilityListener(player);
+    initItemListener(player);
   }
   function initTraitListener$lambda(closure$player) {
     return function (it) {
@@ -402,13 +406,13 @@ var DemigodApp = function (_, Kotlin) {
         case 'INT-MOD':
           closure$player.baseStats.getINTModifiers().get_za3lpa$(0).value = stat;
           break;
-        case 'WIL-MOD':
+        case 'WILL-MOD':
           closure$player.baseStats.getWILModifiers().get_za3lpa$(0).value = stat;
           break;
         case 'SPD-MOD':
           closure$player.baseStats.getSPDModifiers().get_za3lpa$(0).value = stat;
           break;
-        case 'ACC-MOD':
+        case 'AC-MOD':
           closure$player.baseStats.getACCModifiers().get_za3lpa$(0).value = stat;
           break;
         case 'AT-MOD':
@@ -432,9 +436,9 @@ var DemigodApp = function (_, Kotlin) {
       (Kotlin.isType(tmp$_5 = document.getElementById('STR'), HTMLInputElement) ? tmp$_5 : throwCCE()).value = closure$player.baseStats.getSTR().toString();
       (Kotlin.isType(tmp$_6 = document.getElementById('CON'), HTMLInputElement) ? tmp$_6 : throwCCE()).value = closure$player.baseStats.getCON().toString();
       (Kotlin.isType(tmp$_7 = document.getElementById('INT'), HTMLInputElement) ? tmp$_7 : throwCCE()).value = closure$player.baseStats.getINT().toString();
-      (Kotlin.isType(tmp$_8 = document.getElementById('WIL'), HTMLInputElement) ? tmp$_8 : throwCCE()).value = closure$player.baseStats.getWIL().toString();
+      (Kotlin.isType(tmp$_8 = document.getElementById('WILL'), HTMLInputElement) ? tmp$_8 : throwCCE()).value = closure$player.baseStats.getWIL().toString();
       (Kotlin.isType(tmp$_9 = document.getElementById('SPD'), HTMLInputElement) ? tmp$_9 : throwCCE()).value = closure$player.baseStats.getSPD().toString();
-      (Kotlin.isType(tmp$_10 = document.getElementById('ACC'), HTMLInputElement) ? tmp$_10 : throwCCE()).value = closure$player.baseStats.getACC().toString();
+      (Kotlin.isType(tmp$_10 = document.getElementById('AC'), HTMLInputElement) ? tmp$_10 : throwCCE()).value = closure$player.baseStats.getACC().toString();
       return Unit;
     };
   }
@@ -461,8 +465,6 @@ var DemigodApp = function (_, Kotlin) {
   }
   function initEquipmentListener(player) {
     document.addEventListener('change', initEquipmentListener$lambda(player));
-  }
-  function initSkillsListener(player) {
   }
   function initAbilityListener$lambda(closure$player) {
     return function (it) {
@@ -493,6 +495,38 @@ var DemigodApp = function (_, Kotlin) {
     spell.addEventListener('change', initAbilityListener$lambda(player));
     special.addEventListener('change', initAbilityListener$lambda_0(player));
     classAbility.addEventListener('change', initAbilityListener$lambda_1(player));
+  }
+  function initItemListener$lambda$lambda(closure$player, closure$index) {
+    return function (it) {
+      var tmp$;
+      closure$player.inventory.getItem_za3lpa$(closure$index).description = (Kotlin.isType(tmp$ = it.target, HTMLTextAreaElement) ? tmp$ : throwCCE()).value;
+      return Unit;
+    };
+  }
+  function initItemListener$lambda(closure$bagType, closure$player) {
+    return function (it) {
+      closure$player.inventory.bagType = closure$bagType.value;
+      return Unit;
+    };
+  }
+  function initItemListener$lambda_0(closure$notes, closure$player) {
+    return function (it) {
+      closure$player.inventory.notes = closure$notes.value;
+      return Unit;
+    };
+  }
+  function initItemListener(player) {
+    var tmp$, tmp$_0;
+    for (var index = 0; index < 3; index++) {
+      var tmp$_1;
+      var textarea = Kotlin.isType(tmp$_1 = document.getElementById('inventory-slot-' + toString(index + 1 | 0)), HTMLTextAreaElement) ? tmp$_1 : throwCCE();
+      var index_0 = index;
+      textarea.addEventListener('change', initItemListener$lambda$lambda(player, index_0));
+    }
+    var bagType = Kotlin.isType(tmp$ = document.getElementById('bag-type__textarea'), HTMLTextAreaElement) ? tmp$ : throwCCE();
+    bagType.addEventListener('change', initItemListener$lambda(bagType, player));
+    var notes = Kotlin.isType(tmp$_0 = document.getElementById('notes-div__textarea'), HTMLTextAreaElement) ? tmp$_0 : throwCCE();
+    notes.addEventListener('change', initItemListener$lambda_0(notes, player));
   }
   function initNavigationBar$lambda(closure$player) {
     return function (it) {
@@ -526,27 +560,39 @@ var DemigodApp = function (_, Kotlin) {
   }
   function initSlotButtons$lambda_2(closure$player) {
     return function (it) {
-      return deleteSpellSlot(closure$player);
+      return insertItemSlot(closure$player);
     };
   }
   function initSlotButtons$lambda_3(closure$player) {
     return function (it) {
-      return deleteSpecialSlot(closure$player);
+      return deleteSpellSlot(closure$player);
     };
   }
   function initSlotButtons$lambda_4(closure$player) {
     return function (it) {
+      return deleteSpecialSlot(closure$player);
+    };
+  }
+  function initSlotButtons$lambda_5(closure$player) {
+    return function (it) {
       return deleteClassSlot(closure$player);
     };
   }
+  function initSlotButtons$lambda_6(closure$player) {
+    return function (it) {
+      return deleteItemSlot(closure$player);
+    };
+  }
   function initSlotButtons(player) {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4;
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6;
     (Kotlin.isType(tmp$ = document.getElementById('spells-div__button-add'), HTMLButtonElement) ? tmp$ : throwCCE()).onclick = initSlotButtons$lambda(player);
     (Kotlin.isType(tmp$_0 = document.getElementById('special-div__button-add'), HTMLButtonElement) ? tmp$_0 : throwCCE()).onclick = initSlotButtons$lambda_0(player);
     (Kotlin.isType(tmp$_1 = document.getElementById('class-abilities-div__button-add'), HTMLButtonElement) ? tmp$_1 : throwCCE()).onclick = initSlotButtons$lambda_1(player);
-    (Kotlin.isType(tmp$_2 = document.getElementById('spells-div__button-del'), HTMLButtonElement) ? tmp$_2 : throwCCE()).onclick = initSlotButtons$lambda_2(player);
-    (Kotlin.isType(tmp$_3 = document.getElementById('special-div__button-del'), HTMLButtonElement) ? tmp$_3 : throwCCE()).onclick = initSlotButtons$lambda_3(player);
-    (Kotlin.isType(tmp$_4 = document.getElementById('class-abilities-div__button-del'), HTMLButtonElement) ? tmp$_4 : throwCCE()).onclick = initSlotButtons$lambda_4(player);
+    (Kotlin.isType(tmp$_2 = document.getElementById('inventory-div__button-add'), HTMLButtonElement) ? tmp$_2 : throwCCE()).onclick = initSlotButtons$lambda_2(player);
+    (Kotlin.isType(tmp$_3 = document.getElementById('spells-div__button-del'), HTMLButtonElement) ? tmp$_3 : throwCCE()).onclick = initSlotButtons$lambda_3(player);
+    (Kotlin.isType(tmp$_4 = document.getElementById('special-div__button-del'), HTMLButtonElement) ? tmp$_4 : throwCCE()).onclick = initSlotButtons$lambda_4(player);
+    (Kotlin.isType(tmp$_5 = document.getElementById('class-abilities-div__button-del'), HTMLButtonElement) ? tmp$_5 : throwCCE()).onclick = initSlotButtons$lambda_5(player);
+    (Kotlin.isType(tmp$_6 = document.getElementById('inventory-div__button-del'), HTMLButtonElement) ? tmp$_6 : throwCCE()).onclick = initSlotButtons$lambda_6(player);
   }
   function initSlots(player, spellSlots, specialSlots, classSlots) {
     for (var index = 0; index < spellSlots; index++) {
@@ -559,6 +605,51 @@ var DemigodApp = function (_, Kotlin) {
       insertClassSlot(player);
     }
   }
+  function initSkills$lambda$lambda(closure$player, closure$skillName) {
+    return function (it) {
+      var tmp$;
+      ensureNotNull(closure$player.getSkill_61zpoe$(closure$skillName)).value.setBase_za3lpa$(toInt((Kotlin.isType(tmp$ = it.target, HTMLInputElement) ? tmp$ : throwCCE()).value));
+      return Unit;
+    };
+  }
+  function initSkills$lambda$lambda_0(closure$checkbox, closure$player, closure$skillName) {
+    return function (it) {
+      ensureNotNull(closure$player.getSkill_61zpoe$(closure$skillName)).check = closure$checkbox.checked;
+      return Unit;
+    };
+  }
+  function initSkills(player) {
+    var tmp$;
+    var table = Kotlin.isType(tmp$ = document.getElementById('skill-tree'), HTMLTableElement) ? tmp$ : throwCCE();
+    var index = {v: 0};
+    while (index.v < player.skills.size) {
+      var row = table.insertRow();
+      for (var index_0 = 0; index_0 < 2; index_0++) {
+        var tmp$_0, tmp$_1;
+        var skillName = player.skills.get_za3lpa$(index.v).name;
+        var label = row.insertCell();
+        addClass(label, ['skill-tree__label']);
+        label.innerText = skillName;
+        var value = row.insertCell();
+        var input = Kotlin.isType(tmp$_0 = document.createElement('input'), HTMLInputElement) ? tmp$_0 : throwCCE();
+        input.type = 'number';
+        input.name = 'skill-number';
+        input.placeholder = '0';
+        addClass(input, ['skill-tree__number']);
+        input.addEventListener('change', initSkills$lambda$lambda(player, skillName));
+        value.appendChild(input);
+        var check = row.insertCell();
+        addClass(check, ['skill-tree__td-checkbox']);
+        var checkbox = Kotlin.isType(tmp$_1 = document.createElement('input'), HTMLInputElement) ? tmp$_1 : throwCCE();
+        checkbox.type = 'checkbox';
+        checkbox.name = 'roll-check';
+        addClass(checkbox, ['skill-tree__checkbox']);
+        checkbox.addEventListener('change', initSkills$lambda$lambda_0(checkbox, player, skillName));
+        check.appendChild(checkbox);
+        index.v = index.v + 1 | 0;
+      }
+    }
+  }
   function insertSpellSlot(player) {
     return insertAbilitySlot(player, 'spells', 'Spell-Circle-Icon-Web-Dev80px.png');
   }
@@ -568,24 +659,24 @@ var DemigodApp = function (_, Kotlin) {
   function insertClassSlot(player) {
     return insertAbilitySlot(player, 'class-abilities', 'class-abilities-demigod100px.png');
   }
-  function insertAbilitySlot$lambda(closure$player) {
+  function insertAbilitySlot$lambda(closure$player, closure$index) {
     return function (it) {
       var tmp$;
-      closure$player.spells.get_za3lpa$(closure$player.spells.size - 1 | 0).description = (Kotlin.isType(tmp$ = it.target, HTMLTextAreaElement) ? tmp$ : throwCCE()).value;
+      closure$player.spells.get_za3lpa$(closure$index).description = (Kotlin.isType(tmp$ = it.target, HTMLTextAreaElement) ? tmp$ : throwCCE()).value;
       return Unit;
     };
   }
-  function insertAbilitySlot$lambda_0(closure$player) {
+  function insertAbilitySlot$lambda_0(closure$player, closure$index) {
     return function (it) {
       var tmp$;
-      closure$player.specials.get_za3lpa$(closure$player.specials.size - 1 | 0).description = (Kotlin.isType(tmp$ = it.target, HTMLTextAreaElement) ? tmp$ : throwCCE()).value;
+      closure$player.specials.get_za3lpa$(closure$index).description = (Kotlin.isType(tmp$ = it.target, HTMLTextAreaElement) ? tmp$ : throwCCE()).value;
       return Unit;
     };
   }
-  function insertAbilitySlot$lambda_1(closure$player) {
+  function insertAbilitySlot$lambda_1(closure$player, closure$index) {
     return function (it) {
       var tmp$;
-      closure$player.classAbilities.get_za3lpa$(closure$player.classAbilities.size - 1 | 0).description = (Kotlin.isType(tmp$ = it.target, HTMLTextAreaElement) ? tmp$ : throwCCE()).value;
+      closure$player.classAbilities.get_za3lpa$(closure$index).description = (Kotlin.isType(tmp$ = it.target, HTMLTextAreaElement) ? tmp$ : throwCCE()).value;
       return Unit;
     };
   }
@@ -611,19 +702,22 @@ var DemigodApp = function (_, Kotlin) {
         player.spells.add_11rb$(new Spell());
         img.id = type + '-img' + player.spells.size.toString();
         textarea.id = type + '-textarea-' + player.spells.size.toString();
-        textarea.addEventListener('change', insertAbilitySlot$lambda(player));
+        var index = player.spells.size - 1 | 0;
+        textarea.addEventListener('change', insertAbilitySlot$lambda(player, index));
         break;
       case 'special':
         player.specials.add_11rb$(new Special());
         img.id = type + '-img' + player.specials.size.toString();
         textarea.id = type + '-textarea-' + player.specials.size.toString();
-        textarea.addEventListener('change', insertAbilitySlot$lambda_0(player));
+        var index_0 = player.specials.size - 1 | 0;
+        textarea.addEventListener('change', insertAbilitySlot$lambda_0(player, index_0));
         break;
       case 'class-abilities':
         player.classAbilities.add_11rb$(new ClassAbility());
         img.id = type + '-img' + player.classAbilities.size.toString();
         textarea.id = type + '-textarea-' + player.classAbilities.size.toString();
-        textarea.addEventListener('change', insertAbilitySlot$lambda_1(player));
+        var index_1 = player.classAbilities.size - 1 | 0;
+        textarea.addEventListener('change', insertAbilitySlot$lambda_1(player, index_1));
         break;
     }
     return false;
@@ -649,11 +743,137 @@ var DemigodApp = function (_, Kotlin) {
     player.classAbilities.removeAt_za3lpa$(player.spells.size - 1 | 0);
     return false;
   }
+  function insertItemSlot(player) {
+    var tmp$, tmp$_0;
+    var table = Kotlin.isType(tmp$ = document.getElementById('inventory-div__slot-table'), HTMLTableElement) ? tmp$ : throwCCE();
+    var row;
+    if (table.rows.length === 0) {
+      row = table.insertRow();
+    }
+     else {
+      row = Kotlin.isType(tmp$_0 = table.rows[table.rows.length - 1 | 0], HTMLTableRowElement) ? tmp$_0 : throwCCE();
+      if (row.cells.length === 3) {
+        row = table.insertRow();
+      }
+    }
+    row.insertCell().appendChild(createItemSlot(player));
+    return false;
+  }
+  function createItemSlot$lambda(closure$player, closure$index) {
+    return function (it) {
+      var tmp$;
+      closure$player.inventory.getItem_za3lpa$(closure$index).description = (Kotlin.isType(tmp$ = it.target, HTMLTextAreaElement) ? tmp$ : throwCCE()).value;
+      return Unit;
+    };
+  }
+  function createItemSlot(player) {
+    var tmp$;
+    player.inventory.addItem_1d2k3$(new Item());
+    var textarea = Kotlin.isType(tmp$ = document.createElement('textarea'), HTMLTextAreaElement) ? tmp$ : throwCCE();
+    textarea.name = 'inventory-slot';
+    addClass(textarea, ['inventory-div__slot']);
+    textarea.id = 'inventory-slot-' + toString(player.inventory.size);
+    var index = player.inventory.size - 1 | 0;
+    textarea.addEventListener('change', createItemSlot$lambda(player, index));
+    return textarea;
+  }
+  function deleteItemSlot(player) {
+    var tmp$, tmp$_0;
+    if (player.inventory.size > 0) {
+      player.inventory.removeLastItem();
+    }
+    var table = Kotlin.isType(tmp$ = document.getElementById('inventory-div__slot-table'), HTMLTableElement) ? tmp$ : throwCCE();
+    if (table.rows.length === 0)
+      return false;
+    var row = Kotlin.isType(tmp$_0 = table.rows[table.rows.length - 1 | 0], HTMLTableRowElement) ? tmp$_0 : throwCCE();
+    if (row.cells.length === 1) {
+      table.deleteRow(table.rows.length - 1 | 0);
+    }
+     else {
+      row.deleteCell(row.cells.length - 1 | 0);
+    }
+    return false;
+  }
+  function Inventory() {
+    this.items_0 = ArrayList_init();
+    this.gold = 0;
+    this.bagType = '';
+    this.size = 0;
+    this.notes = '';
+  }
+  Inventory.prototype.addItem_1d2k3$ = function (item) {
+    this.items_0.add_11rb$(item);
+    this.size = this.size + 1 | 0;
+  };
+  Inventory.prototype.getItem_61zpoe$ = function (ID) {
+    return null;
+  };
+  Inventory.prototype.getItem_za3lpa$ = function (index) {
+    return this.items_0.get_za3lpa$(index);
+  };
+  Inventory.prototype.removeItem_61zpoe$ = function (ID) {
+    var tmp$;
+    tmp$ = this.items_0.iterator();
+    while (tmp$.hasNext()) {
+      var item = tmp$.next();
+      if (equals(item.id, ID)) {
+        this.items_0.remove_11rb$(item);
+        this.size = this.size - 1 | 0;
+        return item;
+      }
+    }
+    return null;
+  };
+  Inventory.prototype.removeLastItem = function () {
+    this.size = this.size - 1 | 0;
+    return this.items_0.removeAt_za3lpa$(this.items_0.size - 1 | 0);
+  };
+  Inventory.prototype.useItem_61zpoe$ = function (ID) {
+    var tmp$;
+    tmp$ = this.items_0.iterator();
+    while (tmp$.hasNext()) {
+      var item = tmp$.next();
+      if (equals(item.id, ID)) {
+        item.amount = item.amount - 1 | 0;
+        if (item.amount === 0) {
+          this.items_0.remove_11rb$(item);
+        }
+        return true;
+      }
+    }
+    return false;
+  };
+  Inventory.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Inventory',
+    interfaces: []
+  };
+  function Item(name, amount, description, effect) {
+    if (name === void 0)
+      name = '';
+    if (amount === void 0)
+      amount = 1;
+    if (description === void 0)
+      description = '';
+    if (effect === void 0)
+      effect = new Ability();
+    this.name = name;
+    this.amount = amount;
+    this.description = description;
+    this.effect = effect;
+    this.id = generateID();
+  }
+  Item.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Item',
+    interfaces: []
+  };
   function main() {
     var player = new Player();
     tempSheetLogic(player);
     initCharacterSheetListeners(player);
     initSlots(player, 0, 0, 0);
+    initSkills(player);
     initSlotButtons(player);
     initNavigationBar(player);
   }
@@ -674,6 +894,9 @@ var DemigodApp = function (_, Kotlin) {
     player.spells.add_11rb$(new Spell());
     player.specials.add_11rb$(new Special());
     player.classAbilities.add_11rb$(new ClassAbility());
+    player.inventory.addItem_1d2k3$(new Item());
+    player.inventory.addItem_1d2k3$(new Item());
+    player.inventory.addItem_1d2k3$(new Item());
   }
   function generateID() {
     var uuid = '';
@@ -689,6 +912,7 @@ var DemigodApp = function (_, Kotlin) {
     this.traits = new Traits('player', 30, 'Human', new Class());
     this.resources = new Resources();
     this.baseStats = new BaseStats();
+    this.skills = this.initSkills_0();
     this.statChecker = new StatChecker(this);
     this.weapon = new Weapon();
     this.armor = new Armor();
@@ -696,7 +920,63 @@ var DemigodApp = function (_, Kotlin) {
     this.spells = ArrayList_init();
     this.specials = ArrayList_init();
     this.classAbilities = ArrayList_init();
+    this.inventory = new Inventory();
   }
+  Player.prototype.initSkills_0 = function () {
+    var list = ArrayList_init();
+    list.add_11rb$(new Skill('Common Sense'));
+    list.add_11rb$(new Skill('Spell-Craft'));
+    list.add_11rb$(new Skill('Cartography'));
+    list.add_11rb$(new Skill('Ancient World'));
+    list.add_11rb$(new Skill('Study/Reading'));
+    list.add_11rb$(new Skill('Magic Knowledge'));
+    list.add_11rb$(new Skill('Herbology'));
+    list.add_11rb$(new Skill('Advanced Medicine'));
+    list.add_11rb$(new Skill('Detective'));
+    list.add_11rb$(new Skill('Awareness'));
+    list.add_11rb$(new Skill('Disguise'));
+    list.add_11rb$(new Skill('Puzzle'));
+    list.add_11rb$(new Skill('Sense Motive'));
+    list.add_11rb$(new Skill('Escape Artist'));
+    list.add_11rb$(new Skill('Stealth/Sneak'));
+    list.add_11rb$(new Skill('Trickery/Stealing'));
+    list.add_11rb$(new Skill('Lock Picking'));
+    list.add_11rb$(new Skill('Free Running'));
+    list.add_11rb$(new Skill('Tracking/Hunting'));
+    list.add_11rb$(new Skill('Basic Survival'));
+    list.add_11rb$(new Skill('Advanced Riding'));
+    list.add_11rb$(new Skill('Cooking'));
+    list.add_11rb$(new Skill('Beast Taming'));
+    list.add_11rb$(new Skill('Pain Tolerance'));
+    list.add_11rb$(new Skill('First Aid'));
+    list.add_11rb$(new Skill('Inspiration'));
+    list.add_11rb$(new Skill('Seduction'));
+    list.add_11rb$(new Skill('Charm'));
+    list.add_11rb$(new Skill('Speech'));
+    list.add_11rb$(new Skill('Persuasion'));
+    list.add_11rb$(new Skill('Intimidate'));
+    list.add_11rb$(new Skill('Guile'));
+    list.add_11rb$(new Skill('Composure/Calm'));
+    list.add_11rb$(new Skill('War Tactics'));
+    list.add_11rb$(new Skill('Group Management'));
+    list.add_11rb$(new Skill('Hand To Hand Combat'));
+    list.add_11rb$(new Skill('Weapons Play'));
+    list.add_11rb$(new Skill('Specialty Weapon'));
+    list.add_11rb$(new Skill('Swimming'));
+    list.add_11rb$(new Skill('Climbing'));
+    return list;
+  };
+  Player.prototype.getSkill_61zpoe$ = function (name) {
+    var tmp$;
+    tmp$ = this.skills.iterator();
+    while (tmp$.hasNext()) {
+      var skill = tmp$.next();
+      if (equals(skill.name, name)) {
+        return skill;
+      }
+    }
+    return null;
+  };
   Player.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Player',
@@ -769,9 +1049,6 @@ var DemigodApp = function (_, Kotlin) {
   BaseStats.prototype.getACC = function () {
     return this.acc_0.getValue();
   };
-  BaseStats.prototype.setSTRMOD = function () {
-    this.str_0.modifiers.get_za3lpa$(0);
-  };
   BaseStats.prototype.getSTRModifiers = function () {
     return this.str_0.modifiers;
   };
@@ -817,21 +1094,12 @@ var DemigodApp = function (_, Kotlin) {
   };
   Resources.prototype.setCurrentHP_za3lpa$ = function (value) {
     this.hp_0.current.setBase_za3lpa$(value);
-    if (this.hp_0.current.getValue() > this.hp_0.max.getValue()) {
-      this.hp_0.current.setBase_za3lpa$(this.hp_0.max.getValue());
-    }
   };
   Resources.prototype.setCurrentMP_za3lpa$ = function (value) {
     this.mp_0.current.setBase_za3lpa$(value);
-    if (this.mp_0.current.getValue() > this.mp_0.max.getValue()) {
-      this.mp_0.current.setBase_za3lpa$(this.mp_0.max.getValue());
-    }
   };
   Resources.prototype.setCurrentSP_za3lpa$ = function (value) {
     this.sp_0.current.setBase_za3lpa$(value);
-    if (this.sp_0.current.getValue() > this.sp_0.max.getValue()) {
-      this.sp_0.current.setBase_za3lpa$(this.sp_0.max.getValue());
-    }
   };
   Resources.prototype.getMaxHP = function () {
     return this.hp_0.max.getValue();
@@ -984,32 +1252,15 @@ var DemigodApp = function (_, Kotlin) {
   CombatStats.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.at_0, other.at_0) && Kotlin.equals(this.df_0, other.df_0) && Kotlin.equals(this.ma_0, other.ma_0) && Kotlin.equals(this.md_0, other.md_0)))));
   };
-  function Skills(temp) {
-    if (temp === void 0)
-      temp = 0;
-    this.temp = temp;
+  function Skill(name) {
+    this.name = name;
+    this.check = false;
+    this.value = new Value(0);
   }
-  Skills.$metadata$ = {
+  Skill.$metadata$ = {
     kind: Kind_CLASS,
-    simpleName: 'Skills',
+    simpleName: 'Skill',
     interfaces: []
-  };
-  Skills.prototype.component1 = function () {
-    return this.temp;
-  };
-  Skills.prototype.copy_za3lpa$ = function (temp) {
-    return new Skills(temp === void 0 ? this.temp : temp);
-  };
-  Skills.prototype.toString = function () {
-    return 'Skills(temp=' + Kotlin.toString(this.temp) + ')';
-  };
-  Skills.prototype.hashCode = function () {
-    var result = 0;
-    result = result * 31 + Kotlin.hashCode(this.temp) | 0;
-    return result;
-  };
-  Skills.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && Kotlin.equals(this.temp, other.temp))));
   };
   function Traits(name, age, species, _class, level, icon) {
     if (level === void 0)
@@ -1213,11 +1464,12 @@ var DemigodApp = function (_, Kotlin) {
   _.initResourceListener_vgc0e7$ = initResourceListener;
   _.initStatListener_vgc0e7$ = initStatListener;
   _.initEquipmentListener_vgc0e7$ = initEquipmentListener;
-  _.initSkillsListener_vgc0e7$ = initSkillsListener;
   _.initAbilityListener_vgc0e7$ = initAbilityListener;
+  _.initItemListener_vgc0e7$ = initItemListener;
   _.initNavigationBar_vgc0e7$ = initNavigationBar;
   _.initSlotButtons_vgc0e7$ = initSlotButtons;
   _.initSlots_m4me0d$ = initSlots;
+  _.initSkills_vgc0e7$ = initSkills;
   _.insertSpellSlot_vgc0e7$ = insertSpellSlot;
   _.insertSpecialSlot_vgc0e7$ = insertSpecialSlot;
   _.insertClassSlot_vgc0e7$ = insertClassSlot;
@@ -1225,6 +1477,11 @@ var DemigodApp = function (_, Kotlin) {
   _.deleteSpellSlot_vgc0e7$ = deleteSpellSlot;
   _.deleteSpecialSlot_vgc0e7$ = deleteSpecialSlot;
   _.deleteClassSlot_vgc0e7$ = deleteClassSlot;
+  _.insertItemSlot_vgc0e7$ = insertItemSlot;
+  _.createItemSlot_vgc0e7$ = createItemSlot;
+  _.deleteItemSlot_vgc0e7$ = deleteItemSlot;
+  _.Inventory = Inventory;
+  _.Item = Item;
   _.main = main;
   _.tempSheetLogic_vgc0e7$ = tempSheetLogic;
   _.generateID = generateID;
@@ -1232,7 +1489,7 @@ var DemigodApp = function (_, Kotlin) {
   _.BaseStats = BaseStats;
   _.Resources = Resources;
   _.CombatStats = CombatStats;
-  _.Skills = Skills;
+  _.Skill = Skill;
   _.Traits = Traits;
   _.Class = Class;
   _.Value = Value;
