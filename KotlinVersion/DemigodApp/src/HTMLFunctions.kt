@@ -9,6 +9,7 @@ fun initCharacterSheetListeners(player: Player) {
     initEquipmentListener(player)
     initSkillsListener(player)
     initAbilityListener(player)
+    initItemListener(player)
 }
 fun initTraitListener(player: Player) {
     document.addEventListener("change", {
@@ -197,24 +198,30 @@ fun insertAbilitySlot(player: Player, type: String, image: String = "Hold Primar
             player.spells.add(Spell())
             img.id =  "$type-img" + player.spells.size.toString()
             textarea.id =  "$type-textarea-" + player.spells.size.toString()
+            val index = player.spells.size-1
             textarea.addEventListener("change", {
-                player.spells[player.spells.size-1].description = (it.target as HTMLTextAreaElement).value
+                // index must be declared outside the eventListener to stay constant
+                player.spells[index].description = (it.target as HTMLTextAreaElement).value
             })
         }
         "special" -> {
             player.specials.add(Special())
             img.id =  "$type-img" + player.specials.size.toString()
             textarea.id =  "$type-textarea-" + player.specials.size.toString()
+            val index = player.specials.size-1
             textarea.addEventListener("change", {
-                player.specials[player.specials.size-1].description = (it.target as HTMLTextAreaElement).value
+                // index must be declared outside the eventListener to stay constant
+                player.specials[index].description = (it.target as HTMLTextAreaElement).value
             })
         }
         "class-abilities" -> {
             player.classAbilities.add(ClassAbility())
             img.id =  "$type-img" + player.classAbilities.size.toString()
             textarea.id =  "$type-textarea-" + player.classAbilities.size.toString()
+            val index = player.classAbilities.size-1
             textarea.addEventListener("change", {
-                player.classAbilities[player.classAbilities.size-1].description = (it.target as HTMLTextAreaElement).value
+                // index must be declared outside the eventListener to stay constant
+                player.classAbilities[index].description = (it.target as HTMLTextAreaElement).value
             })
         }
     }
@@ -222,7 +229,6 @@ fun insertAbilitySlot(player: Player, type: String, image: String = "Hold Primar
     // "false" keeps page from refreshing on button press
     return false
 }
-
 fun deleteSpellSlot(player: Player): Boolean {
     val table = document.getElementById("spells-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
@@ -277,13 +283,14 @@ fun createItemSlot(player: Player): HTMLTextAreaElement {
     textarea.id = "inventory-slot-" + player.inventory.size
 
     // add EventListener
+    val index = player.inventory.size-1
     textarea.addEventListener("change", {
-        player.inventory.getItem(player.inventory.size).description = (it.target as HTMLTextAreaElement).value
+        // index must be declared outside the eventListener to stay constant
+        player.inventory.getItem(index).description = (it.target as HTMLTextAreaElement).value
     })
 
     return textarea
 }
-
 fun deleteItemSlot(player: Player): Boolean {
     // update player
     if (player.inventory.size > 0) {
