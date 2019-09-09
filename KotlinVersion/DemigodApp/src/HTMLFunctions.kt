@@ -2,13 +2,27 @@ import org.w3c.dom.*
 import kotlin.browser.document
 import kotlin.dom.addClass
 
+fun setupPage(player: Player) {
+    initCharacterSheetListeners(player)
+    initSlots(player, 3, 3, 4)
+    initItems(player, 10)
+    initSkills(player)
+    initButtons(player)
+    initNavigationBar(player)
+    //resetPage(player)
+}
+fun resetPage(player: Player) {
+    while (player.spells.size > 0) { deleteSpellSlot(player) }
+    while (player.specials.size > 0) { deleteSpecialSlot(player) }
+    while (player.classAbilities.size > 0) { deleteClassSlot(player) }
+    while (player.inventory.size > 0) { deleteItemSlot(player) }
+}
 fun initCharacterSheetListeners(player: Player) {
     initTraitListener(player)
     initResourceListener(player)
     initStatListener(player)
     initEquipmentListener(player)
-    initAbilityListener(player)
-    initItemListener(player)
+    initNotesListener(player)
 }
 fun initTraitListener(player: Player) {
     document.addEventListener("change", {
@@ -26,17 +40,17 @@ fun initTraitListener(player: Player) {
 }
 fun initResourceListener(player: Player) {
     document.addEventListener("change", {
-        val resource = (it.target as HTMLInputElement).value.toInt()
-        when ((it.target as HTMLInputElement).id) {
-            "currentHP" -> player.resources.setCurrentHP(resource)
-            "currentMP" -> player.resources.setCurrentMP(resource)
-            "currentSP" -> player.resources.setCurrentSP(resource)
-            "maxHP" -> player.resources.setMaxHP(resource)
-            "maxMP" -> player.resources.setMaxMP(resource)
-            "maxSP" -> player.resources.setMaxSP(resource)
-            "maxHP-MOD" -> player.resources.getMaxHPModifiers()[0].value = resource
-            "maxMP-MOD" -> player.resources.getMaxMPModifiers()[0].value = resource
-            "maxSP-MOD" -> player.resources.getMaxSPModifiers()[0].value = resource
+        val resource = it.target as HTMLInputElement
+        when (resource.id) {
+            "currentHP" -> player.resources.setCurrentHP(resource.value.toInt())
+            "currentMP" -> player.resources.setCurrentMP(resource.value.toInt())
+            "currentSP" -> player.resources.setCurrentSP(resource.value.toInt())
+            "maxHP" -> player.resources.setMaxHP(resource.value.toInt())
+            "maxMP" -> player.resources.setMaxMP(resource.value.toInt())
+            "maxSP" -> player.resources.setMaxSP(resource.value.toInt())
+            "maxHP-MOD" -> player.resources.getMaxHPModifiers()[0].value = resource.value.toInt()
+            "maxMP-MOD" -> player.resources.getMaxMPModifiers()[0].value = resource.value.toInt()
+            "maxSP-MOD" -> player.resources.getMaxSPModifiers()[0].value = resource.value.toInt()
         }
 
         // update document visuals
@@ -47,45 +61,45 @@ fun initResourceListener(player: Player) {
 }
 fun initStatListener(player: Player) {
     document.addEventListener("change", {
-        val stat = (it.target as HTMLInputElement).value.toInt()
-        when ((it.target as HTMLInputElement).id) {
-            "STR" -> player.baseStats.setSTR(stat)
-            "CON" -> player.baseStats.setCON(stat)
-            "INT" -> player.baseStats.setINT(stat)
-            "WILL"-> player.baseStats.setWIL(stat)
-            "SPD" -> player.baseStats.setSPD(stat)
-            "AC"  -> player.baseStats.setACC(stat)
+        val stat = it.target as HTMLInputElement
+        when (stat.id) {
+            "STR-BASE" -> player.baseStats.setSTR(stat.value.toInt())
+            "CON-BASE" -> player.baseStats.setCON(stat.value.toInt())
+            "INT-BASE" -> player.baseStats.setINT(stat.value.toInt())
+            "WILL-BASE"-> player.baseStats.setWIL(stat.value.toInt())
+            "SPD-BASE" -> player.baseStats.setSPD(stat.value.toInt())
+            "AC-BASE"  -> player.baseStats.setACC(stat.value.toInt())
 
-            //"AT" -> player.baseStats.combatStats.setATBase(stat)
-            //"DF" -> player.baseStats.combatStats.setDFBase(stat)
-            //"MA" -> player.baseStats.combatStats.setMABase(stat)
-            //"MD" -> player.baseStats.combatStats.setMDBase(stat)
+            "STR-MOD" -> player.baseStats.getSTRModifiers()[0].value = stat.value.toInt()
+            "CON-MOD" -> player.baseStats.getCONModifiers()[0].value = stat.value.toInt()
+            "INT-MOD" -> player.baseStats.getINTModifiers()[0].value = stat.value.toInt()
+            "WILL-MOD"-> player.baseStats.getWILModifiers()[0].value = stat.value.toInt()
+            "SPD-MOD" -> player.baseStats.getSPDModifiers()[0].value = stat.value.toInt()
+            "AC-MOD"  -> player.baseStats.getACCModifiers()[0].value = stat.value.toInt()
 
-            "STR-MOD" -> player.baseStats.getSTRModifiers()[0].value = stat
-            "CON-MOD" -> player.baseStats.getCONModifiers()[0].value = stat
-            "INT-MOD" -> player.baseStats.getINTModifiers()[0].value = stat
-            "WILL-MOD"-> player.baseStats.getWILModifiers()[0].value = stat
-            "SPD-MOD" -> player.baseStats.getSPDModifiers()[0].value = stat
-            "AC-MOD"  -> player.baseStats.getACCModifiers()[0].value = stat
-
-            "AT-MOD" -> player.baseStats.combatStats.getATModifiers()[0].value = stat
-            "DF-MOD" -> player.baseStats.combatStats.getDFModifiers()[0].value = stat
-            "MA-MOD" -> player.baseStats.combatStats.getMAModifiers()[0].value = stat
-            "MD-MOD" -> player.baseStats.combatStats.getMDModifiers()[0].value = stat
+            "AT-MOD" -> player.baseStats.combatStats.getATModifiers()[0].value = stat.value.toInt()
+            "DF-MOD" -> player.baseStats.combatStats.getDFModifiers()[0].value = stat.value.toInt()
+            "MA-MOD" -> player.baseStats.combatStats.getMAModifiers()[0].value = stat.value.toInt()
+            "MD-MOD" -> player.baseStats.combatStats.getMDModifiers()[0].value = stat.value.toInt()
         }
         // update document visuals
         player.baseStats.updateCombat()
-        (document.getElementById("AT") as HTMLInputElement).value = player.baseStats.combatStats.getAT().toString()
-        (document.getElementById("DF") as HTMLInputElement).value = player.baseStats.combatStats.getDF().toString()
-        (document.getElementById("MA") as HTMLInputElement).value = player.baseStats.combatStats.getMA().toString()
-        (document.getElementById("MD") as HTMLInputElement).value = player.baseStats.combatStats.getMD().toString()
+        (document.getElementById("AT-BASE") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getAT(false).toString()
+        (document.getElementById("DF-BASE") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getDF(false).toString()
+        (document.getElementById("MA-BASE") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getMA(false).toString()
+        (document.getElementById("MD-BASE") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getMD(false).toString()
 
-        (document.getElementById("STR") as HTMLInputElement).value = player.baseStats.getSTR().toString()
-        (document.getElementById("CON") as HTMLInputElement).value = player.baseStats.getCON().toString()
-        (document.getElementById("INT") as HTMLInputElement).value = player.baseStats.getINT().toString()
-        (document.getElementById("WILL") as HTMLInputElement).value = player.baseStats.getWIL().toString()
-        (document.getElementById("SPD") as HTMLInputElement).value = player.baseStats.getSPD().toString()
-        (document.getElementById("AC") as HTMLInputElement).value = player.baseStats.getACC().toString()
+        (document.getElementById("AT-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getAT().toString()
+        (document.getElementById("DF-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getDF().toString()
+        (document.getElementById("MA-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getMA().toString()
+        (document.getElementById("MD-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getMD().toString()
+
+        (document.getElementById("STR-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getSTR().toString()
+        (document.getElementById("CON-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getCON().toString()
+        (document.getElementById("INT-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getINT().toString()
+        (document.getElementById("WILL-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getWIL().toString()
+        (document.getElementById("SPD-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getSPD().toString()
+        (document.getElementById("AC-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getACC().toString()
     })
 }
 fun initEquipmentListener(player: Player) {
@@ -98,8 +112,15 @@ fun initEquipmentListener(player: Player) {
         }
     })
 }
+fun initNotesListener(player: Player) {
+    val notes = document.getElementById("notes-div__textarea") as HTMLTextAreaElement
+    notes.addEventListener("change", {
+        player.inventory.notes = notes.value
+    })
+}
+/* TODO: saved just in case
 fun initAbilityListener(player: Player) {
-    //TODO: used to init the default 3 - search for a better option.
+
     val spell = document.getElementById("spells-textarea-1") as HTMLTextAreaElement
     val special = document.getElementById("special-textarea-1") as HTMLTextAreaElement
     val classAbility = document.getElementById("class-abilities-textarea-1") as HTMLTextAreaElement
@@ -113,8 +134,9 @@ fun initAbilityListener(player: Player) {
         player.classAbilities[0].description = (it.target as HTMLTextAreaElement).value
     })
 }
+*/
+/* TODO: saved just in case
 fun initItemListener(player: Player) {
-    //TODO: used to init the default 3 - search for a better option.
     repeat(3) {
         val textarea = document.getElementById("inventory-slot-" + (it+1)) as HTMLTextAreaElement
         val index = it
@@ -228,18 +250,31 @@ fun initSkills(player: Player) {
         }
     }
 }
+fun initItems(player: Player, amount: Int) {
+    repeat(amount) {
+        insertItemSlot(player)
+    }
+}
 
 
 fun insertSpellSlot(player: Player): Boolean {
-    return insertAbilitySlot(player, "spells", "Spell-Circle-Icon-Web-Dev80px.png")
+    player.spells.add(Spell())
+    return insertAbilitySlot(player, "spells", "Spell-Circle-Icon-Web-Dev80px.png", player.spells.size)
 }
 fun insertSpecialSlot(player: Player): Boolean {
-    return insertAbilitySlot(player, "special", "Triangle Icon - Web Dev.png")
+    player.specials.add(Special())
+    return insertAbilitySlot(player, "special", "Triangle Icon - Web Dev.png", player.specials.size)
 }
 fun insertClassSlot(player: Player): Boolean {
-    return insertAbilitySlot(player, "class-abilities", "class-abilities-demigod100px.png")
+    player.classAbilities.add(ClassAbility())
+    return insertAbilitySlot(player, "class-abilities", "class-abilities-demigod100px.png", player.classAbilities.size)
 }
-fun insertAbilitySlot(player: Player, type: String, image: String = "Hold Primary Logo 240px.png"): Boolean {
+fun insertAbilitySlot(
+        player: Player,
+        type: String,
+        image: String = "Hold Primary Logo 240px.png",
+        size: Int
+): Boolean {
     // access table and create new row
     val table = document.getElementById("$type-div__table") as HTMLTableElement
     val row = table.insertRow()
@@ -250,6 +285,7 @@ fun insertAbilitySlot(player: Player, type: String, image: String = "Hold Primar
     val img = document.createElement("img") as HTMLImageElement
     img.addClass("$type-div__image")
     img.src = image
+    img.id =  "$type-img-$size"
     icon.appendChild(img)
 
     // create text cell (second)
@@ -257,46 +293,25 @@ fun insertAbilitySlot(player: Player, type: String, image: String = "Hold Primar
     text.addClass("$type-div__td-textarea")
     val textarea = document.createElement("textarea") as HTMLTextAreaElement
     textarea.addClass("$type-div__textarea")
-    text.appendChild(textarea)
+    textarea.id =  "$type-textarea-$size"
 
-    //update player and table element IDs
-    when (type) {
-        "spells" -> {
-            player.spells.add(Spell())
-            img.id =  "$type-img" + player.spells.size.toString()
-            textarea.id =  "$type-textarea-" + player.spells.size.toString()
-            val index = player.spells.size-1
-            textarea.addEventListener("change", {
-                // index must be declared outside the eventListener to stay constant
-                player.spells[index].description = (it.target as HTMLTextAreaElement).value
-            })
+    // add eventListener based on which type it is
+    textarea.addEventListener("change", {
+        when (type) {
+            "spells" -> player.spells[size-1].description = (it.target as HTMLTextAreaElement).value
+            "special" -> player.specials[size-1].description = (it.target as HTMLTextAreaElement).value
+            "class-abilities" -> player.classAbilities[size-1].description = (it.target as HTMLTextAreaElement).value
         }
-        "special" -> {
-            player.specials.add(Special())
-            img.id =  "$type-img" + player.specials.size.toString()
-            textarea.id =  "$type-textarea-" + player.specials.size.toString()
-            val index = player.specials.size-1
-            textarea.addEventListener("change", {
-                // index must be declared outside the eventListener to stay constant
-                player.specials[index].description = (it.target as HTMLTextAreaElement).value
-            })
-        }
-        "class-abilities" -> {
-            player.classAbilities.add(ClassAbility())
-            img.id =  "$type-img" + player.classAbilities.size.toString()
-            textarea.id =  "$type-textarea-" + player.classAbilities.size.toString()
-            val index = player.classAbilities.size-1
-            textarea.addEventListener("change", {
-                // index must be declared outside the eventListener to stay constant
-                player.classAbilities[index].description = (it.target as HTMLTextAreaElement).value
-            })
-        }
-    }
+    })
+
+    // finally append
+    text.appendChild(textarea)
 
     // "false" keeps page from refreshing on button press
     return false
 }
 fun deleteSpellSlot(player: Player): Boolean {
+
     val table = document.getElementById("spells-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
     player.spells.removeAt(player.spells.size -1)
@@ -305,13 +320,13 @@ fun deleteSpellSlot(player: Player): Boolean {
 fun deleteSpecialSlot(player: Player): Boolean {
     val table = document.getElementById("special-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
-    player.specials.removeAt(player.spells.size -1)
+    player.specials.removeAt(player.specials.size -1)
     return false
 }
 fun deleteClassSlot(player: Player): Boolean {
     val table = document.getElementById("class-abilities-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
-    player.classAbilities.removeAt(player.spells.size -1)
+    player.classAbilities.removeAt(player.classAbilities.size -1)
     return false
 }
 
@@ -359,16 +374,15 @@ fun createItemSlot(player: Player): HTMLTextAreaElement {
     return textarea
 }
 fun deleteItemSlot(player: Player): Boolean {
-    // update player
-    if (player.inventory.size > 0) {
-        player.inventory.removeLastItem()
+    // update player, cancel out if 0
+    if (player.inventory.size == 0) {
+
+        return false
     }
 
-    val table = document.getElementById("inventory-div__slot-table") as HTMLTableElement
-    // check for empty table exception
-    if (table.rows.length == 0) return false
+    player.inventory.removeLastItem()
 
-    // else, assign "row" as last row in table
+    val table = document.getElementById("inventory-div__slot-table") as HTMLTableElement
     val row = table.rows[table.rows.length-1] as HTMLTableRowElement
 
     // if there is only one cell in the table...

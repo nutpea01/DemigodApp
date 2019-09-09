@@ -1,16 +1,16 @@
+import kotlin.browser.document
+
 /**
  * The starting point of EVERYTHING for this app.
  */
 fun main() {
     //simple testing player
-    val player = Player()
+    var player = Player()
     tempSheetLogic(player)
-
-    initCharacterSheetListeners(player)
-    initSlots(player, 0, 0, 0)
-    initSkills(player)
-    initSlotButtons(player)
-    initNavigationBar(player)
+    setupPage(player)
+    (document.getElementById("resource-stats__form"))!!.addEventListener("submit", {
+        it.preventDefault()
+    })
 }
 
 fun tempSheetLogic(player: Player) {
@@ -28,12 +28,6 @@ fun tempSheetLogic(player: Player) {
     player.resources.getMaxHPModifiers().add(Modifier(""))
     player.resources.getMaxMPModifiers().add(Modifier(""))
     player.resources.getMaxSPModifiers().add(Modifier(""))
-    player.spells.add(Spell())
-    player.specials.add(Special())
-    player.classAbilities.add(ClassAbility())
-    player.inventory.addItem(Item())
-    player.inventory.addItem(Item())
-    player.inventory.addItem(Item())
 }
 
 fun generateID(): String {
