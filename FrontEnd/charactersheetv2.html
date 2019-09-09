@@ -43,7 +43,7 @@
 
 				<tr class="personal-info__table-row">
 					<td><label for="Age">Age :</label></td>
-					<td><input type="text" id="Age" name="Age" placeholder="Age" class="personal-info__user-input"></td>
+					<td><input type="number" id="Age" name="Age" placeholder="Age" class="personal-info__user-input"></td>
 				</tr>
 
 				<tr class="personal-info__table-row">
@@ -58,7 +58,7 @@
 
 				<tr class="personal-info__table-row">
 					<td><label for="Level">Level :</label></td>
-					<td><input type="text" id="Level" name="Level" placeholder="Level" class="personal-info__user-input"></td>
+					<td><input type="number" id="Level" name="Level" placeholder="Level" class="personal-info__user-input"></td>
 				</tr>
 
 			</table>
@@ -69,7 +69,7 @@
 	<!-- HP MP SP TABLE  -->
 	<div class="resource-stats">
 		<h4 class="resource-stats__title">Stats</h4>
-			<form class="resource-stats__form">
+			<form id = "resource-stats__form" class="resource-stats__form">
 				<table class="resource-stats__table">
 					<tr class="resource-stats__effect-row">
 						<td></td>
@@ -227,8 +227,10 @@
 		<form>
 			<table class = "spells-div__table" id = "spells-div__table">
 				<tr>
+					<!--
 					<td class="spells-div__td-image"><img class="spells-div__image" src="Spell-Circle-Icon-Web-Dev80px.png" id = "spells-img-1"></td>
 					<td class="spells-div__td-textarea"><textarea class="spells-div__textarea" id = "spells-textarea-1"></textarea></td>
+					-->
 				</tr>
 			</table>
 			<button id = "spells-div__button-add">+</button>
@@ -240,8 +242,10 @@
 		<form>
 			<table class = "special-div__table" id = "special-div__table">
 				<tr>
+					<!--
 					<td class="special-div__td-image"><img class="special-div__image" src="Triangle Icon - Web Dev.png" id = "special-img-1"></td>
 					<td class="special-div__td-textarea"><textarea class="special-div__textarea" id = "special-textarea-1"></textarea></td>
+					-->
 				</tr>
 			</table>
 			<button id = "special-div__button-add">+</button>
@@ -253,8 +257,10 @@
 		<form>
 			<table class = "class-abilities-div__table" id = "class-abilities-div__table">
 				<tr>
+					<!--
 					<td class="class-abilities-div__td-image"><img class="class-abilities-div__image" src="class-abilities-demigod100px.png" id = "class-abilities-img-1"></td>
 					<td class="class-abilities-div__td-textarea"><textarea class="class-abilities-div__textarea" id = "class-abilities-textarea-1"></textarea></td>
+					-->
 				</tr>
 			</table>
 			<button id = "class-abilities-div__button-add">+</button>
@@ -277,9 +283,9 @@
 
 			<table class="inventory-div__slot-table" id = "inventory-div__slot-table">
 				<tr>
+					<!--
 					<td><textarea name="inventory-slot" class="inventory-div__slot" id="inventory-slot-1"></textarea></td>
-					<td><textarea name="inventory-slot" class="inventory-div__slot" id="inventory-slot-2"></textarea></td>
-					<td><textarea name="inventory-slot" class="inventory-div__slot" id="inventory-slot-3"></textarea></td>
+					-->
 				</tr>
 			</table>
 			<button id = "inventory-div__button-add">+</button>
