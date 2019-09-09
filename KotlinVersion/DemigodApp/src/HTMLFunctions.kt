@@ -131,25 +131,52 @@ fun initItemListener(player: Player) {
         player.inventory.notes = notes.value
     })
 }
+*/
 
 
 
 fun initNavigationBar(player: Player) {
-    (document.getElementById("main-navbar__icon__save-button") as HTMLButtonElement).onclick = { FileHandler.save("test", player) }
-    (document.getElementById("main-navbar__icon__load-button") as HTMLButtonElement).onclick = { FileHandler.load() }
+    (document.getElementById("main-navbar__icon__save-button") as HTMLButtonElement).onclick = { FileHandler.save(player) }
+    (document.getElementById("main-navbar__icon__load-button") as HTMLButtonElement).onclick = { FileHandler.load(player) }
 }
-fun initSlotButtons(player: Player) {
+fun initButtons(player: Player) {
     // initialize add buttons to insert a row
     (document.getElementById("spells-div__button-add") as HTMLButtonElement).onclick = { insertSpellSlot(player) }
     (document.getElementById("special-div__button-add") as HTMLButtonElement).onclick = { insertSpecialSlot(player) }
     (document.getElementById("class-abilities-div__button-add") as HTMLButtonElement).onclick = { insertClassSlot(player) }
-    (document.getElementById("inventory-div__button-add") as HTMLButtonElement).onclick = { insertItemSlot(player) }
 
     // initialize delete buttons to remove a row
     (document.getElementById("spells-div__button-del")   as HTMLButtonElement).onclick = { deleteSpellSlot(player) }
     (document.getElementById("special-div__button-del") as HTMLButtonElement).onclick = { deleteSpecialSlot(player) }
     (document.getElementById("class-abilities-div__button-del")   as HTMLButtonElement).onclick = { deleteClassSlot(player) }
+
+    // initialize inventory buttons
+    (document.getElementById("inventory-div__button-add") as HTMLButtonElement).onclick = { insertItemSlot(player) }
     (document.getElementById("inventory-div__button-del") as HTMLButtonElement).onclick = { deleteItemSlot(player) }
+
+    // initialize stat roll button
+    val rollStatButton = document.getElementById("roll") as HTMLButtonElement
+    rollStatButton.onclick = {
+        DiceRoller.rollStatButton(player).toString()
+    }
+    // secondary init for the stat selector
+    val rollStatSelector = document.getElementById("roll-stat-select") as HTMLSelectElement
+    rollStatSelector.addEventListener("change", {
+        val span = document.getElementById("roll-stat-display")
+        span!!.textContent = when (rollStatSelector.value) {
+            "AT" -> player.baseStats.combatStats.getAT().toString()
+            "DF" -> player.baseStats.combatStats.getDF().toString()
+            "MA" -> player.baseStats.combatStats.getMA().toString()
+            "MD" -> player.baseStats.combatStats.getMD().toString()
+            "STR" -> player.baseStats.getSTR().toString()
+            "CON" -> player.baseStats.getCON().toString()
+            "INT" -> player.baseStats.getINT().toString()
+            "WILL"-> player.baseStats.getWIL().toString()
+            "SPD" -> player.baseStats.getSPD().toString()
+            "AC"  -> player.baseStats.getACC().toString()
+            else -> player.baseStats.combatStats.getAT().toString()
+        }
+    })
 }
 fun initSlots(player: Player, spellSlots: Int, specialSlots: Int, classSlots: Int) {
     repeat(spellSlots) { insertSpellSlot(player) }
