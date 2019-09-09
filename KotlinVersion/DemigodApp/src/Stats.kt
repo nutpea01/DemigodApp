@@ -135,10 +135,10 @@ data class CombatStats (
         private val ma: Value = Value(0),
         private val md: Value = Value(0)
 ) {
-    fun getAT(): Int { return this.at.getValue() }
-    fun getDF(): Int { return this.df.getValue() }
-    fun getMA(): Int { return this.ma.getValue() }
-    fun getMD(): Int { return this.md.getValue() }
+    fun getAT(includeMods: Boolean = true): Int { return this.at.getValue(includeMods) }
+    fun getDF(includeMods: Boolean = true): Int { return this.df.getValue(includeMods) }
+    fun getMA(includeMods: Boolean = true): Int { return this.ma.getValue(includeMods) }
+    fun getMD(includeMods: Boolean = true): Int { return this.md.getValue(includeMods) }
 
     fun setATBase(base: Int) { this.at.setBase(base) }
     fun setDFBase(base: Int) { this.df.setBase(base) }

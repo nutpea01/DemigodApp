@@ -1,9 +1,12 @@
+import kotlin.math.min
+
 open class Value(private var base: Int = 0) {
     val id: String = generateID()
     val modifiers: MutableList<Modifier> = mutableListOf()
 
-    fun getValue(): Int {
-        return this.base + getModTotalValue()
+    fun getValue(includeMods: Boolean = true): Int {
+        if (includeMods) return min(this.base + getModTotalValue(), 9999)
+        return min(this.base, 9999)
     }
     fun getModTotalValue(): Int {
         var temp = 0
