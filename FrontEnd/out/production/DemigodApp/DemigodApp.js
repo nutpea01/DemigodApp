@@ -4,11 +4,11 @@ if (typeof kotlin === 'undefined') {
 var DemigodApp = function (_, Kotlin) {
   'use strict';
   var Kind_CLASS = Kotlin.Kind.CLASS;
+  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var Random = Kotlin.kotlin.random.Random;
   var throwCCE = Kotlin.throwCCE;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var equals = Kotlin.equals;
-  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var ensureNotNull = Kotlin.ensureNotNull;
   var Unit = Kotlin.kotlin.Unit;
   var IllegalStateException_init = Kotlin.kotlin.IllegalStateException_init_pdl1vj$;
@@ -75,6 +75,34 @@ var DemigodApp = function (_, Kotlin) {
     simpleName: 'ClassAbility',
     interfaces: [Ability]
   };
+  function Abilities() {
+    this.spellList_0 = ArrayList_init();
+    this.specialList_0 = ArrayList_init();
+    this.classAbilityList_0 = ArrayList_init();
+  }
+  Abilities.prototype.getSpellList = function () {
+    return this.spellList_0;
+  };
+  Abilities.prototype.getSpecialList = function () {
+    return this.specialList_0;
+  };
+  Abilities.prototype.getClassAbilityList = function () {
+    return this.classAbilityList_0;
+  };
+  Abilities.prototype.setSpellList_yr7jjo$ = function (list) {
+    this.spellList_0 = list;
+  };
+  Abilities.prototype.setSpecialList_fofpvn$ = function (list) {
+    this.specialList_0 = list;
+  };
+  Abilities.prototype.setClassAbilityList_j490ge$ = function (list) {
+    this.classAbilityList_0 = list;
+  };
+  Abilities.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Abilities',
+    interfaces: []
+  };
   function StatChecker(player) {
     this.player_0 = player;
   }
@@ -125,36 +153,36 @@ var DemigodApp = function (_, Kotlin) {
     var rollStatDisplay = Kotlin.isType(tmp$_1 = document.getElementById('roll-stat-display'), HTMLSpanElement) ? tmp$_1 : throwCCE();
     switch (statSelector.value) {
       case 'AT':
-        tmp$_2 = player.baseStats.combatStats.getAT_6taknv$();
+        tmp$_2 = player.baseStats.getAT_6taknv$();
         break;
       case 'DF':
-        tmp$_2 = player.baseStats.combatStats.getDF_6taknv$();
+        tmp$_2 = player.baseStats.getDF_6taknv$();
         break;
       case 'MA':
-        tmp$_2 = player.baseStats.combatStats.getMA_6taknv$();
+        tmp$_2 = player.baseStats.getMA_6taknv$();
         break;
       case 'MD':
-        tmp$_2 = player.baseStats.combatStats.getMD_6taknv$();
+        tmp$_2 = player.baseStats.getMD_6taknv$();
         break;
       case 'STR':
-        tmp$_2 = player.baseStats.getSTR();
+        tmp$_2 = player.baseStats.getSTR_6taknv$();
         break;
       case 'CON':
-        tmp$_2 = player.baseStats.getCON();
+        tmp$_2 = player.baseStats.getCON_6taknv$();
         break;
       case 'INT':
-        tmp$_2 = player.baseStats.getINT();
+        tmp$_2 = player.baseStats.getINT_6taknv$();
         break;
       case 'WILL':
-        tmp$_2 = player.baseStats.getWIL();
+        tmp$_2 = player.baseStats.getWIL_6taknv$();
         break;
       case 'SPD':
-        tmp$_2 = player.baseStats.getSPD();
+        tmp$_2 = player.baseStats.getSPD_6taknv$();
         break;
       case 'AC':
-        tmp$_2 = player.baseStats.getACC();
+        tmp$_2 = player.baseStats.getACC_6taknv$();
         break;
-      default:tmp$_2 = player.baseStats.combatStats.getAT_6taknv$();
+      default:tmp$_2 = player.baseStats.getAT_6taknv$();
         break;
     }
     var stat = tmp$_2;
@@ -242,41 +270,38 @@ var DemigodApp = function (_, Kotlin) {
     simpleName: 'Equipment',
     interfaces: []
   };
-  function Wearable(augmentSlots) {
-    if (augmentSlots === void 0)
-      augmentSlots = 0;
+  function Wearable() {
     Equipment.call(this);
-    this.augmentSlots_661rdt$_0 = augmentSlots;
-    this.augments_uf0hx9$_0 = ArrayList_init();
-    this.glyphs_4vz6xq$_0 = ArrayList_init();
-    this.abilities_p4dwg7$_0 = ArrayList_init();
+    this.data_u1be3f$_0 = new Wearable$WearableData(0);
     this.linkAugSlots_vd9sq1$_0();
   }
   Wearable.prototype.getAugmentSlots = function () {
-    return this.augmentSlots_661rdt$_0;
+    return this.data_u1be3f$_0.augmentSlots;
   };
   Wearable.prototype.addAugmentSlot = function () {
-    this.augmentSlots_661rdt$_0 = this.augmentSlots_661rdt$_0 + 1 | 0;
+    var tmp$;
+    tmp$ = this.data_u1be3f$_0;
+    tmp$.augmentSlots = tmp$.augmentSlots + 1 | 0;
     this.linkAugSlots_vd9sq1$_0();
   };
   Wearable.prototype.equipAugment_gn419t$ = function (augment) {
     var i = 0;
-    while (i < this.augments_uf0hx9$_0.size) {
-      if (equals(this.augments_uf0hx9$_0.get_za3lpa$(i), new Augment())) {
-        this.augments_uf0hx9$_0.set_wxm5ur$(i, augment);
+    while (i < this.data_u1be3f$_0.augments.size) {
+      if (equals(this.data_u1be3f$_0.augments.get_za3lpa$(i), new Augment())) {
+        this.data_u1be3f$_0.augments.set_wxm5ur$(i, augment);
         return;
       }
       i = i + 1 | 0;
     }
   };
   Wearable.prototype.linkAugSlots_vd9sq1$_0 = function () {
-    while (this.augments_uf0hx9$_0.size < this.augmentSlots_661rdt$_0) {
-      this.augments_uf0hx9$_0.add_11rb$(new Augment());
+    while (this.data_u1be3f$_0.augments.size < this.data_u1be3f$_0.augmentSlots) {
+      this.data_u1be3f$_0.augments.add_11rb$(new Augment());
     }
   };
   Wearable.prototype.getAugmentByID_61zpoe$ = function (ID) {
     var tmp$;
-    tmp$ = this.augments_uf0hx9$_0.iterator();
+    tmp$ = this.data_u1be3f$_0.augments.iterator();
     while (tmp$.hasNext()) {
       var aug = tmp$.next();
       if (equals(aug.id, ID)) {
@@ -287,7 +312,7 @@ var DemigodApp = function (_, Kotlin) {
   };
   Wearable.prototype.geGlyphByID_61zpoe$ = function (ID) {
     var tmp$;
-    tmp$ = this.glyphs_4vz6xq$_0.iterator();
+    tmp$ = this.data_u1be3f$_0.glyphs.iterator();
     while (tmp$.hasNext()) {
       var gly = tmp$.next();
       if (equals(gly.id, ID)) {
@@ -298,6 +323,42 @@ var DemigodApp = function (_, Kotlin) {
   };
   Wearable.prototype.getAbiltyByID_61zpoe$ = function (ID) {
     return new Ability();
+  };
+  function Wearable$WearableData(augmentSlots) {
+    if (augmentSlots === void 0)
+      augmentSlots = 0;
+    this.augmentSlots = augmentSlots;
+    this.augments = ArrayList_init();
+    this.glyphs = ArrayList_init();
+    this.abilities = ArrayList_init();
+  }
+  Wearable$WearableData.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'WearableData',
+    interfaces: []
+  };
+  Wearable$WearableData.prototype.component1 = function () {
+    return this.augmentSlots;
+  };
+  Wearable$WearableData.prototype.copy_za3lpa$ = function (augmentSlots) {
+    return new Wearable$WearableData(augmentSlots === void 0 ? this.augmentSlots : augmentSlots);
+  };
+  Wearable$WearableData.prototype.toString = function () {
+    return 'WearableData(augmentSlots=' + Kotlin.toString(this.augmentSlots) + ')';
+  };
+  Wearable$WearableData.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.augmentSlots) | 0;
+    return result;
+  };
+  Wearable$WearableData.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && Kotlin.equals(this.augmentSlots, other.augmentSlots))));
+  };
+  Wearable.prototype.getData = function () {
+    return this.data_u1be3f$_0;
+  };
+  Wearable.prototype.setData_fofztk$ = function (data) {
+    this.data_u1be3f$_0 = data;
   };
   Wearable.$metadata$ = {
     kind: Kind_CLASS,
@@ -360,21 +421,22 @@ var DemigodApp = function (_, Kotlin) {
   }
   FileHandler.prototype.save_vgc0e7$ = function (player) {
     var tmp$;
-    var name = player.traits.name;
-    var clazz = player.traits._class.name;
+    var name = player.traits.getName();
+    var clazz = player.traits.getClassName();
     var file = name + '-' + clazz + '.demi';
     var text = '{';
-    text += '"traits":' + JSON.stringify(player.traits) + ',';
-    text += '"resources":' + JSON.stringify(player.resources) + ',';
-    text += '"baseStats":' + JSON.stringify(player.baseStats) + ',';
-    text += '"weapon":' + JSON.stringify(player.weapon) + ',';
-    text += '"armor":' + JSON.stringify(player.armor) + ',';
-    text += '"accessory":' + JSON.stringify(player.accessory) + ',';
-    text += '"skills":' + JSON.stringify(player.skills) + ',';
-    text += '"spells":' + JSON.stringify(player.spells) + ',';
-    text += '"specials":' + JSON.stringify(player.specials) + ',';
-    text += '"classAbilities":' + JSON.stringify(player.classAbilities) + ',';
-    text += '"inventory":' + JSON.stringify(player.inventory);
+    text += '"traits":' + JSON.stringify(player.traits.getData()) + ',';
+    text += '"resources":' + JSON.stringify(player.resources.getData()) + ',';
+    text += '"baseStats":' + JSON.stringify(player.baseStats.getData()) + ',';
+    text += '"combatStats":' + JSON.stringify(player.baseStats.getCombatStats()) + ',';
+    text += '"weapon":' + JSON.stringify(player.weapon.getData()) + ',';
+    text += '"armor":' + JSON.stringify(player.armor.getData()) + ',';
+    text += '"accessory":' + JSON.stringify(player.accessory.getData()) + ',';
+    text += '"skills":' + JSON.stringify(player.skills.getSkillList()) + ',';
+    text += '"spells":' + JSON.stringify(player.abilities.getSpellList()) + ',';
+    text += '"specials":' + JSON.stringify(player.abilities.getSpecialList()) + ',';
+    text += '"classAbilities":' + JSON.stringify(player.abilities.getClassAbilityList()) + ',';
+    text += '"inventory":' + JSON.stringify(player.inventory.getData());
     text += '}';
     var save = Kotlin.isType(tmp$ = document.createElement('a'), HTMLAnchorElement) ? tmp$ : throwCCE();
     save.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -424,21 +486,28 @@ var DemigodApp = function (_, Kotlin) {
     fileReader.onloadend = FileHandler$readLoadedFile$lambda_0(fileReader, player, this);
   };
   FileHandler.prototype.assignLoadedData_0 = function (json, player) {
-    player.traits.name = json['traits'].name;
-    player.traits.age = json['traits'].age;
-    player.traits.species = json['traits'].species;
-    player.traits._class.name = json['traits']._class.name;
-    player.traits.level = json['traits'].level;
+    player.traits.setData_51v960$(json['traits']);
+    player.resources.setData_1efdba$(json['resources']);
+    player.baseStats.setData_jo81tk$(json['baseStats']);
+    player.baseStats.setCombatStats_9v9adx$(json['combatStats']);
+    player.weapon.setData_fofztk$(json['weapon']);
+    player.armor.setData_fofztk$(json['armor']);
+    player.accessory.setData_fofztk$(json['accessory']);
+    player.skills.setSkillList_b04d0x$(json['skills']);
+    player.abilities.setSpellList_yr7jjo$(json['spells']);
+    player.abilities.setSpecialList_fofpvn$(json['spells']);
+    player.abilities.setClassAbilityList_j490ge$(json['spells']);
+    player.inventory.setData_6ml7ak$(json['inventory']);
     this.updateDocument_0(player);
   };
   FileHandler.prototype.updateDocument_0 = function (player) {
     var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
     resetPage(player);
-    (Kotlin.isType(tmp$ = document.getElementById('Name'), HTMLInputElement) ? tmp$ : throwCCE()).value = player.traits.name;
-    (Kotlin.isType(tmp$_0 = document.getElementById('Age'), HTMLInputElement) ? tmp$_0 : throwCCE()).value = player.traits.age.toString();
-    (Kotlin.isType(tmp$_1 = document.getElementById('Species'), HTMLInputElement) ? tmp$_1 : throwCCE()).value = player.traits.species;
-    (Kotlin.isType(tmp$_2 = document.getElementById('Class'), HTMLInputElement) ? tmp$_2 : throwCCE()).value = player.traits._class.name;
-    (Kotlin.isType(tmp$_3 = document.getElementById('Level'), HTMLInputElement) ? tmp$_3 : throwCCE()).value = player.traits.level.toString();
+    (Kotlin.isType(tmp$ = document.getElementById('Name'), HTMLInputElement) ? tmp$ : throwCCE()).value = player.traits.getName();
+    (Kotlin.isType(tmp$_0 = document.getElementById('Age'), HTMLInputElement) ? tmp$_0 : throwCCE()).value = player.traits.getAge().toString();
+    (Kotlin.isType(tmp$_1 = document.getElementById('Species'), HTMLInputElement) ? tmp$_1 : throwCCE()).value = player.traits.getSpecies();
+    (Kotlin.isType(tmp$_2 = document.getElementById('Class'), HTMLInputElement) ? tmp$_2 : throwCCE()).value = player.traits.getClassName();
+    (Kotlin.isType(tmp$_3 = document.getElementById('Level'), HTMLInputElement) ? tmp$_3 : throwCCE()).value = player.traits.getLevel().toString();
   };
   FileHandler.$metadata$ = {
     kind: Kind_OBJECT,
@@ -461,16 +530,16 @@ var DemigodApp = function (_, Kotlin) {
     initNavigationBar(player);
   }
   function resetPage(player) {
-    while (player.spells.size > 0) {
+    while (player.abilities.getSpellList().size > 0) {
       deleteSpellSlot(player);
     }
-    while (player.specials.size > 0) {
+    while (player.abilities.getSpecialList().size > 0) {
       deleteSpecialSlot(player);
     }
-    while (player.classAbilities.size > 0) {
+    while (player.abilities.getClassAbilityList().size > 0) {
       deleteClassSlot(player);
     }
-    while (player.inventory.size > 0) {
+    while (player.inventory.getSize() > 0) {
       deleteItemSlot(player);
     }
   }
@@ -487,22 +556,19 @@ var DemigodApp = function (_, Kotlin) {
       var trait = Kotlin.isType(tmp$ = it.target, HTMLInputElement) ? tmp$ : throwCCE();
       switch (trait.id) {
         case 'Name':
-          closure$player.traits.name = trait.value;
+          closure$player.traits.setName_61zpoe$(trait.value);
           break;
         case 'Age':
-          closure$player.traits.age = toInt(trait.value);
+          closure$player.traits.setAge_za3lpa$(toInt(trait.value));
           break;
         case 'Species':
-          closure$player.traits.species = trait.value;
+          closure$player.traits.setSpecies_61zpoe$(trait.value);
           break;
         case 'Class':
-          closure$player.traits._class.name = trait.value;
+          closure$player.traits.setClassName_61zpoe$(trait.value);
           break;
         case 'Level':
-          closure$player.traits.level = toInt(trait.value);
-          break;
-        case 'Icon':
-          closure$player.traits.icon = toInt(trait.value);
+          closure$player.traits.setLevel_za3lpa$(toInt(trait.value));
           break;
       }
       return Unit;
@@ -595,33 +661,33 @@ var DemigodApp = function (_, Kotlin) {
           closure$player.baseStats.getACCModifiers().get_za3lpa$(0).value = toInt(stat.value);
           break;
         case 'AT-MOD':
-          closure$player.baseStats.combatStats.getATModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getATModifiers().get_za3lpa$(0).value = toInt(stat.value);
           break;
         case 'DF-MOD':
-          closure$player.baseStats.combatStats.getDFModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getDFModifiers().get_za3lpa$(0).value = toInt(stat.value);
           break;
         case 'MA-MOD':
-          closure$player.baseStats.combatStats.getMAModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getMAModifiers().get_za3lpa$(0).value = toInt(stat.value);
           break;
         case 'MD-MOD':
-          closure$player.baseStats.combatStats.getMDModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getMDModifiers().get_za3lpa$(0).value = toInt(stat.value);
           break;
       }
       closure$player.baseStats.updateCombat();
-      (Kotlin.isType(tmp$_0 = document.getElementById('AT-BASE'), HTMLTableCellElement) ? tmp$_0 : throwCCE()).innerText = closure$player.baseStats.combatStats.getAT_6taknv$(false).toString();
-      (Kotlin.isType(tmp$_1 = document.getElementById('DF-BASE'), HTMLTableCellElement) ? tmp$_1 : throwCCE()).innerText = closure$player.baseStats.combatStats.getDF_6taknv$(false).toString();
-      (Kotlin.isType(tmp$_2 = document.getElementById('MA-BASE'), HTMLTableCellElement) ? tmp$_2 : throwCCE()).innerText = closure$player.baseStats.combatStats.getMA_6taknv$(false).toString();
-      (Kotlin.isType(tmp$_3 = document.getElementById('MD-BASE'), HTMLTableCellElement) ? tmp$_3 : throwCCE()).innerText = closure$player.baseStats.combatStats.getMD_6taknv$(false).toString();
-      (Kotlin.isType(tmp$_4 = document.getElementById('AT-TOTAL'), HTMLTableCellElement) ? tmp$_4 : throwCCE()).innerText = closure$player.baseStats.combatStats.getAT_6taknv$().toString();
-      (Kotlin.isType(tmp$_5 = document.getElementById('DF-TOTAL'), HTMLTableCellElement) ? tmp$_5 : throwCCE()).innerText = closure$player.baseStats.combatStats.getDF_6taknv$().toString();
-      (Kotlin.isType(tmp$_6 = document.getElementById('MA-TOTAL'), HTMLTableCellElement) ? tmp$_6 : throwCCE()).innerText = closure$player.baseStats.combatStats.getMA_6taknv$().toString();
-      (Kotlin.isType(tmp$_7 = document.getElementById('MD-TOTAL'), HTMLTableCellElement) ? tmp$_7 : throwCCE()).innerText = closure$player.baseStats.combatStats.getMD_6taknv$().toString();
-      (Kotlin.isType(tmp$_8 = document.getElementById('STR-TOTAL'), HTMLTableCellElement) ? tmp$_8 : throwCCE()).innerText = closure$player.baseStats.getSTR().toString();
-      (Kotlin.isType(tmp$_9 = document.getElementById('CON-TOTAL'), HTMLTableCellElement) ? tmp$_9 : throwCCE()).innerText = closure$player.baseStats.getCON().toString();
-      (Kotlin.isType(tmp$_10 = document.getElementById('INT-TOTAL'), HTMLTableCellElement) ? tmp$_10 : throwCCE()).innerText = closure$player.baseStats.getINT().toString();
-      (Kotlin.isType(tmp$_11 = document.getElementById('WILL-TOTAL'), HTMLTableCellElement) ? tmp$_11 : throwCCE()).innerText = closure$player.baseStats.getWIL().toString();
-      (Kotlin.isType(tmp$_12 = document.getElementById('SPD-TOTAL'), HTMLTableCellElement) ? tmp$_12 : throwCCE()).innerText = closure$player.baseStats.getSPD().toString();
-      (Kotlin.isType(tmp$_13 = document.getElementById('AC-TOTAL'), HTMLTableCellElement) ? tmp$_13 : throwCCE()).innerText = closure$player.baseStats.getACC().toString();
+      (Kotlin.isType(tmp$_0 = document.getElementById('AT-BASE'), HTMLTableCellElement) ? tmp$_0 : throwCCE()).innerText = closure$player.baseStats.getAT_6taknv$(false).toString();
+      (Kotlin.isType(tmp$_1 = document.getElementById('DF-BASE'), HTMLTableCellElement) ? tmp$_1 : throwCCE()).innerText = closure$player.baseStats.getDF_6taknv$(false).toString();
+      (Kotlin.isType(tmp$_2 = document.getElementById('MA-BASE'), HTMLTableCellElement) ? tmp$_2 : throwCCE()).innerText = closure$player.baseStats.getMA_6taknv$(false).toString();
+      (Kotlin.isType(tmp$_3 = document.getElementById('MD-BASE'), HTMLTableCellElement) ? tmp$_3 : throwCCE()).innerText = closure$player.baseStats.getMD_6taknv$(false).toString();
+      (Kotlin.isType(tmp$_4 = document.getElementById('AT-TOTAL'), HTMLTableCellElement) ? tmp$_4 : throwCCE()).innerText = closure$player.baseStats.getAT_6taknv$().toString();
+      (Kotlin.isType(tmp$_5 = document.getElementById('DF-TOTAL'), HTMLTableCellElement) ? tmp$_5 : throwCCE()).innerText = closure$player.baseStats.getDF_6taknv$().toString();
+      (Kotlin.isType(tmp$_6 = document.getElementById('MA-TOTAL'), HTMLTableCellElement) ? tmp$_6 : throwCCE()).innerText = closure$player.baseStats.getMA_6taknv$().toString();
+      (Kotlin.isType(tmp$_7 = document.getElementById('MD-TOTAL'), HTMLTableCellElement) ? tmp$_7 : throwCCE()).innerText = closure$player.baseStats.getMD_6taknv$().toString();
+      (Kotlin.isType(tmp$_8 = document.getElementById('STR-TOTAL'), HTMLTableCellElement) ? tmp$_8 : throwCCE()).innerText = closure$player.baseStats.getSTR_6taknv$().toString();
+      (Kotlin.isType(tmp$_9 = document.getElementById('CON-TOTAL'), HTMLTableCellElement) ? tmp$_9 : throwCCE()).innerText = closure$player.baseStats.getCON_6taknv$().toString();
+      (Kotlin.isType(tmp$_10 = document.getElementById('INT-TOTAL'), HTMLTableCellElement) ? tmp$_10 : throwCCE()).innerText = closure$player.baseStats.getINT_6taknv$().toString();
+      (Kotlin.isType(tmp$_11 = document.getElementById('WILL-TOTAL'), HTMLTableCellElement) ? tmp$_11 : throwCCE()).innerText = closure$player.baseStats.getWIL_6taknv$().toString();
+      (Kotlin.isType(tmp$_12 = document.getElementById('SPD-TOTAL'), HTMLTableCellElement) ? tmp$_12 : throwCCE()).innerText = closure$player.baseStats.getSPD_6taknv$().toString();
+      (Kotlin.isType(tmp$_13 = document.getElementById('AC-TOTAL'), HTMLTableCellElement) ? tmp$_13 : throwCCE()).innerText = closure$player.baseStats.getACC_6taknv$().toString();
       return Unit;
     };
   }
@@ -649,16 +715,16 @@ var DemigodApp = function (_, Kotlin) {
   function initEquipmentListener(player) {
     document.addEventListener('change', initEquipmentListener$lambda(player));
   }
-  function initNotesListener$lambda(closure$notes, closure$player) {
+  function initNotesListener$lambda(closure$player, closure$notes) {
     return function (it) {
-      closure$player.inventory.notes = closure$notes.value;
+      closure$player.inventory.setNotes_61zpoe$(closure$notes.value);
       return Unit;
     };
   }
   function initNotesListener(player) {
     var tmp$;
     var notes = Kotlin.isType(tmp$ = document.getElementById('notes-div__textarea'), HTMLTextAreaElement) ? tmp$ : throwCCE();
-    notes.addEventListener('change', initNotesListener$lambda(notes, player));
+    notes.addEventListener('change', initNotesListener$lambda(player, notes));
   }
   function initNavigationBar$lambda(closure$player) {
     return function (it) {
@@ -729,36 +795,36 @@ var DemigodApp = function (_, Kotlin) {
       tmp$_0 = ensureNotNull(span);
       switch (closure$rollStatSelector.value) {
         case 'AT':
-          tmp$ = closure$player.baseStats.combatStats.getAT_6taknv$().toString();
+          tmp$ = closure$player.baseStats.getAT_6taknv$().toString();
           break;
         case 'DF':
-          tmp$ = closure$player.baseStats.combatStats.getDF_6taknv$().toString();
+          tmp$ = closure$player.baseStats.getDF_6taknv$().toString();
           break;
         case 'MA':
-          tmp$ = closure$player.baseStats.combatStats.getMA_6taknv$().toString();
+          tmp$ = closure$player.baseStats.getMA_6taknv$().toString();
           break;
         case 'MD':
-          tmp$ = closure$player.baseStats.combatStats.getMD_6taknv$().toString();
+          tmp$ = closure$player.baseStats.getMD_6taknv$().toString();
           break;
         case 'STR':
-          tmp$ = closure$player.baseStats.getSTR().toString();
+          tmp$ = closure$player.baseStats.getSTR_6taknv$().toString();
           break;
         case 'CON':
-          tmp$ = closure$player.baseStats.getCON().toString();
+          tmp$ = closure$player.baseStats.getCON_6taknv$().toString();
           break;
         case 'INT':
-          tmp$ = closure$player.baseStats.getINT().toString();
+          tmp$ = closure$player.baseStats.getINT_6taknv$().toString();
           break;
         case 'WILL':
-          tmp$ = closure$player.baseStats.getWIL().toString();
+          tmp$ = closure$player.baseStats.getWIL_6taknv$().toString();
           break;
         case 'SPD':
-          tmp$ = closure$player.baseStats.getSPD().toString();
+          tmp$ = closure$player.baseStats.getSPD_6taknv$().toString();
           break;
         case 'AC':
-          tmp$ = closure$player.baseStats.getACC().toString();
+          tmp$ = closure$player.baseStats.getACC_6taknv$().toString();
           break;
-        default:tmp$ = closure$player.baseStats.combatStats.getAT_6taknv$().toString();
+        default:tmp$ = closure$player.baseStats.getAT_6taknv$().toString();
           break;
       }
       tmp$_0.textContent = tmp$;
@@ -794,13 +860,13 @@ var DemigodApp = function (_, Kotlin) {
   function initSkills$lambda$lambda(closure$player, closure$skillName) {
     return function (it) {
       var tmp$;
-      ensureNotNull(closure$player.getSkill_61zpoe$(closure$skillName)).value.setBase_za3lpa$(toInt((Kotlin.isType(tmp$ = it.target, HTMLInputElement) ? tmp$ : throwCCE()).value));
+      ensureNotNull(closure$player.skills.getSkill_61zpoe$(closure$skillName)).value.setBase_za3lpa$(toInt((Kotlin.isType(tmp$ = it.target, HTMLInputElement) ? tmp$ : throwCCE()).value));
       return Unit;
     };
   }
   function initSkills$lambda$lambda_0(closure$checkbox, closure$player, closure$skillName) {
     return function (it) {
-      ensureNotNull(closure$player.getSkill_61zpoe$(closure$skillName)).check = closure$checkbox.checked;
+      ensureNotNull(closure$player.skills.getSkill_61zpoe$(closure$skillName)).check = closure$checkbox.checked;
       return Unit;
     };
   }
@@ -808,11 +874,11 @@ var DemigodApp = function (_, Kotlin) {
     var tmp$;
     var table = Kotlin.isType(tmp$ = document.getElementById('skill-tree'), HTMLTableElement) ? tmp$ : throwCCE();
     var index = {v: 0};
-    while (index.v < player.skills.size) {
+    while (index.v < player.skills.getSkillList().size) {
       var row = table.insertRow();
       for (var index_0 = 0; index_0 < 2; index_0++) {
         var tmp$_0, tmp$_1;
-        var skillName = player.skills.get_za3lpa$(index.v).name;
+        var skillName = player.skills.getSkillList().get_za3lpa$(index.v).name;
         var label = row.insertCell();
         addClass(label, ['skill-tree__label']);
         label.innerText = skillName;
@@ -842,29 +908,29 @@ var DemigodApp = function (_, Kotlin) {
     }
   }
   function insertSpellSlot(player) {
-    player.spells.add_11rb$(new Spell());
-    return insertAbilitySlot(player, 'spells', 'Spell-Circle-Icon-Web-Dev80px.png', player.spells.size);
+    player.abilities.getSpellList().add_11rb$(new Spell());
+    return insertAbilitySlot(player, 'spells', 'Spell-Circle-Icon-Web-Dev80px.png', player.abilities.getSpellList().size);
   }
   function insertSpecialSlot(player) {
-    player.specials.add_11rb$(new Special());
-    return insertAbilitySlot(player, 'special', 'Triangle Icon - Web Dev.png', player.specials.size);
+    player.abilities.getSpecialList().add_11rb$(new Special());
+    return insertAbilitySlot(player, 'special', 'Triangle Icon - Web Dev.png', player.abilities.getSpecialList().size);
   }
   function insertClassSlot(player) {
-    player.classAbilities.add_11rb$(new ClassAbility());
-    return insertAbilitySlot(player, 'class-abilities', 'class-abilities-demigod100px.png', player.classAbilities.size);
+    player.abilities.getClassAbilityList().add_11rb$(new ClassAbility());
+    return insertAbilitySlot(player, 'class-abilities', 'class-abilities-demigod100px.png', player.abilities.getClassAbilityList().size);
   }
   function insertAbilitySlot$lambda(closure$type, closure$player, closure$size) {
     return function (it) {
       var tmp$, tmp$_0, tmp$_1;
       switch (closure$type) {
         case 'spells':
-          closure$player.spells.get_za3lpa$(closure$size - 1 | 0).description = (Kotlin.isType(tmp$ = it.target, HTMLTextAreaElement) ? tmp$ : throwCCE()).value;
+          closure$player.abilities.getSpellList().get_za3lpa$(closure$size - 1 | 0).description = (Kotlin.isType(tmp$ = it.target, HTMLTextAreaElement) ? tmp$ : throwCCE()).value;
           break;
         case 'special':
-          closure$player.specials.get_za3lpa$(closure$size - 1 | 0).description = (Kotlin.isType(tmp$_0 = it.target, HTMLTextAreaElement) ? tmp$_0 : throwCCE()).value;
+          closure$player.abilities.getSpecialList().get_za3lpa$(closure$size - 1 | 0).description = (Kotlin.isType(tmp$_0 = it.target, HTMLTextAreaElement) ? tmp$_0 : throwCCE()).value;
           break;
         case 'class-abilities':
-          closure$player.classAbilities.get_za3lpa$(closure$size - 1 | 0).description = (Kotlin.isType(tmp$_1 = it.target, HTMLTextAreaElement) ? tmp$_1 : throwCCE()).value;
+          closure$player.abilities.getClassAbilityList().get_za3lpa$(closure$size - 1 | 0).description = (Kotlin.isType(tmp$_1 = it.target, HTMLTextAreaElement) ? tmp$_1 : throwCCE()).value;
           break;
       }
       return Unit;
@@ -896,21 +962,21 @@ var DemigodApp = function (_, Kotlin) {
     var tmp$;
     var table = Kotlin.isType(tmp$ = document.getElementById('spells-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
     table.deleteRow(table.rows.length - 1 | 0);
-    player.spells.removeAt_za3lpa$(player.spells.size - 1 | 0);
+    player.abilities.getSpellList().removeAt_za3lpa$(player.abilities.getSpellList().size - 1 | 0);
     return false;
   }
   function deleteSpecialSlot(player) {
     var tmp$;
     var table = Kotlin.isType(tmp$ = document.getElementById('special-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
     table.deleteRow(table.rows.length - 1 | 0);
-    player.specials.removeAt_za3lpa$(player.specials.size - 1 | 0);
+    player.abilities.getSpecialList().removeAt_za3lpa$(player.abilities.getSpecialList().size - 1 | 0);
     return false;
   }
   function deleteClassSlot(player) {
     var tmp$;
     var table = Kotlin.isType(tmp$ = document.getElementById('class-abilities-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
     table.deleteRow(table.rows.length - 1 | 0);
-    player.classAbilities.removeAt_za3lpa$(player.classAbilities.size - 1 | 0);
+    player.abilities.getClassAbilityList().removeAt_za3lpa$(player.abilities.getClassAbilityList().size - 1 | 0);
     return false;
   }
   function insertItemSlot(player) {
@@ -942,14 +1008,14 @@ var DemigodApp = function (_, Kotlin) {
     var textarea = Kotlin.isType(tmp$ = document.createElement('textarea'), HTMLTextAreaElement) ? tmp$ : throwCCE();
     textarea.name = 'inventory-slot';
     addClass(textarea, ['inventory-div__slot']);
-    textarea.id = 'inventory-slot-' + toString(player.inventory.size);
-    var index = player.inventory.size - 1 | 0;
+    textarea.id = 'inventory-slot-' + toString(player.inventory.getSize());
+    var index = player.inventory.getSize() - 1 | 0;
     textarea.addEventListener('change', createItemSlot$lambda(player, index));
     return textarea;
   }
   function deleteItemSlot(player) {
     var tmp$, tmp$_0;
-    if (player.inventory.size === 0) {
+    if (player.inventory.getSize() === 0) {
       return false;
     }
     player.inventory.removeLastItem();
@@ -964,53 +1030,109 @@ var DemigodApp = function (_, Kotlin) {
     return false;
   }
   function Inventory() {
-    this.items_0 = ArrayList_init();
-    this.gold = 0;
-    this.bagType = '';
-    this.size = 0;
-    this.notes = '';
+    this.data_0 = new Inventory$InventoryData();
   }
   Inventory.prototype.addItem_1d2k3$ = function (item) {
-    this.items_0.add_11rb$(item);
-    this.size = this.size + 1 | 0;
+    this.data_0.items.add_11rb$(item);
   };
   Inventory.prototype.getItem_61zpoe$ = function (ID) {
     return null;
   };
   Inventory.prototype.getItem_za3lpa$ = function (index) {
-    return this.items_0.get_za3lpa$(index);
+    return this.data_0.items.get_za3lpa$(index);
   };
   Inventory.prototype.removeItem_61zpoe$ = function (ID) {
     var tmp$;
-    tmp$ = this.items_0.iterator();
+    tmp$ = this.data_0.items.iterator();
     while (tmp$.hasNext()) {
       var item = tmp$.next();
       if (equals(item.id, ID)) {
-        this.items_0.remove_11rb$(item);
-        this.size = this.size - 1 | 0;
+        this.data_0.items.remove_11rb$(item);
         return item;
       }
     }
     return null;
   };
   Inventory.prototype.removeLastItem = function () {
-    this.size = this.size - 1 | 0;
-    return this.items_0.removeAt_za3lpa$(this.items_0.size - 1 | 0);
+    return this.data_0.items.removeAt_za3lpa$(this.data_0.items.size - 1 | 0);
   };
   Inventory.prototype.useItem_61zpoe$ = function (ID) {
     var tmp$;
-    tmp$ = this.items_0.iterator();
+    tmp$ = this.data_0.items.iterator();
     while (tmp$.hasNext()) {
       var item = tmp$.next();
       if (equals(item.id, ID)) {
         item.amount = item.amount - 1 | 0;
         if (item.amount === 0) {
-          this.items_0.remove_11rb$(item);
+          this.data_0.items.remove_11rb$(item);
         }
         return true;
       }
     }
     return false;
+  };
+  Inventory.prototype.getGold = function () {
+    return this.data_0.gold;
+  };
+  Inventory.prototype.getSize = function () {
+    return this.data_0.items.size;
+  };
+  Inventory.prototype.getItems = function () {
+    return this.data_0.items;
+  };
+  Inventory.prototype.getBagType = function () {
+    return this.data_0.bagType;
+  };
+  Inventory.prototype.getNotes = function () {
+    return this.data_0.notes;
+  };
+  Inventory.prototype.setGold_za3lpa$ = function (gold) {
+    this.data_0.gold = gold;
+  };
+  Inventory.prototype.setItems_jngbmb$ = function (items) {
+    this.data_0.items = items;
+  };
+  Inventory.prototype.setBagType_61zpoe$ = function (bagType) {
+    this.data_0.bagType = bagType;
+  };
+  Inventory.prototype.setNotes_61zpoe$ = function (notes) {
+    this.data_0.notes = notes;
+  };
+  function Inventory$InventoryData(gold) {
+    if (gold === void 0)
+      gold = 0;
+    this.gold = gold;
+    this.items = ArrayList_init();
+    this.bagType = '';
+    this.notes = '';
+  }
+  Inventory$InventoryData.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'InventoryData',
+    interfaces: []
+  };
+  Inventory$InventoryData.prototype.component1 = function () {
+    return this.gold;
+  };
+  Inventory$InventoryData.prototype.copy_za3lpa$ = function (gold) {
+    return new Inventory$InventoryData(gold === void 0 ? this.gold : gold);
+  };
+  Inventory$InventoryData.prototype.toString = function () {
+    return 'InventoryData(gold=' + Kotlin.toString(this.gold) + ')';
+  };
+  Inventory$InventoryData.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.gold) | 0;
+    return result;
+  };
+  Inventory$InventoryData.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && Kotlin.equals(this.gold, other.gold))));
+  };
+  Inventory.prototype.getData = function () {
+    return this.data_0;
+  };
+  Inventory.prototype.setData_6ml7ak$ = function (data) {
+    this.data_0 = data;
   };
   Inventory.$metadata$ = {
     kind: Kind_CLASS,
@@ -1054,10 +1176,10 @@ var DemigodApp = function (_, Kotlin) {
     player.baseStats.getWILModifiers().add_11rb$(new Modifier(''));
     player.baseStats.getSPDModifiers().add_11rb$(new Modifier(''));
     player.baseStats.getACCModifiers().add_11rb$(new Modifier(''));
-    player.baseStats.combatStats.getATModifiers().add_11rb$(new Modifier(''));
-    player.baseStats.combatStats.getDFModifiers().add_11rb$(new Modifier(''));
-    player.baseStats.combatStats.getMAModifiers().add_11rb$(new Modifier(''));
-    player.baseStats.combatStats.getMDModifiers().add_11rb$(new Modifier(''));
+    player.baseStats.getATModifiers().add_11rb$(new Modifier(''));
+    player.baseStats.getDFModifiers().add_11rb$(new Modifier(''));
+    player.baseStats.getMAModifiers().add_11rb$(new Modifier(''));
+    player.baseStats.getMDModifiers().add_11rb$(new Modifier(''));
     player.resources.getMaxHPModifiers().add_11rb$(new Modifier(''));
     player.resources.getMaxMPModifiers().add_11rb$(new Modifier(''));
     player.resources.getMaxSPModifiers().add_11rb$(new Modifier(''));
@@ -1073,80 +1195,149 @@ var DemigodApp = function (_, Kotlin) {
     return uuid;
   }
   function Player() {
-    this.traits = new Traits('player', 30, 'Human', new Class());
+    this.traits = new Traits();
     this.resources = new Resources();
     this.baseStats = new BaseStats();
-    this.skills = this.initSkills_0();
+    this.skills = new Skills();
     this.statChecker = new StatChecker(this);
     this.weapon = new Weapon();
     this.armor = new Armor();
     this.accessory = new Accessory();
-    this.spells = ArrayList_init();
-    this.specials = ArrayList_init();
-    this.classAbilities = ArrayList_init();
+    this.abilities = new Abilities();
     this.inventory = new Inventory();
   }
-  Player.prototype.initSkills_0 = function () {
-    var list = ArrayList_init();
-    list.add_11rb$(new Skill('Common Sense'));
-    list.add_11rb$(new Skill('Spell-Craft'));
-    list.add_11rb$(new Skill('Cartography'));
-    list.add_11rb$(new Skill('Ancient World'));
-    list.add_11rb$(new Skill('Study/Reading'));
-    list.add_11rb$(new Skill('Magic Knowledge'));
-    list.add_11rb$(new Skill('Herbology'));
-    list.add_11rb$(new Skill('Advanced Medicine'));
-    list.add_11rb$(new Skill('Detective'));
-    list.add_11rb$(new Skill('Awareness'));
-    list.add_11rb$(new Skill('Disguise'));
-    list.add_11rb$(new Skill('Puzzle'));
-    list.add_11rb$(new Skill('Sense Motive'));
-    list.add_11rb$(new Skill('Escape Artist'));
-    list.add_11rb$(new Skill('Stealth/Sneak'));
-    list.add_11rb$(new Skill('Trickery/Stealing'));
-    list.add_11rb$(new Skill('Lock Picking'));
-    list.add_11rb$(new Skill('Free Running'));
-    list.add_11rb$(new Skill('Tracking/Hunting'));
-    list.add_11rb$(new Skill('Basic Survival'));
-    list.add_11rb$(new Skill('Advanced Riding'));
-    list.add_11rb$(new Skill('Cooking'));
-    list.add_11rb$(new Skill('Beast Taming'));
-    list.add_11rb$(new Skill('Pain Tolerance'));
-    list.add_11rb$(new Skill('First Aid'));
-    list.add_11rb$(new Skill('Inspiration'));
-    list.add_11rb$(new Skill('Seduction'));
-    list.add_11rb$(new Skill('Charm'));
-    list.add_11rb$(new Skill('Speech'));
-    list.add_11rb$(new Skill('Persuasion'));
-    list.add_11rb$(new Skill('Intimidate'));
-    list.add_11rb$(new Skill('Guile'));
-    list.add_11rb$(new Skill('Composure/Calm'));
-    list.add_11rb$(new Skill('War Tactics'));
-    list.add_11rb$(new Skill('Group Management'));
-    list.add_11rb$(new Skill('Hand To Hand Combat'));
-    list.add_11rb$(new Skill('Weapons Play'));
-    list.add_11rb$(new Skill('Specialty Weapon'));
-    list.add_11rb$(new Skill('Swimming'));
-    list.add_11rb$(new Skill('Climbing'));
-    return list;
-  };
-  Player.prototype.getSkill_61zpoe$ = function (name) {
-    var tmp$;
-    tmp$ = this.skills.iterator();
-    while (tmp$.hasNext()) {
-      var skill = tmp$.next();
-      if (equals(skill.name, name)) {
-        return skill;
-      }
-    }
-    return null;
-  };
   Player.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Player',
     interfaces: []
   };
-  function BaseStats(str, con, int, wil, spd, acc) {
+  function BaseStats(data) {
+    if (data === void 0)
+      data = new BaseStats$BaseStatsData();
+    this.data_0 = data;
+    this.combatStats_0 = new BaseStats$CombatStats();
+  }
+  BaseStats.prototype.updateCombat = function () {
+    this.setATBase_za3lpa$(this.data_0.str.getValue_6taknv$() * 2 | 0);
+    this.setDFBase_za3lpa$(this.data_0.con.getValue_6taknv$() * 1 | 0);
+    this.setMABase_za3lpa$(this.data_0.int.getValue_6taknv$() * 2 | 0);
+    this.setMDBase_za3lpa$(this.data_0.wil.getValue_6taknv$() * 1 | 0);
+  };
+  BaseStats.prototype.setSTR_za3lpa$ = function (value) {
+    this.data_0.str.setBase_za3lpa$(value);
+    this.updateCombat();
+  };
+  BaseStats.prototype.setCON_za3lpa$ = function (value) {
+    this.data_0.con.setBase_za3lpa$(value);
+    this.updateCombat();
+  };
+  BaseStats.prototype.setINT_za3lpa$ = function (value) {
+    this.data_0.int.setBase_za3lpa$(value);
+    this.updateCombat();
+  };
+  BaseStats.prototype.setWIL_za3lpa$ = function (value) {
+    this.data_0.wil.setBase_za3lpa$(value);
+    this.updateCombat();
+  };
+  BaseStats.prototype.setSPD_za3lpa$ = function (value) {
+    this.data_0.spd.setBase_za3lpa$(value);
+  };
+  BaseStats.prototype.setACC_za3lpa$ = function (value) {
+    this.data_0.acc.setBase_za3lpa$(value);
+  };
+  BaseStats.prototype.setATBase_za3lpa$ = function (base) {
+    this.combatStats_0.at.setBase_za3lpa$(base);
+  };
+  BaseStats.prototype.setDFBase_za3lpa$ = function (base) {
+    this.combatStats_0.df.setBase_za3lpa$(base);
+  };
+  BaseStats.prototype.setMABase_za3lpa$ = function (base) {
+    this.combatStats_0.ma.setBase_za3lpa$(base);
+  };
+  BaseStats.prototype.setMDBase_za3lpa$ = function (base) {
+    this.combatStats_0.md.setBase_za3lpa$(base);
+  };
+  BaseStats.prototype.getSTR_6taknv$ = function (includeMods) {
+    if (includeMods === void 0)
+      includeMods = true;
+    return this.data_0.str.getValue_6taknv$(includeMods);
+  };
+  BaseStats.prototype.getCON_6taknv$ = function (includeMods) {
+    if (includeMods === void 0)
+      includeMods = true;
+    return this.data_0.con.getValue_6taknv$(includeMods);
+  };
+  BaseStats.prototype.getINT_6taknv$ = function (includeMods) {
+    if (includeMods === void 0)
+      includeMods = true;
+    return this.data_0.int.getValue_6taknv$(includeMods);
+  };
+  BaseStats.prototype.getWIL_6taknv$ = function (includeMods) {
+    if (includeMods === void 0)
+      includeMods = true;
+    return this.data_0.wil.getValue_6taknv$(includeMods);
+  };
+  BaseStats.prototype.getSPD_6taknv$ = function (includeMods) {
+    if (includeMods === void 0)
+      includeMods = true;
+    return this.data_0.spd.getValue_6taknv$(includeMods);
+  };
+  BaseStats.prototype.getACC_6taknv$ = function (includeMods) {
+    if (includeMods === void 0)
+      includeMods = true;
+    return this.data_0.acc.getValue_6taknv$(includeMods);
+  };
+  BaseStats.prototype.getAT_6taknv$ = function (includeMods) {
+    if (includeMods === void 0)
+      includeMods = true;
+    return this.combatStats_0.at.getValue_6taknv$(includeMods);
+  };
+  BaseStats.prototype.getDF_6taknv$ = function (includeMods) {
+    if (includeMods === void 0)
+      includeMods = true;
+    return this.combatStats_0.df.getValue_6taknv$(includeMods);
+  };
+  BaseStats.prototype.getMA_6taknv$ = function (includeMods) {
+    if (includeMods === void 0)
+      includeMods = true;
+    return this.combatStats_0.ma.getValue_6taknv$(includeMods);
+  };
+  BaseStats.prototype.getMD_6taknv$ = function (includeMods) {
+    if (includeMods === void 0)
+      includeMods = true;
+    return this.combatStats_0.md.getValue_6taknv$(includeMods);
+  };
+  BaseStats.prototype.getSTRModifiers = function () {
+    return this.data_0.str.modifiers;
+  };
+  BaseStats.prototype.getCONModifiers = function () {
+    return this.data_0.con.modifiers;
+  };
+  BaseStats.prototype.getINTModifiers = function () {
+    return this.data_0.int.modifiers;
+  };
+  BaseStats.prototype.getWILModifiers = function () {
+    return this.data_0.wil.modifiers;
+  };
+  BaseStats.prototype.getSPDModifiers = function () {
+    return this.data_0.spd.modifiers;
+  };
+  BaseStats.prototype.getACCModifiers = function () {
+    return this.data_0.acc.modifiers;
+  };
+  BaseStats.prototype.getATModifiers = function () {
+    return this.combatStats_0.at.modifiers;
+  };
+  BaseStats.prototype.getDFModifiers = function () {
+    return this.combatStats_0.df.modifiers;
+  };
+  BaseStats.prototype.getMAModifiers = function () {
+    return this.combatStats_0.ma.modifiers;
+  };
+  BaseStats.prototype.getMDModifiers = function () {
+    return this.combatStats_0.md.modifiers;
+  };
+  function BaseStats$BaseStatsData(str, con, int, wil, spd, acc) {
     if (str === void 0)
       str = new Value(0);
     if (con === void 0)
@@ -1159,147 +1350,176 @@ var DemigodApp = function (_, Kotlin) {
       spd = new Value(0);
     if (acc === void 0)
       acc = new Value(0);
-    this.str_0 = str;
-    this.con_0 = con;
-    this.int_0 = int;
-    this.wil_0 = wil;
-    this.spd_0 = spd;
-    this.acc_0 = acc;
-    this.combatStats = new CombatStats();
+    this.str = str;
+    this.con = con;
+    this.int = int;
+    this.wil = wil;
+    this.spd = spd;
+    this.acc = acc;
   }
-  BaseStats.prototype.updateCombat = function () {
-    this.combatStats.setATBase_za3lpa$(this.str_0.getValue_6taknv$() * 2 | 0);
-    this.combatStats.setDFBase_za3lpa$(this.con_0.getValue_6taknv$() * 1 | 0);
-    this.combatStats.setMABase_za3lpa$(this.int_0.getValue_6taknv$() * 2 | 0);
-    this.combatStats.setMDBase_za3lpa$(this.wil_0.getValue_6taknv$() * 1 | 0);
+  BaseStats$BaseStatsData.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'BaseStatsData',
+    interfaces: []
   };
-  BaseStats.prototype.setSTR_za3lpa$ = function (value) {
-    this.str_0.setBase_za3lpa$(value);
-    this.updateCombat();
+  BaseStats$BaseStatsData.prototype.component1 = function () {
+    return this.str;
   };
-  BaseStats.prototype.setCON_za3lpa$ = function (value) {
-    this.con_0.setBase_za3lpa$(value);
-    this.updateCombat();
+  BaseStats$BaseStatsData.prototype.component2 = function () {
+    return this.con;
   };
-  BaseStats.prototype.setINT_za3lpa$ = function (value) {
-    this.int_0.setBase_za3lpa$(value);
-    this.updateCombat();
+  BaseStats$BaseStatsData.prototype.component3 = function () {
+    return this.int;
   };
-  BaseStats.prototype.setWIL_za3lpa$ = function (value) {
-    this.wil_0.setBase_za3lpa$(value);
-    this.updateCombat();
+  BaseStats$BaseStatsData.prototype.component4 = function () {
+    return this.wil;
   };
-  BaseStats.prototype.setSPD_za3lpa$ = function (value) {
-    this.spd_0.setBase_za3lpa$(value);
+  BaseStats$BaseStatsData.prototype.component5 = function () {
+    return this.spd;
   };
-  BaseStats.prototype.setACC_za3lpa$ = function (value) {
-    this.acc_0.setBase_za3lpa$(value);
+  BaseStats$BaseStatsData.prototype.component6 = function () {
+    return this.acc;
   };
-  BaseStats.prototype.getSTR = function () {
-    return this.str_0.getValue_6taknv$();
+  BaseStats$BaseStatsData.prototype.copy_43thh2$ = function (str, con, int, wil, spd, acc) {
+    return new BaseStats$BaseStatsData(str === void 0 ? this.str : str, con === void 0 ? this.con : con, int === void 0 ? this.int : int, wil === void 0 ? this.wil : wil, spd === void 0 ? this.spd : spd, acc === void 0 ? this.acc : acc);
   };
-  BaseStats.prototype.getCON = function () {
-    return this.con_0.getValue_6taknv$();
+  BaseStats$BaseStatsData.prototype.toString = function () {
+    return 'BaseStatsData(str=' + Kotlin.toString(this.str) + (', con=' + Kotlin.toString(this.con)) + (', int=' + Kotlin.toString(this.int)) + (', wil=' + Kotlin.toString(this.wil)) + (', spd=' + Kotlin.toString(this.spd)) + (', acc=' + Kotlin.toString(this.acc)) + ')';
   };
-  BaseStats.prototype.getINT = function () {
-    return this.int_0.getValue_6taknv$();
+  BaseStats$BaseStatsData.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.str) | 0;
+    result = result * 31 + Kotlin.hashCode(this.con) | 0;
+    result = result * 31 + Kotlin.hashCode(this.int) | 0;
+    result = result * 31 + Kotlin.hashCode(this.wil) | 0;
+    result = result * 31 + Kotlin.hashCode(this.spd) | 0;
+    result = result * 31 + Kotlin.hashCode(this.acc) | 0;
+    return result;
   };
-  BaseStats.prototype.getWIL = function () {
-    return this.wil_0.getValue_6taknv$();
+  BaseStats$BaseStatsData.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.str, other.str) && Kotlin.equals(this.con, other.con) && Kotlin.equals(this.int, other.int) && Kotlin.equals(this.wil, other.wil) && Kotlin.equals(this.spd, other.spd) && Kotlin.equals(this.acc, other.acc)))));
   };
-  BaseStats.prototype.getSPD = function () {
-    return this.spd_0.getValue_6taknv$();
+  BaseStats.prototype.getData = function () {
+    return this.data_0;
   };
-  BaseStats.prototype.getACC = function () {
-    return this.acc_0.getValue_6taknv$();
+  BaseStats.prototype.setData_jo81tk$ = function (data) {
+    this.data_0 = data;
   };
-  BaseStats.prototype.getSTRModifiers = function () {
-    return this.str_0.modifiers;
+  function BaseStats$CombatStats(at, df, ma, md) {
+    if (at === void 0)
+      at = new Value(0);
+    if (df === void 0)
+      df = new Value(0);
+    if (ma === void 0)
+      ma = new Value(0);
+    if (md === void 0)
+      md = new Value(0);
+    this.at = at;
+    this.df = df;
+    this.ma = ma;
+    this.md = md;
+  }
+  BaseStats$CombatStats.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'CombatStats',
+    interfaces: []
   };
-  BaseStats.prototype.getCONModifiers = function () {
-    return this.con_0.modifiers;
+  BaseStats$CombatStats.prototype.component1 = function () {
+    return this.at;
   };
-  BaseStats.prototype.getINTModifiers = function () {
-    return this.int_0.modifiers;
+  BaseStats$CombatStats.prototype.component2 = function () {
+    return this.df;
   };
-  BaseStats.prototype.getWILModifiers = function () {
-    return this.wil_0.modifiers;
+  BaseStats$CombatStats.prototype.component3 = function () {
+    return this.ma;
   };
-  BaseStats.prototype.getSPDModifiers = function () {
-    return this.spd_0.modifiers;
+  BaseStats$CombatStats.prototype.component4 = function () {
+    return this.md;
   };
-  BaseStats.prototype.getACCModifiers = function () {
-    return this.acc_0.modifiers;
+  BaseStats$CombatStats.prototype.copy_5uymv4$ = function (at, df, ma, md) {
+    return new BaseStats$CombatStats(at === void 0 ? this.at : at, df === void 0 ? this.df : df, ma === void 0 ? this.ma : ma, md === void 0 ? this.md : md);
+  };
+  BaseStats$CombatStats.prototype.toString = function () {
+    return 'CombatStats(at=' + Kotlin.toString(this.at) + (', df=' + Kotlin.toString(this.df)) + (', ma=' + Kotlin.toString(this.ma)) + (', md=' + Kotlin.toString(this.md)) + ')';
+  };
+  BaseStats$CombatStats.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.at) | 0;
+    result = result * 31 + Kotlin.hashCode(this.df) | 0;
+    result = result * 31 + Kotlin.hashCode(this.ma) | 0;
+    result = result * 31 + Kotlin.hashCode(this.md) | 0;
+    return result;
+  };
+  BaseStats$CombatStats.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.at, other.at) && Kotlin.equals(this.df, other.df) && Kotlin.equals(this.ma, other.ma) && Kotlin.equals(this.md, other.md)))));
+  };
+  BaseStats.prototype.getCombatStats = function () {
+    return this.combatStats_0;
+  };
+  BaseStats.prototype.setCombatStats_9v9adx$ = function (combatStats) {
+    this.combatStats_0 = combatStats;
   };
   BaseStats.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'BaseStats',
     interfaces: []
   };
-  function Resources(hp, sp, mp) {
-    if (hp === void 0)
-      hp = new DynamicValue(150, 150);
-    if (sp === void 0)
-      sp = new DynamicValue(150, 150);
-    if (mp === void 0)
-      mp = new DynamicValue(150, 150);
-    this.hp_0 = hp;
-    this.sp_0 = sp;
-    this.mp_0 = mp;
+  function Resources() {
+    this.data_0 = new Resources$ResourcesData();
   }
   Resources.prototype.setMaxHP_za3lpa$ = function (value) {
-    this.hp_0.max.setBase_za3lpa$(value);
+    this.data_0.hp.max.setBase_za3lpa$(value);
   };
   Resources.prototype.setMaxMP_za3lpa$ = function (value) {
-    this.mp_0.max.setBase_za3lpa$(value);
+    this.data_0.mp.max.setBase_za3lpa$(value);
   };
   Resources.prototype.setMaxSP_za3lpa$ = function (value) {
-    this.sp_0.max.setBase_za3lpa$(value);
+    this.data_0.sp.max.setBase_za3lpa$(value);
   };
   Resources.prototype.setCurrentHP_za3lpa$ = function (value) {
-    this.hp_0.current.setBase_za3lpa$(value);
+    this.data_0.hp.current.setBase_za3lpa$(value);
   };
   Resources.prototype.setCurrentMP_za3lpa$ = function (value) {
-    this.mp_0.current.setBase_za3lpa$(value);
+    this.data_0.mp.current.setBase_za3lpa$(value);
   };
   Resources.prototype.setCurrentSP_za3lpa$ = function (value) {
-    this.sp_0.current.setBase_za3lpa$(value);
+    this.data_0.sp.current.setBase_za3lpa$(value);
   };
   Resources.prototype.getMaxHP = function () {
-    return this.hp_0.max.getValue_6taknv$();
+    return this.data_0.hp.max.getValue_6taknv$();
   };
   Resources.prototype.getMaxMP = function () {
-    return this.mp_0.max.getValue_6taknv$();
+    return this.data_0.mp.max.getValue_6taknv$();
   };
   Resources.prototype.getMaxSP = function () {
-    return this.sp_0.max.getValue_6taknv$();
+    return this.data_0.sp.max.getValue_6taknv$();
   };
   Resources.prototype.getCurrentHP = function () {
-    return this.hp_0.current.getValue_6taknv$();
+    return this.data_0.hp.current.getValue_6taknv$();
   };
   Resources.prototype.getCurrentMP = function () {
-    return this.mp_0.current.getValue_6taknv$();
+    return this.data_0.mp.current.getValue_6taknv$();
   };
   Resources.prototype.getCurrentSP = function () {
-    return this.sp_0.current.getValue_6taknv$();
+    return this.data_0.sp.current.getValue_6taknv$();
   };
   Resources.prototype.getMaxHPModifiers = function () {
-    return this.hp_0.max.modifiers;
+    return this.data_0.hp.max.modifiers;
   };
   Resources.prototype.getMaxMPModifiers = function () {
-    return this.mp_0.max.modifiers;
+    return this.data_0.mp.max.modifiers;
   };
   Resources.prototype.getMaxSPModifiers = function () {
-    return this.sp_0.max.modifiers;
+    return this.data_0.sp.max.modifiers;
   };
   Resources.prototype.getCurrentHPModifiers = function () {
-    return this.hp_0.current.modifiers;
+    return this.data_0.hp.current.modifiers;
   };
   Resources.prototype.getCurrentMPModifiers = function () {
-    return this.mp_0.current.modifiers;
+    return this.data_0.mp.current.modifiers;
   };
   Resources.prototype.getCurrentSPModifiers = function () {
-    return this.sp_0.current.modifiers;
+    return this.data_0.sp.current.modifiers;
   };
   Resources.prototype.dealDamage_zih9xn$ = function (damage, target) {
     target.resources.setCurrentHP_za3lpa$(damage + DiceRoller_getInstance().roll_za3lpa$() | 0);
@@ -1327,114 +1547,208 @@ var DemigodApp = function (_, Kotlin) {
   Resources.prototype.restoreSP_za3lpa$ = function (restore) {
     this.setCurrentSP_za3lpa$(this.getCurrentSP() + restore | 0);
   };
+  function Resources$ResourcesData(hp, sp, mp) {
+    if (hp === void 0)
+      hp = new DynamicValue(150, 150);
+    if (sp === void 0)
+      sp = new DynamicValue(150, 150);
+    if (mp === void 0)
+      mp = new DynamicValue(150, 150);
+    this.hp = hp;
+    this.sp = sp;
+    this.mp = mp;
+  }
+  Resources$ResourcesData.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'ResourcesData',
+    interfaces: []
+  };
+  Resources$ResourcesData.prototype.component1 = function () {
+    return this.hp;
+  };
+  Resources$ResourcesData.prototype.component2 = function () {
+    return this.sp;
+  };
+  Resources$ResourcesData.prototype.component3 = function () {
+    return this.mp;
+  };
+  Resources$ResourcesData.prototype.copy_ayn8wi$ = function (hp, sp, mp) {
+    return new Resources$ResourcesData(hp === void 0 ? this.hp : hp, sp === void 0 ? this.sp : sp, mp === void 0 ? this.mp : mp);
+  };
+  Resources$ResourcesData.prototype.toString = function () {
+    return 'ResourcesData(hp=' + Kotlin.toString(this.hp) + (', sp=' + Kotlin.toString(this.sp)) + (', mp=' + Kotlin.toString(this.mp)) + ')';
+  };
+  Resources$ResourcesData.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.hp) | 0;
+    result = result * 31 + Kotlin.hashCode(this.sp) | 0;
+    result = result * 31 + Kotlin.hashCode(this.mp) | 0;
+    return result;
+  };
+  Resources$ResourcesData.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.hp, other.hp) && Kotlin.equals(this.sp, other.sp) && Kotlin.equals(this.mp, other.mp)))));
+  };
+  Resources.prototype.getData = function () {
+    return this.data_0;
+  };
+  Resources.prototype.setData_1efdba$ = function (data) {
+    this.data_0 = data;
+  };
   Resources.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Resources',
     interfaces: []
   };
-  function CombatStats(at, df, ma, md) {
-    if (at === void 0)
-      at = new Value(0);
-    if (df === void 0)
-      df = new Value(0);
-    if (ma === void 0)
-      ma = new Value(0);
-    if (md === void 0)
-      md = new Value(0);
-    this.at_0 = at;
-    this.df_0 = df;
-    this.ma_0 = ma;
-    this.md_0 = md;
+  function Skills() {
+    this.skillList_0 = this.initSkills_0();
   }
-  CombatStats.prototype.getAT_6taknv$ = function (includeMods) {
-    if (includeMods === void 0)
-      includeMods = true;
-    return this.at_0.getValue_6taknv$(includeMods);
-  };
-  CombatStats.prototype.getDF_6taknv$ = function (includeMods) {
-    if (includeMods === void 0)
-      includeMods = true;
-    return this.df_0.getValue_6taknv$(includeMods);
-  };
-  CombatStats.prototype.getMA_6taknv$ = function (includeMods) {
-    if (includeMods === void 0)
-      includeMods = true;
-    return this.ma_0.getValue_6taknv$(includeMods);
-  };
-  CombatStats.prototype.getMD_6taknv$ = function (includeMods) {
-    if (includeMods === void 0)
-      includeMods = true;
-    return this.md_0.getValue_6taknv$(includeMods);
-  };
-  CombatStats.prototype.setATBase_za3lpa$ = function (base) {
-    this.at_0.setBase_za3lpa$(base);
-  };
-  CombatStats.prototype.setDFBase_za3lpa$ = function (base) {
-    this.df_0.setBase_za3lpa$(base);
-  };
-  CombatStats.prototype.setMABase_za3lpa$ = function (base) {
-    this.ma_0.setBase_za3lpa$(base);
-  };
-  CombatStats.prototype.setMDBase_za3lpa$ = function (base) {
-    this.md_0.setBase_za3lpa$(base);
-  };
-  CombatStats.prototype.getATModifiers = function () {
-    return this.at_0.modifiers;
-  };
-  CombatStats.prototype.getDFModifiers = function () {
-    return this.df_0.modifiers;
-  };
-  CombatStats.prototype.getMAModifiers = function () {
-    return this.ma_0.modifiers;
-  };
-  CombatStats.prototype.getMDModifiers = function () {
-    return this.md_0.modifiers;
-  };
-  CombatStats.$metadata$ = {
+  function Skills$SkillData(name, check, value) {
+    if (check === void 0)
+      check = false;
+    if (value === void 0)
+      value = new Value(0);
+    this.name = name;
+    this.check = check;
+    this.value = value;
+  }
+  Skills$SkillData.$metadata$ = {
     kind: Kind_CLASS,
-    simpleName: 'CombatStats',
+    simpleName: 'SkillData',
     interfaces: []
   };
-  CombatStats.prototype.component1_0 = function () {
-    return this.at_0;
+  Skills$SkillData.prototype.component1 = function () {
+    return this.name;
   };
-  CombatStats.prototype.component2_0 = function () {
-    return this.df_0;
+  Skills$SkillData.prototype.component2 = function () {
+    return this.check;
   };
-  CombatStats.prototype.component3_0 = function () {
-    return this.ma_0;
+  Skills$SkillData.prototype.component3 = function () {
+    return this.value;
   };
-  CombatStats.prototype.component4_0 = function () {
-    return this.md_0;
+  Skills$SkillData.prototype.copy_6a8q4y$ = function (name, check, value) {
+    return new Skills$SkillData(name === void 0 ? this.name : name, check === void 0 ? this.check : check, value === void 0 ? this.value : value);
   };
-  CombatStats.prototype.copy_5uymv4$ = function (at, df, ma, md) {
-    return new CombatStats(at === void 0 ? this.at_0 : at, df === void 0 ? this.df_0 : df, ma === void 0 ? this.ma_0 : ma, md === void 0 ? this.md_0 : md);
+  Skills$SkillData.prototype.toString = function () {
+    return 'SkillData(name=' + Kotlin.toString(this.name) + (', check=' + Kotlin.toString(this.check)) + (', value=' + Kotlin.toString(this.value)) + ')';
   };
-  CombatStats.prototype.toString = function () {
-    return 'CombatStats(at=' + Kotlin.toString(this.at_0) + (', df=' + Kotlin.toString(this.df_0)) + (', ma=' + Kotlin.toString(this.ma_0)) + (', md=' + Kotlin.toString(this.md_0)) + ')';
-  };
-  CombatStats.prototype.hashCode = function () {
+  Skills$SkillData.prototype.hashCode = function () {
     var result = 0;
-    result = result * 31 + Kotlin.hashCode(this.at_0) | 0;
-    result = result * 31 + Kotlin.hashCode(this.df_0) | 0;
-    result = result * 31 + Kotlin.hashCode(this.ma_0) | 0;
-    result = result * 31 + Kotlin.hashCode(this.md_0) | 0;
+    result = result * 31 + Kotlin.hashCode(this.name) | 0;
+    result = result * 31 + Kotlin.hashCode(this.check) | 0;
+    result = result * 31 + Kotlin.hashCode(this.value) | 0;
     return result;
   };
-  CombatStats.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.at_0, other.at_0) && Kotlin.equals(this.df_0, other.df_0) && Kotlin.equals(this.ma_0, other.ma_0) && Kotlin.equals(this.md_0, other.md_0)))));
+  Skills$SkillData.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.name, other.name) && Kotlin.equals(this.check, other.check) && Kotlin.equals(this.value, other.value)))));
   };
-  function Skill(name) {
-    this.name = name;
-    this.check = false;
-    this.value = new Value(0);
-  }
-  Skill.$metadata$ = {
+  Skills.prototype.initSkills_0 = function () {
+    var list = ArrayList_init();
+    list.add_11rb$(new Skills$SkillData('Common Sense'));
+    list.add_11rb$(new Skills$SkillData('Spell-Craft'));
+    list.add_11rb$(new Skills$SkillData('Cartography'));
+    list.add_11rb$(new Skills$SkillData('Ancient World'));
+    list.add_11rb$(new Skills$SkillData('Study/Reading'));
+    list.add_11rb$(new Skills$SkillData('Magic Knowledge'));
+    list.add_11rb$(new Skills$SkillData('Herbology'));
+    list.add_11rb$(new Skills$SkillData('Advanced Medicine'));
+    list.add_11rb$(new Skills$SkillData('Detective'));
+    list.add_11rb$(new Skills$SkillData('Awareness'));
+    list.add_11rb$(new Skills$SkillData('Disguise'));
+    list.add_11rb$(new Skills$SkillData('Puzzle'));
+    list.add_11rb$(new Skills$SkillData('Sense Motive'));
+    list.add_11rb$(new Skills$SkillData('Escape Artist'));
+    list.add_11rb$(new Skills$SkillData('Stealth/Sneak'));
+    list.add_11rb$(new Skills$SkillData('Trickery/Stealing'));
+    list.add_11rb$(new Skills$SkillData('Lock Picking'));
+    list.add_11rb$(new Skills$SkillData('Free Running'));
+    list.add_11rb$(new Skills$SkillData('Tracking/Hunting'));
+    list.add_11rb$(new Skills$SkillData('Basic Survival'));
+    list.add_11rb$(new Skills$SkillData('Advanced Riding'));
+    list.add_11rb$(new Skills$SkillData('Cooking'));
+    list.add_11rb$(new Skills$SkillData('Beast Taming'));
+    list.add_11rb$(new Skills$SkillData('Pain Tolerance'));
+    list.add_11rb$(new Skills$SkillData('First Aid'));
+    list.add_11rb$(new Skills$SkillData('Inspiration'));
+    list.add_11rb$(new Skills$SkillData('Seduction'));
+    list.add_11rb$(new Skills$SkillData('Charm'));
+    list.add_11rb$(new Skills$SkillData('Speech'));
+    list.add_11rb$(new Skills$SkillData('Persuasion'));
+    list.add_11rb$(new Skills$SkillData('Intimidate'));
+    list.add_11rb$(new Skills$SkillData('Guile'));
+    list.add_11rb$(new Skills$SkillData('Composure/Calm'));
+    list.add_11rb$(new Skills$SkillData('War Tactics'));
+    list.add_11rb$(new Skills$SkillData('Group Management'));
+    list.add_11rb$(new Skills$SkillData('Hand To Hand Combat'));
+    list.add_11rb$(new Skills$SkillData('Weapons Play'));
+    list.add_11rb$(new Skills$SkillData('Specialty Weapon'));
+    list.add_11rb$(new Skills$SkillData('Swimming'));
+    list.add_11rb$(new Skills$SkillData('Climbing'));
+    return list;
+  };
+  Skills.prototype.getSkill_61zpoe$ = function (name) {
+    var tmp$;
+    tmp$ = this.skillList_0.iterator();
+    while (tmp$.hasNext()) {
+      var skill = tmp$.next();
+      if (equals(skill.name, name)) {
+        return skill;
+      }
+    }
+    return null;
+  };
+  Skills.prototype.getSkillList = function () {
+    return this.skillList_0;
+  };
+  Skills.prototype.setSkillList_b04d0x$ = function (skillList) {
+    this.skillList_0 = skillList;
+  };
+  Skills.$metadata$ = {
     kind: Kind_CLASS,
-    simpleName: 'Skill',
+    simpleName: 'Skills',
     interfaces: []
   };
-  function Traits(name, age, species, _class, level, icon) {
+  function Traits() {
+    this.data_0 = new Traits$TraitsData();
+  }
+  Traits.prototype.getName = function () {
+    return this.data_0.name;
+  };
+  Traits.prototype.setName_61zpoe$ = function (name) {
+    this.data_0.name = name;
+  };
+  Traits.prototype.getAge = function () {
+    return this.data_0.age;
+  };
+  Traits.prototype.setAge_za3lpa$ = function (age) {
+    this.data_0.age = age;
+  };
+  Traits.prototype.getSpecies = function () {
+    return this.data_0.species;
+  };
+  Traits.prototype.setSpecies_61zpoe$ = function (species) {
+    this.data_0.species = species;
+  };
+  Traits.prototype.getClassName = function () {
+    return this.data_0._class.name;
+  };
+  Traits.prototype.setClassName_61zpoe$ = function (name) {
+    this.data_0._class.name = name;
+  };
+  Traits.prototype.getLevel = function () {
+    return this.data_0.level;
+  };
+  Traits.prototype.setLevel_za3lpa$ = function (level) {
+    this.data_0.level = level;
+  };
+  function Traits$TraitsData(name, age, species, _class, level, icon) {
+    if (name === void 0)
+      name = 'player';
+    if (age === void 0)
+      age = 0;
+    if (species === void 0)
+      species = 'Human';
+    if (_class === void 0)
+      _class = new Class();
     if (level === void 0)
       level = 1;
     if (icon === void 0)
@@ -1446,36 +1760,36 @@ var DemigodApp = function (_, Kotlin) {
     this.level = level;
     this.icon = icon;
   }
-  Traits.$metadata$ = {
+  Traits$TraitsData.$metadata$ = {
     kind: Kind_CLASS,
-    simpleName: 'Traits',
+    simpleName: 'TraitsData',
     interfaces: []
   };
-  Traits.prototype.component1 = function () {
+  Traits$TraitsData.prototype.component1 = function () {
     return this.name;
   };
-  Traits.prototype.component2 = function () {
+  Traits$TraitsData.prototype.component2 = function () {
     return this.age;
   };
-  Traits.prototype.component3 = function () {
+  Traits$TraitsData.prototype.component3 = function () {
     return this.species;
   };
-  Traits.prototype.component4 = function () {
+  Traits$TraitsData.prototype.component4 = function () {
     return this._class;
   };
-  Traits.prototype.component5 = function () {
+  Traits$TraitsData.prototype.component5 = function () {
     return this.level;
   };
-  Traits.prototype.component6 = function () {
+  Traits$TraitsData.prototype.component6 = function () {
     return this.icon;
   };
-  Traits.prototype.copy_46c0s2$ = function (name, age, species, _class, level, icon) {
-    return new Traits(name === void 0 ? this.name : name, age === void 0 ? this.age : age, species === void 0 ? this.species : species, _class === void 0 ? this._class : _class, level === void 0 ? this.level : level, icon === void 0 ? this.icon : icon);
+  Traits$TraitsData.prototype.copy_46c0s2$ = function (name, age, species, _class, level, icon) {
+    return new Traits$TraitsData(name === void 0 ? this.name : name, age === void 0 ? this.age : age, species === void 0 ? this.species : species, _class === void 0 ? this._class : _class, level === void 0 ? this.level : level, icon === void 0 ? this.icon : icon);
   };
-  Traits.prototype.toString = function () {
-    return 'Traits(name=' + Kotlin.toString(this.name) + (', age=' + Kotlin.toString(this.age)) + (', species=' + Kotlin.toString(this.species)) + (', _class=' + Kotlin.toString(this._class)) + (', level=' + Kotlin.toString(this.level)) + (', icon=' + Kotlin.toString(this.icon)) + ')';
+  Traits$TraitsData.prototype.toString = function () {
+    return 'TraitsData(name=' + Kotlin.toString(this.name) + (', age=' + Kotlin.toString(this.age)) + (', species=' + Kotlin.toString(this.species)) + (', _class=' + Kotlin.toString(this._class)) + (', level=' + Kotlin.toString(this.level)) + (', icon=' + Kotlin.toString(this.icon)) + ')';
   };
-  Traits.prototype.hashCode = function () {
+  Traits$TraitsData.prototype.hashCode = function () {
     var result = 0;
     result = result * 31 + Kotlin.hashCode(this.name) | 0;
     result = result * 31 + Kotlin.hashCode(this.age) | 0;
@@ -1485,8 +1799,19 @@ var DemigodApp = function (_, Kotlin) {
     result = result * 31 + Kotlin.hashCode(this.icon) | 0;
     return result;
   };
-  Traits.prototype.equals = function (other) {
+  Traits$TraitsData.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.name, other.name) && Kotlin.equals(this.age, other.age) && Kotlin.equals(this.species, other.species) && Kotlin.equals(this._class, other._class) && Kotlin.equals(this.level, other.level) && Kotlin.equals(this.icon, other.icon)))));
+  };
+  Traits.prototype.getData = function () {
+    return this.data_0;
+  };
+  Traits.prototype.setData_51v960$ = function (data) {
+    this.data_0 = data;
+  };
+  Traits.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Traits',
+    interfaces: []
   };
   function Class(name) {
     if (name === void 0)
@@ -1623,11 +1948,13 @@ var DemigodApp = function (_, Kotlin) {
   _.Spell = Spell;
   _.Special = Special;
   _.ClassAbility = ClassAbility;
+  _.Abilities = Abilities;
   _.StatChecker = StatChecker;
   Object.defineProperty(_, 'DiceRoller', {
     get: DiceRoller_getInstance
   });
   _.Equipment = Equipment;
+  Wearable.WearableData = Wearable$WearableData;
   _.Wearable = Wearable;
   _.Upgrade = Upgrade;
   _.Glyph = Glyph;
@@ -1661,16 +1988,21 @@ var DemigodApp = function (_, Kotlin) {
   _.insertItemSlot_vgc0e7$ = insertItemSlot;
   _.createItemSlot_vgc0e7$ = createItemSlot;
   _.deleteItemSlot_vgc0e7$ = deleteItemSlot;
+  Inventory.InventoryData = Inventory$InventoryData;
   _.Inventory = Inventory;
   _.Item = Item;
   _.main = main;
   _.tempSheetLogic_vgc0e7$ = tempSheetLogic;
   _.generateID = generateID;
   _.Player = Player;
+  BaseStats.BaseStatsData = BaseStats$BaseStatsData;
+  BaseStats.CombatStats = BaseStats$CombatStats;
   _.BaseStats = BaseStats;
+  Resources.ResourcesData = Resources$ResourcesData;
   _.Resources = Resources;
-  _.CombatStats = CombatStats;
-  _.Skill = Skill;
+  Skills.SkillData = Skills$SkillData;
+  _.Skills = Skills;
+  Traits.TraitsData = Traits$TraitsData;
   _.Traits = Traits;
   _.Class = Class;
   _.Value = Value;

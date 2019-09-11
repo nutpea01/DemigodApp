@@ -12,10 +12,10 @@ fun setupPage(player: Player) {
     //resetPage(player)
 }
 fun resetPage(player: Player) {
-    while (player.spells.size > 0) { deleteSpellSlot(player) }
-    while (player.specials.size > 0) { deleteSpecialSlot(player) }
-    while (player.classAbilities.size > 0) { deleteClassSlot(player) }
-    while (player.inventory.size > 0) { deleteItemSlot(player) }
+    while (player.abilities.getSpellList().size > 0) { deleteSpellSlot(player) }
+    while (player.abilities.getSpecialList().size > 0) { deleteSpecialSlot(player) }
+    while (player.abilities.getClassAbilityList().size > 0) { deleteClassSlot(player) }
+    while (player.inventory.getSize() > 0) { deleteItemSlot(player) }
 }
 fun initCharacterSheetListeners(player: Player) {
     initTraitListener(player)
@@ -28,13 +28,13 @@ fun initTraitListener(player: Player) {
     document.addEventListener("change", {
         val trait = it.target as HTMLInputElement
         when (trait.id) {
-            "Name" -> player.traits.name = trait.value
-            "Age" -> player.traits.age = trait.value.toInt()
-            "Species" -> player.traits.species = trait.value
-            "Class" -> player.traits._class.name = trait.value
-            "Level" -> player.traits.level = trait.value.toInt()
+            "Name" -> player.traits.setName(trait.value)
+            "Age" -> player.traits.setAge(trait.value.toInt())
+            "Species" -> player.traits.setSpecies(trait.value)
+            "Class" -> player.traits.setClassName(trait.value)
+            "Level" -> player.traits.setLevel(trait.value.toInt())
             //TODO: not in sheet (specifically) yet, also doesn't need to be int
-            "Icon" -> player.traits.icon = trait.value.toInt()
+            //"Icon" -> player.traits.icon = trait.value.toInt()
         }
     })
 }
@@ -77,22 +77,22 @@ fun initStatListener(player: Player) {
             "SPD-MOD" -> player.baseStats.getSPDModifiers()[0].value = stat.value.toInt()
             "AC-MOD"  -> player.baseStats.getACCModifiers()[0].value = stat.value.toInt()
 
-            "AT-MOD" -> player.baseStats.combatStats.getATModifiers()[0].value = stat.value.toInt()
-            "DF-MOD" -> player.baseStats.combatStats.getDFModifiers()[0].value = stat.value.toInt()
-            "MA-MOD" -> player.baseStats.combatStats.getMAModifiers()[0].value = stat.value.toInt()
-            "MD-MOD" -> player.baseStats.combatStats.getMDModifiers()[0].value = stat.value.toInt()
+            "AT-MOD" -> player.baseStats.getATModifiers()[0].value = stat.value.toInt()
+            "DF-MOD" -> player.baseStats.getDFModifiers()[0].value = stat.value.toInt()
+            "MA-MOD" -> player.baseStats.getMAModifiers()[0].value = stat.value.toInt()
+            "MD-MOD" -> player.baseStats.getMDModifiers()[0].value = stat.value.toInt()
         }
         // update document visuals
         player.baseStats.updateCombat()
-        (document.getElementById("AT-BASE") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getAT(false).toString()
-        (document.getElementById("DF-BASE") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getDF(false).toString()
-        (document.getElementById("MA-BASE") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getMA(false).toString()
-        (document.getElementById("MD-BASE") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getMD(false).toString()
+        (document.getElementById("AT-BASE") as HTMLTableCellElement).innerText = player.baseStats.getAT(false).toString()
+        (document.getElementById("DF-BASE") as HTMLTableCellElement).innerText = player.baseStats.getDF(false).toString()
+        (document.getElementById("MA-BASE") as HTMLTableCellElement).innerText = player.baseStats.getMA(false).toString()
+        (document.getElementById("MD-BASE") as HTMLTableCellElement).innerText = player.baseStats.getMD(false).toString()
 
-        (document.getElementById("AT-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getAT().toString()
-        (document.getElementById("DF-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getDF().toString()
-        (document.getElementById("MA-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getMA().toString()
-        (document.getElementById("MD-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.combatStats.getMD().toString()
+        (document.getElementById("AT-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getAT().toString()
+        (document.getElementById("DF-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getDF().toString()
+        (document.getElementById("MA-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getMA().toString()
+        (document.getElementById("MD-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getMD().toString()
 
         (document.getElementById("STR-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getSTR().toString()
         (document.getElementById("CON-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getCON().toString()
@@ -115,7 +115,7 @@ fun initEquipmentListener(player: Player) {
 fun initNotesListener(player: Player) {
     val notes = document.getElementById("notes-div__textarea") as HTMLTextAreaElement
     notes.addEventListener("change", {
-        player.inventory.notes = notes.value
+        player.inventory.setNotes(notes.value)
     })
 }
 /* TODO: saved just in case
@@ -186,17 +186,17 @@ fun initButtons(player: Player) {
     rollStatSelector.addEventListener("change", {
         val span = document.getElementById("roll-stat-display")
         span!!.textContent = when (rollStatSelector.value) {
-            "AT" -> player.baseStats.combatStats.getAT().toString()
-            "DF" -> player.baseStats.combatStats.getDF().toString()
-            "MA" -> player.baseStats.combatStats.getMA().toString()
-            "MD" -> player.baseStats.combatStats.getMD().toString()
+            "AT" -> player.baseStats.getAT().toString()
+            "DF" -> player.baseStats.getDF().toString()
+            "MA" -> player.baseStats.getMA().toString()
+            "MD" -> player.baseStats.getMD().toString()
             "STR" -> player.baseStats.getSTR().toString()
             "CON" -> player.baseStats.getCON().toString()
             "INT" -> player.baseStats.getINT().toString()
             "WILL"-> player.baseStats.getWIL().toString()
             "SPD" -> player.baseStats.getSPD().toString()
             "AC"  -> player.baseStats.getACC().toString()
-            else -> player.baseStats.combatStats.getAT().toString()
+            else -> player.baseStats.getAT().toString()
         }
     })
 }
@@ -208,13 +208,13 @@ fun initSlots(player: Player, spellSlots: Int, specialSlots: Int, classSlots: In
 fun initSkills(player: Player) {
     val table = document.getElementById("skill-tree") as HTMLTableElement
     var index = 0
-    while (index < player.skills.size) {
+    while (index < player.skills.getSkillList().size) {
         // add row
         val row = table.insertRow()
 
         // two skills per row
         repeat(2) {
-            val skillName = player.skills[index].name
+            val skillName = player.skills.getSkillList()[index].name
             // first cell - skill name
             val label = row.insertCell()
             label.addClass("skill-tree__label")
@@ -228,7 +228,7 @@ fun initSkills(player: Player) {
             input.placeholder = "0"
             input.addClass("skill-tree__number")
             input.addEventListener("change", {
-                player.getSkill(skillName)!!.value.setBase((it.target as HTMLInputElement).value.toInt())
+                player.skills.getSkill(skillName)!!.value.setBase((it.target as HTMLInputElement).value.toInt())
             })
             value.appendChild(input)
 
@@ -241,7 +241,7 @@ fun initSkills(player: Player) {
             checkbox.name = "roll-check"
             checkbox.addClass("skill-tree__checkbox")
             checkbox.addEventListener("change", {
-                player.getSkill(skillName)!!.check = checkbox.checked
+                player.skills.getSkill(skillName)!!.check = checkbox.checked
             })
             check.appendChild(checkbox)
 
@@ -258,16 +258,16 @@ fun initItems(player: Player, amount: Int) {
 
 
 fun insertSpellSlot(player: Player): Boolean {
-    player.spells.add(Spell())
-    return insertAbilitySlot(player, "spells", "Spell-Circle-Icon-Web-Dev80px.png", player.spells.size)
+    player.abilities.getSpellList().add(Spell())
+    return insertAbilitySlot(player, "spells", "Spell-Circle-Icon-Web-Dev80px.png", player.abilities.getSpellList().size)
 }
 fun insertSpecialSlot(player: Player): Boolean {
-    player.specials.add(Special())
-    return insertAbilitySlot(player, "special", "Triangle Icon - Web Dev.png", player.specials.size)
+    player.abilities.getSpecialList().add(Special())
+    return insertAbilitySlot(player, "special", "Triangle Icon - Web Dev.png", player.abilities.getSpecialList().size)
 }
 fun insertClassSlot(player: Player): Boolean {
-    player.classAbilities.add(ClassAbility())
-    return insertAbilitySlot(player, "class-abilities", "class-abilities-demigod100px.png", player.classAbilities.size)
+    player.abilities.getClassAbilityList().add(ClassAbility())
+    return insertAbilitySlot(player, "class-abilities", "class-abilities-demigod100px.png", player.abilities.getClassAbilityList().size)
 }
 fun insertAbilitySlot(
         player: Player,
@@ -298,9 +298,9 @@ fun insertAbilitySlot(
     // add eventListener based on which type it is
     textarea.addEventListener("change", {
         when (type) {
-            "spells" -> player.spells[size-1].description = (it.target as HTMLTextAreaElement).value
-            "special" -> player.specials[size-1].description = (it.target as HTMLTextAreaElement).value
-            "class-abilities" -> player.classAbilities[size-1].description = (it.target as HTMLTextAreaElement).value
+            "spells" -> player.abilities.getSpellList()[size-1].description = (it.target as HTMLTextAreaElement).value
+            "special" -> player.abilities.getSpecialList()[size-1].description = (it.target as HTMLTextAreaElement).value
+            "class-abilities" -> player.abilities.getClassAbilityList()[size-1].description = (it.target as HTMLTextAreaElement).value
         }
     })
 
@@ -314,19 +314,19 @@ fun deleteSpellSlot(player: Player): Boolean {
 
     val table = document.getElementById("spells-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
-    player.spells.removeAt(player.spells.size -1)
+    player.abilities.getSpellList().removeAt(player.abilities.getSpellList().size -1)
     return false
 }
 fun deleteSpecialSlot(player: Player): Boolean {
     val table = document.getElementById("special-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
-    player.specials.removeAt(player.specials.size -1)
+    player.abilities.getSpecialList().removeAt(player.abilities.getSpecialList().size -1)
     return false
 }
 fun deleteClassSlot(player: Player): Boolean {
     val table = document.getElementById("class-abilities-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
-    player.classAbilities.removeAt(player.classAbilities.size -1)
+    player.abilities.getClassAbilityList().removeAt(player.abilities.getClassAbilityList().size -1)
     return false
 }
 
@@ -362,10 +362,10 @@ fun createItemSlot(player: Player): HTMLTextAreaElement {
     val textarea = document.createElement("textarea") as HTMLTextAreaElement
     textarea.name = "inventory-slot"
     textarea.addClass("inventory-div__slot")
-    textarea.id = "inventory-slot-" + player.inventory.size
+    textarea.id = "inventory-slot-" + player.inventory.getSize()
 
     // add EventListener
-    val index = player.inventory.size-1
+    val index = player.inventory.getSize()-1
     textarea.addEventListener("change", {
         // index must be declared outside the eventListener to stay constant
         player.inventory.getItem(index).description = (it.target as HTMLTextAreaElement).value
@@ -375,7 +375,7 @@ fun createItemSlot(player: Player): HTMLTextAreaElement {
 }
 fun deleteItemSlot(player: Player): Boolean {
     // update player, cancel out if 0
-    if (player.inventory.size == 0) {
+    if (player.inventory.getSize() == 0) {
 
         return false
     }

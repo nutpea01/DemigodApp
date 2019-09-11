@@ -1,68 +1,98 @@
-import org.w3c.dom.HTMLInputElement
-import kotlin.browser.document
-
 class BaseStats (
-        private val str: Value = Value(0),
-        private val con: Value = Value(0),
-        private val int: Value = Value(0),
-        private val wil: Value = Value(0),
-        private val spd: Value = Value(0),
-        private val acc: Value = Value(0)
+        private var data: BaseStatsData = BaseStatsData()
 ) {
-    val combatStats: CombatStats = CombatStats()
+    private var combatStats: CombatStats = CombatStats()
 
     fun updateCombat() {
-        combatStats.setATBase(str.getValue()*2)
-        combatStats.setDFBase(con.getValue()*1)
-        combatStats.setMABase(int.getValue()*2)
-        combatStats.setMDBase(wil.getValue()*1)
+        setATBase(this.data.str.getValue()*2)
+        setDFBase(this.data.con.getValue()*1)
+        setMABase(this.data.int.getValue()*2)
+        setMDBase(this.data.wil.getValue()*1)
 
     }
     fun setSTR(value: Int) {
-        this.str.setBase(value)
+        this.data.str.setBase(value)
         updateCombat()
     }
     fun setCON(value: Int) {
-        this.con.setBase(value)
+        this.data.con.setBase(value)
         updateCombat()
     }
     fun setINT(value: Int) {
-        this.int.setBase(value)
+        this.data.int.setBase(value)
         updateCombat()
     }
     fun setWIL(value: Int) {
-        this.wil.setBase(value)
+        this.data.wil.setBase(value)
         updateCombat()
     }
-    fun setSPD(value: Int) { this.spd.setBase(value) }
-    fun setACC(value: Int) { this.acc.setBase(value) }
+    fun setSPD(value: Int) { this.data.spd.setBase(value) }
+    fun setACC(value: Int) { this.data.acc.setBase(value) }
+    fun setATBase(base: Int) { this.combatStats.at.setBase(base) }
+    fun setDFBase(base: Int) { this.combatStats.df.setBase(base) }
+    fun setMABase(base: Int) { this.combatStats.ma.setBase(base) }
+    fun setMDBase(base: Int) { this.combatStats.md.setBase(base) }
 
-    fun getSTR(): Int { return this.str.getValue() }
-    fun getCON(): Int { return this.con.getValue() }
-    fun getINT(): Int { return this.int.getValue() }
-    fun getWIL(): Int { return this.wil.getValue() }
-    fun getSPD(): Int { return this.spd.getValue() }
-    fun getACC(): Int { return this.acc.getValue() }
+    fun getSTR(includeMods: Boolean = true): Int { return this.data.str.getValue(includeMods) }
+    fun getCON(includeMods: Boolean = true): Int { return this.data.con.getValue(includeMods) }
+    fun getINT(includeMods: Boolean = true): Int { return this.data.int.getValue(includeMods) }
+    fun getWIL(includeMods: Boolean = true): Int { return this.data.wil.getValue(includeMods) }
+    fun getSPD(includeMods: Boolean = true): Int { return this.data.spd.getValue(includeMods) }
+    fun getACC(includeMods: Boolean = true): Int { return this.data.acc.getValue(includeMods) }
+    fun  getAT(includeMods: Boolean = true): Int { return this.combatStats.at.getValue(includeMods) }
+    fun  getDF(includeMods: Boolean = true): Int { return this.combatStats.df.getValue(includeMods) }
+    fun  getMA(includeMods: Boolean = true): Int { return this.combatStats.ma.getValue(includeMods) }
+    fun  getMD(includeMods: Boolean = true): Int { return this.combatStats.md.getValue(includeMods) }
 
-    fun getSTRModifiers(): MutableList<Modifier> { return this.str.modifiers }
-    fun getCONModifiers(): MutableList<Modifier> { return this.con.modifiers }
-    fun getINTModifiers(): MutableList<Modifier> { return this.int.modifiers }
-    fun getWILModifiers(): MutableList<Modifier> { return this.wil.modifiers }
-    fun getSPDModifiers(): MutableList<Modifier> { return this.spd.modifiers }
-    fun getACCModifiers(): MutableList<Modifier> { return this.acc.modifiers }
+    fun getSTRModifiers(): MutableList<Modifier> { return this.data.str.modifiers }
+    fun getCONModifiers(): MutableList<Modifier> { return this.data.con.modifiers }
+    fun getINTModifiers(): MutableList<Modifier> { return this.data.int.modifiers }
+    fun getWILModifiers(): MutableList<Modifier> { return this.data.wil.modifiers }
+    fun getSPDModifiers(): MutableList<Modifier> { return this.data.spd.modifiers }
+    fun getACCModifiers(): MutableList<Modifier> { return this.data.acc.modifiers }
+    fun  getATModifiers(): MutableList<Modifier> { return this.combatStats.at.modifiers }
+    fun  getDFModifiers(): MutableList<Modifier> { return this.combatStats.df.modifiers }
+    fun  getMAModifiers(): MutableList<Modifier> { return this.combatStats.ma.modifiers }
+    fun  getMDModifiers(): MutableList<Modifier> { return this.combatStats.md.modifiers }
 
+    data class BaseStatsData (
+            val str: Value = Value(0),
+            val con: Value = Value(0),
+            val int: Value = Value(0),
+            val wil: Value = Value(0),
+            val spd: Value = Value(0),
+            val acc: Value = Value(0)
+    )
+    fun getData(): BaseStatsData {
+        return this.data
+    }
+    fun setData(data: BaseStatsData) {
+        this.data = data
+    }
+
+    data class CombatStats (
+            val at: Value = Value(0),
+            val df: Value = Value(0),
+            val ma: Value = Value(0),
+            val md: Value = Value(0)
+    )
+    fun getCombatStats(): CombatStats {
+        return this.combatStats
+    }
+    fun setCombatStats(combatStats: CombatStats) {
+        this.combatStats = combatStats
+    }
 }
 
-class Resources (
-        private val hp: DynamicValue = DynamicValue(150, 150),
-        private val sp: DynamicValue = DynamicValue(150, 150),
-        private val mp: DynamicValue = DynamicValue(150, 150)
-) {
-    fun setMaxHP(value: Int) { this.hp.max.setBase(value) }
-    fun setMaxMP(value: Int) { this.mp.max.setBase(value) }
-    fun setMaxSP(value: Int) { this.sp.max.setBase(value) }
+
+class Resources {
+    private var data = ResourcesData()
+
+    fun setMaxHP(value: Int) { this.data.hp.max.setBase(value) }
+    fun setMaxMP(value: Int) { this.data.mp.max.setBase(value) }
+    fun setMaxSP(value: Int) { this.data.sp.max.setBase(value) }
     fun setCurrentHP(value: Int) {
-        this.hp.current.setBase(value)
+        this.data.hp.current.setBase(value)
         /* TODO: useful for future calculations, but not right now
         if (this.hp.current.getValue() > this.hp.max.getValue()) {
             this.hp.current.setBase(this.hp.max.getValue())
@@ -70,7 +100,7 @@ class Resources (
         */
     }
     fun setCurrentMP(value: Int) {
-        this.mp.current.setBase(value)
+        this.data.mp.current.setBase(value)
         /* TODO: useful for future calculations, but not right now
         if (this.mp.current.getValue() > this.mp.max.getValue()) {
             this.mp.current.setBase(this.mp.max.getValue())
@@ -78,7 +108,7 @@ class Resources (
         */
     }
     fun setCurrentSP(value: Int) {
-        this.sp.current.setBase(value)
+        this.data.sp.current.setBase(value)
         /* TODO: useful for future calculations, but not right now
         if (this.sp.current.getValue() > this.sp.max.getValue()) {
             this.sp.current.setBase(this.sp.max.getValue())
@@ -86,19 +116,19 @@ class Resources (
         */
     }
 
-    fun getMaxHP(): Int { return this.hp.max.getValue() }
-    fun getMaxMP(): Int { return this.mp.max.getValue() }
-    fun getMaxSP(): Int { return this.sp.max.getValue() }
-    fun getCurrentHP(): Int { return this.hp.current.getValue() }
-    fun getCurrentMP(): Int { return this.mp.current.getValue() }
-    fun getCurrentSP(): Int { return this.sp.current.getValue() }
+    fun getMaxHP(): Int { return this.data.hp.max.getValue() }
+    fun getMaxMP(): Int { return this.data.mp.max.getValue() }
+    fun getMaxSP(): Int { return this.data.sp.max.getValue() }
+    fun getCurrentHP(): Int { return this.data.hp.current.getValue() }
+    fun getCurrentMP(): Int { return this.data.mp.current.getValue() }
+    fun getCurrentSP(): Int { return this.data.sp.current.getValue() }
 
-    fun getMaxHPModifiers(): MutableList<Modifier> { return this.hp.max.modifiers }
-    fun getMaxMPModifiers(): MutableList<Modifier> { return this.mp.max.modifiers }
-    fun getMaxSPModifiers(): MutableList<Modifier> { return this.sp.max.modifiers }
-    fun getCurrentHPModifiers(): MutableList<Modifier> { return this.hp.current.modifiers }
-    fun getCurrentMPModifiers(): MutableList<Modifier> { return this.mp.current.modifiers }
-    fun getCurrentSPModifiers(): MutableList<Modifier> { return this.sp.current.modifiers }
+    fun getMaxHPModifiers(): MutableList<Modifier> { return this.data.hp.max.modifiers }
+    fun getMaxMPModifiers(): MutableList<Modifier> { return this.data.mp.max.modifiers }
+    fun getMaxSPModifiers(): MutableList<Modifier> { return this.data.sp.max.modifiers }
+    fun getCurrentHPModifiers(): MutableList<Modifier> { return this.data.hp.current.modifiers }
+    fun getCurrentMPModifiers(): MutableList<Modifier> { return this.data.mp.current.modifiers }
+    fun getCurrentSPModifiers(): MutableList<Modifier> { return this.data.sp.current.modifiers }
 
     //TODO: most of these will become more interesting as we add abilities. eventually, they should likely be able to find damage themselves based on stats...?
     fun dealDamage(damage: Int, target: Player) {
@@ -127,46 +157,147 @@ class Resources (
 
     fun restoreMP(restore: Int) { this.setCurrentMP(this.getCurrentMP()+restore) }
     fun restoreSP(restore: Int) { this.setCurrentSP(this.getCurrentSP()+restore) }
+
+    data class ResourcesData (
+            val hp: DynamicValue = DynamicValue(150, 150),
+            val sp: DynamicValue = DynamicValue(150, 150),
+            val mp: DynamicValue = DynamicValue(150, 150)
+    )
+    fun getData(): ResourcesData {
+        return this.data
+    }
+    fun setData(data: ResourcesData) {
+        this.data = data
+    }
 }
 
-data class CombatStats (
-        private val at: Value = Value(0),
-        private val df: Value = Value(0),
-        private val ma: Value = Value(0),
-        private val md: Value = Value(0)
-) {
-    fun getAT(includeMods: Boolean = true): Int { return this.at.getValue(includeMods) }
-    fun getDF(includeMods: Boolean = true): Int { return this.df.getValue(includeMods) }
-    fun getMA(includeMods: Boolean = true): Int { return this.ma.getValue(includeMods) }
-    fun getMD(includeMods: Boolean = true): Int { return this.md.getValue(includeMods) }
+class Skills {
+    private var skillList: MutableList<SkillData> = initSkills()
 
-    fun setATBase(base: Int) { this.at.setBase(base) }
-    fun setDFBase(base: Int) { this.df.setBase(base) }
-    fun setMABase(base: Int) { this.ma.setBase(base) }
-    fun setMDBase(base: Int) { this.md.setBase(base) }
+    data class SkillData (
+            val name: String,
+            var check: Boolean = false,  // used for if the player succeeds roll
+            val value: Value = Value(0)
+    )
+    private fun initSkills(): MutableList<SkillData> {
+        val list: MutableList<SkillData> = mutableListOf()
+        list.add(SkillData("Common Sense"))
+        list.add(SkillData("Spell-Craft"))
+        list.add(SkillData("Cartography"))
+        list.add(SkillData("Ancient World"))
+        list.add(SkillData("Study/Reading"))
+        list.add(SkillData("Magic Knowledge"))
+        list.add(SkillData("Herbology"))
+        list.add(SkillData("Advanced Medicine"))
+        list.add(SkillData("Detective"))
+        list.add(SkillData("Awareness"))
+        list.add(SkillData("Disguise"))
+        list.add(SkillData("Puzzle"))
+        list.add(SkillData("Sense Motive"))
+        list.add(SkillData("Escape Artist"))
+        list.add(SkillData("Stealth/Sneak"))
+        list.add(SkillData("Trickery/Stealing"))
+        list.add(SkillData("Lock Picking"))
+        list.add(SkillData("Free Running"))
+        list.add(SkillData("Tracking/Hunting"))
+        list.add(SkillData("Basic Survival"))
+        list.add(SkillData("Advanced Riding"))
+        list.add(SkillData("Cooking"))
+        list.add(SkillData("Beast Taming"))
+        list.add(SkillData("Pain Tolerance"))
+        list.add(SkillData("First Aid"))
+        list.add(SkillData("Inspiration"))
+        list.add(SkillData("Seduction"))
+        list.add(SkillData("Charm"))
+        list.add(SkillData("Speech"))
+        list.add(SkillData("Persuasion"))
+        list.add(SkillData("Intimidate"))
+        list.add(SkillData("Guile"))
+        list.add(SkillData("Composure/Calm"))
+        list.add(SkillData("War Tactics"))
+        list.add(SkillData("Group Management"))
+        list.add(SkillData("Hand To Hand Combat"))
+        list.add(SkillData("Weapons Play"))
+        list.add(SkillData("Specialty Weapon"))
+        list.add(SkillData("Swimming"))
+        list.add(SkillData("Climbing"))
+        return list
+    }
 
-    fun getATModifiers(): MutableList<Modifier> { return this.at.modifiers }
-    fun getDFModifiers(): MutableList<Modifier> { return this.df.modifiers }
-    fun getMAModifiers(): MutableList<Modifier> { return this.ma.modifiers }
-    fun getMDModifiers(): MutableList<Modifier> { return this.md.modifiers }
+    fun getSkill(name: String): SkillData? {
+        for (skill in this.skillList) {
+            if (skill.name == name) {
+                return skill
+            }
+        }
+        return null
+    }
+    fun getSkillList(): MutableList<SkillData> {
+        return this.skillList
+    }
+    fun setSkillList(skillList: MutableList<SkillData>) {
+        this.skillList = skillList
+    }
+}
+class Traits {
+    private var data: TraitsData = TraitsData()
+
+    fun getName(): String {
+        return this.data.name
+    }
+    fun setName(name: String) {
+        this.data.name = name
+    }
+
+    fun getAge(): Int {
+        return this.data.age
+    }
+    fun setAge(age: Int) {
+        this.data.age = age
+    }
+
+    fun getSpecies(): String {
+        return this.data.species
+    }
+    fun setSpecies(species: String) {
+        this.data.species = species
+    }
+
+    //TODO: Classes get/setter
+    fun getClassName(): String {
+        return this.data._class.name
+    }
+    fun setClassName(name: String) {
+        this.data._class.name = name
+    }
+
+    fun getLevel(): Int {
+        return this.data.level
+    }
+    fun setLevel(level: Int) {
+        this.data.level = level
+
+    }
+
+    //TODO: Icon set/getter
+
+    data class TraitsData (
+            var name: String = "player",
+            var age: Int = 0,
+            var species: String = "Human",
+            val _class: Class = Class(),
+            var level: Int = 1,
+            var icon: Int = 0
+    )
+    fun getData(): TraitsData {
+        return this.data
+    }
+    fun setData(data: TraitsData) {
+        this.data = data
+    }
 }
 
-class Skill (
-        val name: String
-){
-    var check: Boolean = false  // used for if the player succeeds roll
-    val value: Value = Value(0)
-}
-data class Traits (
-        var name: String,
-        var age: Int,
-        var species: String,
-        val _class: Class,
-        var level: Int = 1,
-        var icon: Int = 0
-)
-
-//TODO: class
+//TODO: classes
 data class Class (
         var name: String = ""
-) {}
+)

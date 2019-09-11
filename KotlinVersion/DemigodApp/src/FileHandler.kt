@@ -11,26 +11,24 @@ object FileHandler {
     var fileID: Int = 0
 
     fun save(player: Player) {
-        val name = player.traits.name
-        val clazz = player.traits._class.name
+        val name = player.traits.getName()
+        val clazz = player.traits.getClassName()
         val file = "$name-$clazz.demi"
 
-        var text
-        /*
         var text = "{"
-        text += "\"traits\":" + JSON.stringify(player.traits) + ","
-        text += "\"resources\":" + JSON.stringify(player.resources) + ","
-        text += "\"baseStats\":" + JSON.stringify(player.baseStats) + ","
-        text += "\"weapon\":" + JSON.stringify(player.weapon) + ","
-        text += "\"armor\":" + JSON.stringify(player.armor) + ","
-        text += "\"accessory\":" + JSON.stringify(player.accessory) + ","
-        text += "\"skills\":" + JSON.stringify(player.skills) + ","
-        text += "\"spells\":" + JSON.stringify(player.spells) + ","
-        text += "\"specials\":" + JSON.stringify(player.specials) + ","
-        text += "\"classAbilities\":" + JSON.stringify(player.classAbilities) + ","
-        text += "\"inventory\":" + JSON.stringify(player.inventory)
+        text += "\"traits\":" + JSON.stringify(player.traits.getData()) + ","
+        text += "\"resources\":" + JSON.stringify(player.resources.getData()) + ","
+        text += "\"baseStats\":" + JSON.stringify(player.baseStats.getData()) + ","
+        text += "\"combatStats\":" + JSON.stringify(player.baseStats.getCombatStats()) + ","
+        text += "\"weapon\":" + JSON.stringify(player.weapon.getData()) + ","
+        text += "\"armor\":" + JSON.stringify(player.armor.getData()) + ","
+        text += "\"accessory\":" + JSON.stringify(player.accessory.getData()) + ","
+        text += "\"skills\":" + JSON.stringify(player.skills.getSkillList()) + ","
+        text += "\"spells\":" + JSON.stringify(player.abilities.getSpellList()) + ","
+        text += "\"specials\":" + JSON.stringify(player.abilities.getSpecialList()) + ","
+        text += "\"classAbilities\":" + JSON.stringify(player.abilities.getClassAbilityList()) + ","
+        text += "\"inventory\":" + JSON.stringify(player.inventory.getData())
         text += "}"
-         */
 
         // create hyperlink and set it's href and text "defined above"
         val save = document.createElement("a") as HTMLAnchorElement
@@ -95,6 +93,7 @@ object FileHandler {
         //val classAbilities: MutableList<ClassAbility> = mutableListOf()
         //val inventory = Inventory()
 
+        /*
         js("""
             player.traits.name = json['traits'].name
             player.traits.age = json['traits'].age
@@ -104,28 +103,33 @@ object FileHandler {
             
             player.resources.hp
         """)
-        /*
-        val t = json["traits"].unsafeCast<Traits>()
-        player.traits.name = t.name
-        player.traits.age = t.age
-        player.traits.species = t.species
-        player.traits._class.name = t._class.name
-        player.traits.level = t.level
+        */
+        player.traits.setData(json["traits"].unsafeCast<Traits.TraitsData>())
 
-        val r = json["resources"].unsafeCast<Any>()
+        player.resources.setData(json["resources"].unsafeCast<Resources.ResourcesData>())
+        player.baseStats.setData(json["baseStats"].unsafeCast<BaseStats.BaseStatsData>())
+        player.baseStats.setCombatStats(json["combatStats"].unsafeCast<BaseStats.CombatStats>())
 
-         */
-        //player.resources.setCurrentHP(r.getCurrentHP())
-        //console.log(r.getCurrentHP())
+        player.weapon.setData(json["weapon"].unsafeCast<Wearable.WearableData>())
+        player.armor.setData(json["armor"].unsafeCast<Wearable.WearableData>())
+        player.accessory.setData(json["accessory"].unsafeCast<Wearable.WearableData>())
+
+        player.skills.setSkillList(json["skills"].unsafeCast<MutableList<Skills.SkillData>>())
+
+        player.abilities.setSpellList(json["spells"].unsafeCast<MutableList<Spell>>())
+        player.abilities.setSpecialList(json["spells"].unsafeCast<MutableList<Special>>())
+        player.abilities.setClassAbilityList(json["spells"].unsafeCast<MutableList<ClassAbility>>())
+
+        player.inventory.setData(json["inventory"].unsafeCast<Inventory.InventoryData>())
 
         updateDocument(player)
     }
     private fun updateDocument(player: Player) {
         resetPage(player)
-        (document.getElementById("Name") as HTMLInputElement).value = player.traits.name
-        (document.getElementById("Age") as HTMLInputElement).value = player.traits.age.toString()
-        (document.getElementById("Species") as HTMLInputElement).value = player.traits.species
-        (document.getElementById("Class") as HTMLInputElement).value = player.traits._class.name
-        (document.getElementById("Level") as HTMLInputElement).value = player.traits.level.toString()
+        (document.getElementById("Name") as HTMLInputElement).value = player.traits.getName()
+        (document.getElementById("Age") as HTMLInputElement).value = player.traits.getAge().toString()
+        (document.getElementById("Species") as HTMLInputElement).value = player.traits.getSpecies()
+        (document.getElementById("Class") as HTMLInputElement).value = player.traits.getClassName()
+        (document.getElementById("Level") as HTMLInputElement).value = player.traits.getLevel().toString()
     }
 }

@@ -7,39 +7,35 @@ open class Equipment(
     var icon: Int = 0
 }
 
-open class Wearable(
-    private var augmentSlots: Int = 0
-): Equipment() {
-    private val augments: MutableList<Augment> = mutableListOf()
-    private val glyphs: MutableList<Glyph> = mutableListOf()
-    private val abilities: MutableList<Ability> = mutableListOf()
+open class Wearable: Equipment() {
+    private var data: WearableData = WearableData(0)
 
     init {
         linkAugSlots()
     }
 
-    fun getAugmentSlots(): Int { return this.augmentSlots }
+    fun getAugmentSlots(): Int { return this.data.augmentSlots }
     fun addAugmentSlot() {
-        this.augmentSlots++
+        this.data.augmentSlots++
         linkAugSlots()
     }
     fun equipAugment(augment: Augment) {
         var i = 0
-        while (i < this.augments.size) {
-            if (this.augments[i] == Augment()) {
-                this.augments[i] = augment
+        while (i < this.data.augments.size) {
+            if (this.data.augments[i] == Augment()) {
+                this.data.augments[i] = augment
                 return
             }
             i++
         }
     }
     private fun linkAugSlots() {
-        while (this.augments.size < this.augmentSlots) {
-            this.augments.add(Augment())
+        while (this.data.augments.size < this.data.augmentSlots) {
+            this.data.augments.add(Augment())
         }
     }
     fun getAugmentByID(ID: String): Augment {
-        for (aug in this.augments) {
+        for (aug in this.data.augments) {
             if (aug.id == ID) {
                 return aug
             }
@@ -47,7 +43,7 @@ open class Wearable(
         return Augment()
     }
     fun geGlyphByID(ID: String): Glyph {
-        for (gly in this.glyphs) {
+        for (gly in this.data.glyphs) {
             if (gly.id == ID) {
                 return gly
             }
@@ -58,15 +54,29 @@ open class Wearable(
     fun getAbiltyByID(ID: String): Ability {
         return Ability()
     }
+
+    data class WearableData (
+            var augmentSlots: Int = 0
+    ) {
+        val augments: MutableList<Augment> = mutableListOf()
+        val glyphs: MutableList<Glyph> = mutableListOf()
+        val abilities: MutableList<Ability> = mutableListOf()
+    }
+    fun getData(): WearableData {
+        return this.data
+    }
+    fun setData(data: WearableData) {
+        this.data = data
+    }
 }
 
 open class Upgrade: Equipment() {
-    val isAbility: Boolean = false
-    val effect: Ability = Ability()
+    var isAbility: Boolean = false
+    var effect: Ability = Ability()
 }
 
-class Glyph: Upgrade() {}
-class Augment: Upgrade() {}
+class Glyph: Upgrade()
+class Augment: Upgrade()
 
 class Weapon: Wearable()
 class Armor: Wearable()

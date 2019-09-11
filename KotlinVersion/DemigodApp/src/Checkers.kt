@@ -40,17 +40,17 @@ object DiceRoller {
         val rollStatDisplay = (document.getElementById("roll-stat-display") as HTMLSpanElement)
 
         val stat = when (statSelector.value) {
-            "AT" -> player.baseStats.combatStats.getAT()
-            "DF" -> player.baseStats.combatStats.getDF()
-            "MA" -> player.baseStats.combatStats.getMA()
-            "MD" -> player.baseStats.combatStats.getMD()
+            "AT" -> player.baseStats.getAT()
+            "DF" -> player.baseStats.getDF()
+            "MA" -> player.baseStats.getMA()
+            "MD" -> player.baseStats.getMD()
             "STR" -> player.baseStats.getSTR()
             "CON" -> player.baseStats.getCON()
             "INT" -> player.baseStats.getINT()
             "WILL"-> player.baseStats.getWIL()
             "SPD" -> player.baseStats.getSPD()
             "AC"  -> player.baseStats.getACC()
-            else -> player.baseStats.combatStats.getAT()
+            else -> player.baseStats.getAT()
         }
         rollID = setInterval({
             val lastRoll = roll()
