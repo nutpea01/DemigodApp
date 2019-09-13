@@ -11,10 +11,10 @@ var DemigodApp = function (_, Kotlin) {
   var equals = Kotlin.equals;
   var ensureNotNull = Kotlin.ensureNotNull;
   var Unit = Kotlin.kotlin.Unit;
+  var toString = Kotlin.toString;
   var IllegalStateException_init = Kotlin.kotlin.IllegalStateException_init_pdl1vj$;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
   var addClass = Kotlin.kotlin.dom.addClass_hhb33f$;
-  var toString = Kotlin.toString;
   var Math_0 = Math;
   Spell.prototype = Object.create(Ability.prototype);
   Spell.prototype.constructor = Spell;
@@ -500,14 +500,81 @@ var DemigodApp = function (_, Kotlin) {
     player.inventory.setData_6ml7ak$(json['inventory']);
     this.updateDocument_0(player);
   };
+  function FileHandler$updateDocument$lambda(closure$player) {
+    return function (it) {
+      var skill = closure$player.skills.getSkillList().get_za3lpa$(it);
+      console.log('1' + skill.name + ' ' + toString(skill.value) + ' ' + toString(skill.check));
+      return Unit;
+    };
+  }
   FileHandler.prototype.updateDocument_0 = function (player) {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4;
     resetPage(player);
     (Kotlin.isType(tmp$ = document.getElementById('Name'), HTMLInputElement) ? tmp$ : throwCCE()).value = player.traits.getName();
     (Kotlin.isType(tmp$_0 = document.getElementById('Age'), HTMLInputElement) ? tmp$_0 : throwCCE()).value = player.traits.getAge().toString();
     (Kotlin.isType(tmp$_1 = document.getElementById('Species'), HTMLInputElement) ? tmp$_1 : throwCCE()).value = player.traits.getSpecies();
     (Kotlin.isType(tmp$_2 = document.getElementById('Class'), HTMLInputElement) ? tmp$_2 : throwCCE()).value = player.traits.getClassName();
     (Kotlin.isType(tmp$_3 = document.getElementById('Level'), HTMLInputElement) ? tmp$_3 : throwCCE()).value = player.traits.getLevel().toString();
+    console.log(player.resources.getCurrentHP());
+    console.log(player.resources.getCurrentMP());
+    console.log(player.resources.getCurrentSP());
+    console.log(player.resources.getMaxHP());
+    console.log(player.resources.getMaxMP());
+    console.log(player.resources.getMaxSP());
+    console.log(player.resources.getMaxHPModifiers()[0].value);
+    console.log(player.resources.getMaxMPModifiers()[0].value);
+    console.log(player.resources.getMaxSPModifiers()[0].value);
+    console.log(player.baseStats.getSTR_6taknv$());
+    console.log(player.baseStats.getCON_6taknv$());
+    console.log(player.baseStats.getINT_6taknv$());
+    console.log(player.baseStats.getWIL_6taknv$());
+    console.log(player.baseStats.getSPD_6taknv$());
+    console.log(player.baseStats.getACC_6taknv$());
+    console.log(player.baseStats.getSTRModifiers()[0].value);
+    console.log(player.baseStats.getCONModifiers()[0].value);
+    console.log(player.baseStats.getINTModifiers()[0].value);
+    console.log(player.baseStats.getWILModifiers()[0].value);
+    console.log(player.baseStats.getSPDModifiers()[0].value);
+    console.log(player.baseStats.getACCModifiers()[0].value);
+    console.log(player.baseStats.getAT_6taknv$());
+    console.log(player.baseStats.getDF_6taknv$());
+    console.log(player.baseStats.getMA_6taknv$());
+    console.log(player.baseStats.getMD_6taknv$());
+    console.log(player.baseStats.getATModifiers()[0].value);
+    console.log(player.baseStats.getDFModifiers()[0].value);
+    console.log(player.baseStats.getMAModifiers()[0].value);
+    console.log(player.baseStats.getMDModifiers()[0].value);
+    console.log(player.weapon.description);
+    console.log(player.armor.description);
+    console.log(player.accessory.description);
+    console.log(player.skills.getSkillList());
+    var times = (Kotlin.isArray(tmp$_4 = player.skills.getSkillList()) ? tmp$_4 : throwCCE()).length;
+    for (var index = 0; index < times; index++) {
+      FileHandler$updateDocument$lambda(player)(index);
+    }
+    var times_0 = player.abilities.getSpellList().size;
+    for (var index_0 = 0; index_0 < times_0; index_0++) {
+      var spell = player.abilities.getSpellList().get_za3lpa$(index_0);
+      console.log(spell.description);
+    }
+    var times_1 = player.abilities.getSpecialList().size;
+    for (var index_1 = 0; index_1 < times_1; index_1++) {
+      var special = player.abilities.getSpecialList().get_za3lpa$(index_1);
+      console.log(special.description);
+    }
+    var times_2 = player.abilities.getClassAbilityList().size;
+    for (var index_2 = 0; index_2 < times_2; index_2++) {
+      var classAbility = player.abilities.getClassAbilityList().get_za3lpa$(index_2);
+      console.log(classAbility.description);
+    }
+    var times_3 = player.inventory.getItems().size;
+    for (var index_3 = 0; index_3 < times_3; index_3++) {
+      var item = player.inventory.getItems().get_za3lpa$(index_3);
+      console.log(item.description);
+    }
+    console.log(player.inventory.getGold());
+    console.log(player.inventory.getBagType());
+    console.log(player.inventory.getNotes());
   };
   FileHandler.$metadata$ = {
     kind: Kind_OBJECT,
@@ -860,7 +927,7 @@ var DemigodApp = function (_, Kotlin) {
   function initSkills$lambda$lambda(closure$player, closure$skillName) {
     return function (it) {
       var tmp$;
-      ensureNotNull(closure$player.skills.getSkill_61zpoe$(closure$skillName)).value.setBase_za3lpa$(toInt((Kotlin.isType(tmp$ = it.target, HTMLInputElement) ? tmp$ : throwCCE()).value));
+      ensureNotNull(closure$player.skills.getSkill_61zpoe$(closure$skillName)).value.base = toInt((Kotlin.isType(tmp$ = it.target, HTMLInputElement) ? tmp$ : throwCCE()).value);
       return Unit;
     };
   }
@@ -1218,94 +1285,94 @@ var DemigodApp = function (_, Kotlin) {
     this.combatStats_0 = new BaseStats$CombatStats();
   }
   BaseStats.prototype.updateCombat = function () {
-    this.setATBase_za3lpa$(this.data_0.str.getValue_6taknv$() * 2 | 0);
-    this.setDFBase_za3lpa$(this.data_0.con.getValue_6taknv$() * 1 | 0);
-    this.setMABase_za3lpa$(this.data_0.int.getValue_6taknv$() * 2 | 0);
-    this.setMDBase_za3lpa$(this.data_0.wil.getValue_6taknv$() * 1 | 0);
+    this.setATBase_za3lpa$(ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.str) * 2 | 0);
+    this.setDFBase_za3lpa$(ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.con) * 1 | 0);
+    this.setMABase_za3lpa$(ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.int) * 2 | 0);
+    this.setMDBase_za3lpa$(ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.wil) * 1 | 0);
   };
   BaseStats.prototype.setSTR_za3lpa$ = function (value) {
-    this.data_0.str.setBase_za3lpa$(value);
+    this.data_0.str.base = value;
     this.updateCombat();
   };
   BaseStats.prototype.setCON_za3lpa$ = function (value) {
-    this.data_0.con.setBase_za3lpa$(value);
+    this.data_0.con.base = value;
     this.updateCombat();
   };
   BaseStats.prototype.setINT_za3lpa$ = function (value) {
-    this.data_0.int.setBase_za3lpa$(value);
+    this.data_0.int.base = value;
     this.updateCombat();
   };
   BaseStats.prototype.setWIL_za3lpa$ = function (value) {
-    this.data_0.wil.setBase_za3lpa$(value);
+    this.data_0.wil.base = value;
     this.updateCombat();
   };
   BaseStats.prototype.setSPD_za3lpa$ = function (value) {
-    this.data_0.spd.setBase_za3lpa$(value);
+    this.data_0.spd.base = value;
   };
   BaseStats.prototype.setACC_za3lpa$ = function (value) {
-    this.data_0.acc.setBase_za3lpa$(value);
+    this.data_0.acc.base = value;
   };
   BaseStats.prototype.setATBase_za3lpa$ = function (base) {
-    this.combatStats_0.at.setBase_za3lpa$(base);
+    this.combatStats_0.at.base = base;
   };
   BaseStats.prototype.setDFBase_za3lpa$ = function (base) {
-    this.combatStats_0.df.setBase_za3lpa$(base);
+    this.combatStats_0.df.base = base;
   };
   BaseStats.prototype.setMABase_za3lpa$ = function (base) {
-    this.combatStats_0.ma.setBase_za3lpa$(base);
+    this.combatStats_0.ma.base = base;
   };
   BaseStats.prototype.setMDBase_za3lpa$ = function (base) {
-    this.combatStats_0.md.setBase_za3lpa$(base);
+    this.combatStats_0.md.base = base;
   };
   BaseStats.prototype.getSTR_6taknv$ = function (includeMods) {
     if (includeMods === void 0)
       includeMods = true;
-    return this.data_0.str.getValue_6taknv$(includeMods);
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.str, includeMods);
   };
   BaseStats.prototype.getCON_6taknv$ = function (includeMods) {
     if (includeMods === void 0)
       includeMods = true;
-    return this.data_0.con.getValue_6taknv$(includeMods);
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.con, includeMods);
   };
   BaseStats.prototype.getINT_6taknv$ = function (includeMods) {
     if (includeMods === void 0)
       includeMods = true;
-    return this.data_0.int.getValue_6taknv$(includeMods);
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.int, includeMods);
   };
   BaseStats.prototype.getWIL_6taknv$ = function (includeMods) {
     if (includeMods === void 0)
       includeMods = true;
-    return this.data_0.wil.getValue_6taknv$(includeMods);
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.wil, includeMods);
   };
   BaseStats.prototype.getSPD_6taknv$ = function (includeMods) {
     if (includeMods === void 0)
       includeMods = true;
-    return this.data_0.spd.getValue_6taknv$(includeMods);
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.spd, includeMods);
   };
   BaseStats.prototype.getACC_6taknv$ = function (includeMods) {
     if (includeMods === void 0)
       includeMods = true;
-    return this.data_0.acc.getValue_6taknv$(includeMods);
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.acc, includeMods);
   };
   BaseStats.prototype.getAT_6taknv$ = function (includeMods) {
     if (includeMods === void 0)
       includeMods = true;
-    return this.combatStats_0.at.getValue_6taknv$(includeMods);
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.combatStats_0.at, includeMods);
   };
   BaseStats.prototype.getDF_6taknv$ = function (includeMods) {
     if (includeMods === void 0)
       includeMods = true;
-    return this.combatStats_0.df.getValue_6taknv$(includeMods);
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.combatStats_0.df, includeMods);
   };
   BaseStats.prototype.getMA_6taknv$ = function (includeMods) {
     if (includeMods === void 0)
       includeMods = true;
-    return this.combatStats_0.ma.getValue_6taknv$(includeMods);
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.combatStats_0.ma, includeMods);
   };
   BaseStats.prototype.getMD_6taknv$ = function (includeMods) {
     if (includeMods === void 0)
       includeMods = true;
-    return this.combatStats_0.md.getValue_6taknv$(includeMods);
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.combatStats_0.md, includeMods);
   };
   BaseStats.prototype.getSTRModifiers = function () {
     return this.data_0.str.modifiers;
@@ -1468,40 +1535,40 @@ var DemigodApp = function (_, Kotlin) {
     this.data_0 = new Resources$ResourcesData();
   }
   Resources.prototype.setMaxHP_za3lpa$ = function (value) {
-    this.data_0.hp.max.setBase_za3lpa$(value);
+    this.data_0.hp.max.base = value;
   };
   Resources.prototype.setMaxMP_za3lpa$ = function (value) {
-    this.data_0.mp.max.setBase_za3lpa$(value);
+    this.data_0.mp.max.base = value;
   };
   Resources.prototype.setMaxSP_za3lpa$ = function (value) {
-    this.data_0.sp.max.setBase_za3lpa$(value);
+    this.data_0.sp.max.base = value;
   };
   Resources.prototype.setCurrentHP_za3lpa$ = function (value) {
-    this.data_0.hp.current.setBase_za3lpa$(value);
+    this.data_0.hp.current.base = value;
   };
   Resources.prototype.setCurrentMP_za3lpa$ = function (value) {
-    this.data_0.mp.current.setBase_za3lpa$(value);
+    this.data_0.mp.current.base = value;
   };
   Resources.prototype.setCurrentSP_za3lpa$ = function (value) {
-    this.data_0.sp.current.setBase_za3lpa$(value);
+    this.data_0.sp.current.base = value;
   };
   Resources.prototype.getMaxHP = function () {
-    return this.data_0.hp.max.getValue_6taknv$();
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.hp.max);
   };
   Resources.prototype.getMaxMP = function () {
-    return this.data_0.mp.max.getValue_6taknv$();
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.mp.max);
   };
   Resources.prototype.getMaxSP = function () {
-    return this.data_0.sp.max.getValue_6taknv$();
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.sp.max);
   };
   Resources.prototype.getCurrentHP = function () {
-    return this.data_0.hp.current.getValue_6taknv$();
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.hp.current);
   };
   Resources.prototype.getCurrentMP = function () {
-    return this.data_0.mp.current.getValue_6taknv$();
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.mp.current);
   };
   Resources.prototype.getCurrentSP = function () {
-    return this.data_0.sp.current.getValue_6taknv$();
+    return ValueFunctions_getInstance().getValue_4z11p2$(this.data_0.sp.current);
   };
   Resources.prototype.getMaxHPModifiers = function () {
     return this.data_0.hp.max.modifiers;
@@ -1549,11 +1616,11 @@ var DemigodApp = function (_, Kotlin) {
   };
   function Resources$ResourcesData(hp, sp, mp) {
     if (hp === void 0)
-      hp = new DynamicValue(150, 150);
+      hp = new DynamicValue();
     if (sp === void 0)
-      sp = new DynamicValue(150, 150);
+      sp = new DynamicValue();
     if (mp === void 0)
-      mp = new DynamicValue(150, 150);
+      mp = new DynamicValue();
     this.hp = hp;
     this.sp = sp;
     this.mp = mp;
@@ -1843,90 +1910,65 @@ var DemigodApp = function (_, Kotlin) {
   function Value(base) {
     if (base === void 0)
       base = 0;
-    this.base_ds0yms$_0 = base;
+    this.base = base;
     this.id = generateID();
     this.modifiers = ArrayList_init();
   }
-  Value.prototype.getValue_6taknv$ = function (includeMods) {
-    if (includeMods === void 0)
-      includeMods = true;
-    if (includeMods) {
-      var a = this.base_ds0yms$_0 + this.getModTotalValue() | 0;
-      return Math_0.min(a, 9999);
-    }
-    var a_0 = this.base_ds0yms$_0;
-    return Math_0.min(a_0, 9999);
-  };
-  Value.prototype.getModTotalValue = function () {
-    var tmp$;
-    var temp = 0;
-    tmp$ = this.modifiers.iterator();
-    while (tmp$.hasNext()) {
-      var mod = tmp$.next();
-      if (mod.active)
-        temp = temp + mod.value | 0;
-    }
-    return temp;
-  };
-  Value.prototype.setBase_za3lpa$ = function (base) {
-    this.base_ds0yms$_0 = base;
-  };
-  Value.prototype.addBase_za3lpa$ = function (add) {
-    this.base_ds0yms$_0 = this.base_ds0yms$_0 + add | 0;
-    return this.base_ds0yms$_0;
-  };
-  Value.prototype.getModBySource_61zpoe$ = function (SourceID) {
-    var tmp$;
-    tmp$ = this.modifiers.iterator();
-    while (tmp$.hasNext()) {
-      var mod = tmp$.next();
-      if (equals(mod.source, SourceID)) {
-        return mod;
-      }
-    }
-    return new Modifier('');
-  };
-  Value.prototype.removeModBySource_61zpoe$ = function (SourceID) {
-    var mod = this.getModBySource_61zpoe$(SourceID);
-    this.modifiers.remove_11rb$(mod);
-    return mod;
-  };
-  Value.prototype.getModByID_61zpoe$ = function (ID) {
-    var tmp$;
-    tmp$ = this.modifiers.iterator();
-    while (tmp$.hasNext()) {
-      var mod = tmp$.next();
-      if (equals(mod.id, ID)) {
-        return mod;
-      }
-    }
-    return new Modifier('');
-  };
-  Value.prototype.removeModByID_61zpoe$ = function (ID) {
-    var mod = this.getModByID_61zpoe$(ID);
-    this.modifiers.remove_11rb$(mod);
-    return mod;
-  };
   Value.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Value',
     interfaces: []
   };
+  Value.prototype.component1 = function () {
+    return this.base;
+  };
+  Value.prototype.copy_za3lpa$ = function (base) {
+    return new Value(base === void 0 ? this.base : base);
+  };
+  Value.prototype.toString = function () {
+    return 'Value(base=' + Kotlin.toString(this.base) + ')';
+  };
+  Value.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.base) | 0;
+    return result;
+  };
+  Value.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && Kotlin.equals(this.base, other.base))));
+  };
   function DynamicValue(current, max) {
     if (current === void 0)
-      current = 150;
+      current = new Value(150);
     if (max === void 0)
-      max = 150;
-    this.current = new Value(current);
-    this.max = new Value(max);
+      max = new Value(150);
+    this.current = current;
+    this.max = max;
   }
-  DynamicValue.prototype.getMissing = function () {
-    return this.max.getValue_6taknv$() - this.current.getValue_6taknv$() | 0;
-  };
   DynamicValue.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'DynamicValue',
     interfaces: []
+  };
+  DynamicValue.prototype.component1 = function () {
+    return this.current;
+  };
+  DynamicValue.prototype.component2 = function () {
+    return this.max;
+  };
+  DynamicValue.prototype.copy_ewpvbe$ = function (current, max) {
+    return new DynamicValue(current === void 0 ? this.current : current, max === void 0 ? this.max : max);
+  };
+  DynamicValue.prototype.toString = function () {
+    return 'DynamicValue(current=' + Kotlin.toString(this.current) + (', max=' + Kotlin.toString(this.max)) + ')';
+  };
+  DynamicValue.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.current) | 0;
+    result = result * 31 + Kotlin.hashCode(this.max) | 0;
+    return result;
+  };
+  DynamicValue.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.current, other.current) && Kotlin.equals(this.max, other.max)))));
   };
   function Modifier(source, value, turns) {
     if (value === void 0)
@@ -1944,6 +1986,100 @@ var DemigodApp = function (_, Kotlin) {
     simpleName: 'Modifier',
     interfaces: []
   };
+  Modifier.prototype.component1 = function () {
+    return this.source;
+  };
+  Modifier.prototype.component2 = function () {
+    return this.value;
+  };
+  Modifier.prototype.component3 = function () {
+    return this.turns;
+  };
+  Modifier.prototype.copy_3m52m6$ = function (source, value, turns) {
+    return new Modifier(source === void 0 ? this.source : source, value === void 0 ? this.value : value, turns === void 0 ? this.turns : turns);
+  };
+  Modifier.prototype.toString = function () {
+    return 'Modifier(source=' + Kotlin.toString(this.source) + (', value=' + Kotlin.toString(this.value)) + (', turns=' + Kotlin.toString(this.turns)) + ')';
+  };
+  Modifier.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.source) | 0;
+    result = result * 31 + Kotlin.hashCode(this.value) | 0;
+    result = result * 31 + Kotlin.hashCode(this.turns) | 0;
+    return result;
+  };
+  Modifier.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.source, other.source) && Kotlin.equals(this.value, other.value) && Kotlin.equals(this.turns, other.turns)))));
+  };
+  function ValueFunctions() {
+    ValueFunctions_instance = this;
+  }
+  ValueFunctions.prototype.getValue_4z11p2$ = function (value, includeMods) {
+    if (includeMods === void 0)
+      includeMods = true;
+    if (includeMods) {
+      var a = value.base + this.getModTotalValue_1d2jpt$(value) | 0;
+      return Math_0.min(a, 9999);
+    }
+    var a_0 = value.base;
+    return Math_0.min(a_0, 9999);
+  };
+  ValueFunctions.prototype.getDifference_ewpvbe$ = function (value1, value2) {
+    return this.getValue_4z11p2$(value1) - this.getValue_4z11p2$(value2) | 0;
+  };
+  ValueFunctions.prototype.getModTotalValue_1d2jpt$ = function (value) {
+    var temp = {v: 0};
+    var times = value.modifiers.size;
+    for (var index = 0; index < times; index++) {
+      if (value.modifiers.get_za3lpa$(index).active)
+        temp.v = temp.v + value.modifiers.get_za3lpa$(index).value | 0;
+    }
+    return temp.v;
+  };
+  ValueFunctions.prototype.getModBySource_3pd7kz$ = function (value, SourceID) {
+    var tmp$;
+    tmp$ = value.modifiers.iterator();
+    while (tmp$.hasNext()) {
+      var mod = tmp$.next();
+      if (equals(mod.source, SourceID)) {
+        return mod;
+      }
+    }
+    return new Modifier('');
+  };
+  ValueFunctions.prototype.removeModBySource_3pd7kz$ = function (value, SourceID) {
+    var mod = this.getModBySource_3pd7kz$(value, SourceID);
+    value.modifiers.remove_11rb$(mod);
+    return mod;
+  };
+  ValueFunctions.prototype.getModByID_3pd7kz$ = function (value, ID) {
+    var tmp$;
+    tmp$ = value.modifiers.iterator();
+    while (tmp$.hasNext()) {
+      var mod = tmp$.next();
+      if (equals(mod.id, ID)) {
+        return mod;
+      }
+    }
+    return new Modifier('');
+  };
+  ValueFunctions.prototype.removeModByID_3pd7kz$ = function (value, ID) {
+    var mod = this.getModByID_3pd7kz$(value, ID);
+    value.modifiers.remove_11rb$(mod);
+    return mod;
+  };
+  ValueFunctions.$metadata$ = {
+    kind: Kind_OBJECT,
+    simpleName: 'ValueFunctions',
+    interfaces: []
+  };
+  var ValueFunctions_instance = null;
+  function ValueFunctions_getInstance() {
+    if (ValueFunctions_instance === null) {
+      new ValueFunctions();
+    }
+    return ValueFunctions_instance;
+  }
   _.Ability = Ability;
   _.Spell = Spell;
   _.Special = Special;
@@ -2008,6 +2144,9 @@ var DemigodApp = function (_, Kotlin) {
   _.Value = Value;
   _.DynamicValue = DynamicValue;
   _.Modifier = Modifier;
+  Object.defineProperty(_, 'ValueFunctions', {
+    get: ValueFunctions_getInstance
+  });
   main();
   Kotlin.defineModule('DemigodApp', _);
   return _;

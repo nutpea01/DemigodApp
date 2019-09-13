@@ -6,6 +6,7 @@ import org.w3c.files.get
 import kotlin.browser.document
 import kotlin.js.Json
 import kotlin.reflect.typeOf
+import kotlin.js.iterator
 
 object FileHandler {
     var fileID: Int = 0
@@ -23,7 +24,18 @@ object FileHandler {
         text += "\"weapon\":" + JSON.stringify(player.weapon.getData()) + ","
         text += "\"armor\":" + JSON.stringify(player.armor.getData()) + ","
         text += "\"accessory\":" + JSON.stringify(player.accessory.getData()) + ","
+
+        /*
+        text += "\"skills\": {"
+        val skills = document.getElementsByClassName("skill-tree__number")
+        repeat(skills.length) {
+            val skill = skills[it] as HTMLInputElement
+            text += JSON.stringify(skill.value) + ","
+        }
+        text += "}"
+        */
         text += "\"skills\":" + JSON.stringify(player.skills.getSkillList()) + ","
+
         text += "\"spells\":" + JSON.stringify(player.abilities.getSpellList()) + ","
         text += "\"specials\":" + JSON.stringify(player.abilities.getSpecialList()) + ","
         text += "\"classAbilities\":" + JSON.stringify(player.abilities.getClassAbilityList()) + ","
@@ -106,6 +118,14 @@ object FileHandler {
         */
         player.traits.setData(json["traits"].unsafeCast<Traits.TraitsData>())
 
+        /*
+        val skills = document.getElementsByClassName("skill-tree__number")
+        repeat(skills.length) {
+            val skill = skills[it] as HTMLInputElement
+            player.skills.getSkillList()[it].value.setBase(skill.value.toInt())
+        }
+        */
+
         player.resources.setData(json["resources"].unsafeCast<Resources.ResourcesData>())
         player.baseStats.setData(json["baseStats"].unsafeCast<BaseStats.BaseStatsData>())
         player.baseStats.setCombatStats(json["combatStats"].unsafeCast<BaseStats.CombatStats>())
@@ -131,5 +151,67 @@ object FileHandler {
         (document.getElementById("Species") as HTMLInputElement).value = player.traits.getSpecies()
         (document.getElementById("Class") as HTMLInputElement).value = player.traits.getClassName()
         (document.getElementById("Level") as HTMLInputElement).value = player.traits.getLevel().toString()
+
+        console.log(player.resources.getCurrentHP())
+        console.log(player.resources.getCurrentMP())
+        console.log(player.resources.getCurrentSP())
+        console.log(player.resources.getMaxHP())
+        console.log(player.resources.getMaxMP())
+        console.log(player.resources.getMaxSP())
+        console.log(js("player.resources.getMaxHPModifiers()[0].value"))
+        console.log(js("player.resources.getMaxMPModifiers()[0].value"))
+        console.log(js("player.resources.getMaxSPModifiers()[0].value"))
+
+        console.log(player.baseStats.getSTR())
+        console.log(player.baseStats.getCON())
+        console.log(player.baseStats.getINT())
+        console.log(player.baseStats.getWIL())
+        console.log(player.baseStats.getSPD())
+        console.log(player.baseStats.getACC())
+        console.log(js("player.baseStats.getSTRModifiers()[0].value"))
+        console.log(js("player.baseStats.getCONModifiers()[0].value"))
+        console.log(js("player.baseStats.getINTModifiers()[0].value"))
+        console.log(js("player.baseStats.getWILModifiers()[0].value"))
+        console.log(js("player.baseStats.getSPDModifiers()[0].value"))
+        console.log(js("player.baseStats.getACCModifiers()[0].value"))
+        console.log(player.baseStats.getAT())
+        console.log(player.baseStats.getDF())
+        console.log(player.baseStats.getMA())
+        console.log(player.baseStats.getMD())
+        console.log(js("player.baseStats.getATModifiers()[0].value"))
+        console.log(js("player.baseStats.getDFModifiers()[0].value"))
+        console.log(js("player.baseStats.getMAModifiers()[0].value"))
+        console.log(js("player.baseStats.getMDModifiers()[0].value"))
+
+        console.log(player.weapon.description)
+        console.log(player.armor.description)
+        console.log(player.accessory.description)
+
+        console.log(player.skills.getSkillList())
+        repeat((player.skills.getSkillList() as Array<Skills.SkillData>).size) {
+            val skill = player.skills.getSkillList()[it]
+            console.log("1" + skill.name + " " + skill.value + " " + skill.check)
+        }
+        repeat(player.abilities.getSpellList().size) {
+            val spell = player.abilities.getSpellList()[it]
+            console.log(spell.description)
+        }
+        repeat(player.abilities.getSpecialList().size) {
+            val special = player.abilities.getSpecialList()[it]
+            console.log(special.description)
+        }
+        repeat(player.abilities.getClassAbilityList().size) {
+            val classAbility = player.abilities.getClassAbilityList()[it]
+            console.log(classAbility.description)
+        }
+
+        repeat(player.inventory.getItems().size) {
+            val item = player.inventory.getItems()[it]
+            console.log(item.description)
+        }
+        console.log(player.inventory.getGold())
+        console.log(player.inventory.getBagType())
+        console.log(player.inventory.getNotes())
+
     }
 }

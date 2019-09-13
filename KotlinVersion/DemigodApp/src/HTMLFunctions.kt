@@ -12,6 +12,7 @@ fun setupPage(player: Player) {
     //resetPage(player)
 }
 fun resetPage(player: Player) {
+    //TODO: not working anymore, size stays at 0?
     while (player.abilities.getSpellList().size > 0) { deleteSpellSlot(player) }
     while (player.abilities.getSpecialList().size > 0) { deleteSpecialSlot(player) }
     while (player.abilities.getClassAbilityList().size > 0) { deleteClassSlot(player) }
@@ -228,7 +229,7 @@ fun initSkills(player: Player) {
             input.placeholder = "0"
             input.addClass("skill-tree__number")
             input.addEventListener("change", {
-                player.skills.getSkill(skillName)!!.value.setBase((it.target as HTMLInputElement).value.toInt())
+                player.skills.getSkill(skillName)!!.value.base = (it.target as HTMLInputElement).value.toInt()
             })
             value.appendChild(input)
 

@@ -4,45 +4,44 @@ class BaseStats (
     private var combatStats: CombatStats = CombatStats()
 
     fun updateCombat() {
-        setATBase(this.data.str.getValue()*2)
-        setDFBase(this.data.con.getValue()*1)
-        setMABase(this.data.int.getValue()*2)
-        setMDBase(this.data.wil.getValue()*1)
-
+        setATBase(ValueFunctions.getValue(this.data.str)*2)
+        setDFBase(ValueFunctions.getValue(this.data.con)*1)
+        setMABase(ValueFunctions.getValue(this.data.int)*2)
+        setMDBase(ValueFunctions.getValue(this.data.wil)*1)
     }
     fun setSTR(value: Int) {
-        this.data.str.setBase(value)
+        this.data.str.base = value
         updateCombat()
     }
     fun setCON(value: Int) {
-        this.data.con.setBase(value)
+        this.data.con.base = value
         updateCombat()
     }
     fun setINT(value: Int) {
-        this.data.int.setBase(value)
+        this.data.int.base = value
         updateCombat()
     }
     fun setWIL(value: Int) {
-        this.data.wil.setBase(value)
+        this.data.wil.base = value
         updateCombat()
     }
-    fun setSPD(value: Int) { this.data.spd.setBase(value) }
-    fun setACC(value: Int) { this.data.acc.setBase(value) }
-    fun setATBase(base: Int) { this.combatStats.at.setBase(base) }
-    fun setDFBase(base: Int) { this.combatStats.df.setBase(base) }
-    fun setMABase(base: Int) { this.combatStats.ma.setBase(base) }
-    fun setMDBase(base: Int) { this.combatStats.md.setBase(base) }
+    fun setSPD(value: Int) { this.data.spd.base = value }
+    fun setACC(value: Int) { this.data.acc.base = value }
+    fun setATBase(base: Int) { this.combatStats.at.base = base }
+    fun setDFBase(base: Int) { this.combatStats.df.base = base }
+    fun setMABase(base: Int) { this.combatStats.ma.base = base }
+    fun setMDBase(base: Int) { this.combatStats.md.base = base }
 
-    fun getSTR(includeMods: Boolean = true): Int { return this.data.str.getValue(includeMods) }
-    fun getCON(includeMods: Boolean = true): Int { return this.data.con.getValue(includeMods) }
-    fun getINT(includeMods: Boolean = true): Int { return this.data.int.getValue(includeMods) }
-    fun getWIL(includeMods: Boolean = true): Int { return this.data.wil.getValue(includeMods) }
-    fun getSPD(includeMods: Boolean = true): Int { return this.data.spd.getValue(includeMods) }
-    fun getACC(includeMods: Boolean = true): Int { return this.data.acc.getValue(includeMods) }
-    fun  getAT(includeMods: Boolean = true): Int { return this.combatStats.at.getValue(includeMods) }
-    fun  getDF(includeMods: Boolean = true): Int { return this.combatStats.df.getValue(includeMods) }
-    fun  getMA(includeMods: Boolean = true): Int { return this.combatStats.ma.getValue(includeMods) }
-    fun  getMD(includeMods: Boolean = true): Int { return this.combatStats.md.getValue(includeMods) }
+    fun getSTR(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.data.str, includeMods) }
+    fun getCON(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.data.con, includeMods) }
+    fun getINT(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.data.int, includeMods) }
+    fun getWIL(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.data.wil, includeMods) }
+    fun getSPD(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.data.spd, includeMods) }
+    fun getACC(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.data.acc, includeMods) }
+    fun  getAT(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.combatStats.at, includeMods) }
+    fun  getDF(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.combatStats.df, includeMods) }
+    fun  getMA(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.combatStats.ma, includeMods) }
+    fun  getMD(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.combatStats.md, includeMods) }
 
     fun getSTRModifiers(): MutableList<Modifier> { return this.data.str.modifiers }
     fun getCONModifiers(): MutableList<Modifier> { return this.data.con.modifiers }
@@ -88,11 +87,11 @@ class BaseStats (
 class Resources {
     private var data = ResourcesData()
 
-    fun setMaxHP(value: Int) { this.data.hp.max.setBase(value) }
-    fun setMaxMP(value: Int) { this.data.mp.max.setBase(value) }
-    fun setMaxSP(value: Int) { this.data.sp.max.setBase(value) }
+    fun setMaxHP(value: Int) { this.data.hp.max.base = value }
+    fun setMaxMP(value: Int) { this.data.mp.max.base = value }
+    fun setMaxSP(value: Int) { this.data.sp.max.base = value }
     fun setCurrentHP(value: Int) {
-        this.data.hp.current.setBase(value)
+        this.data.hp.current.base = value
         /* TODO: useful for future calculations, but not right now
         if (this.hp.current.getValue() > this.hp.max.getValue()) {
             this.hp.current.setBase(this.hp.max.getValue())
@@ -100,7 +99,7 @@ class Resources {
         */
     }
     fun setCurrentMP(value: Int) {
-        this.data.mp.current.setBase(value)
+        this.data.mp.current.base = value
         /* TODO: useful for future calculations, but not right now
         if (this.mp.current.getValue() > this.mp.max.getValue()) {
             this.mp.current.setBase(this.mp.max.getValue())
@@ -108,7 +107,7 @@ class Resources {
         */
     }
     fun setCurrentSP(value: Int) {
-        this.data.sp.current.setBase(value)
+        this.data.sp.current.base = value
         /* TODO: useful for future calculations, but not right now
         if (this.sp.current.getValue() > this.sp.max.getValue()) {
             this.sp.current.setBase(this.sp.max.getValue())
@@ -116,12 +115,12 @@ class Resources {
         */
     }
 
-    fun getMaxHP(): Int { return this.data.hp.max.getValue() }
-    fun getMaxMP(): Int { return this.data.mp.max.getValue() }
-    fun getMaxSP(): Int { return this.data.sp.max.getValue() }
-    fun getCurrentHP(): Int { return this.data.hp.current.getValue() }
-    fun getCurrentMP(): Int { return this.data.mp.current.getValue() }
-    fun getCurrentSP(): Int { return this.data.sp.current.getValue() }
+    fun getMaxHP(): Int { return ValueFunctions.getValue(this.data.hp.max) }
+    fun getMaxMP(): Int { return ValueFunctions.getValue(this.data.mp.max) }
+    fun getMaxSP(): Int { return ValueFunctions.getValue(this.data.sp.max) }
+    fun getCurrentHP(): Int { return ValueFunctions.getValue(this.data.hp.current) }
+    fun getCurrentMP(): Int { return ValueFunctions.getValue(this.data.mp.current) }
+    fun getCurrentSP(): Int { return ValueFunctions.getValue(this.data.sp.current) }
 
     fun getMaxHPModifiers(): MutableList<Modifier> { return this.data.hp.max.modifiers }
     fun getMaxMPModifiers(): MutableList<Modifier> { return this.data.mp.max.modifiers }
@@ -159,9 +158,9 @@ class Resources {
     fun restoreSP(restore: Int) { this.setCurrentSP(this.getCurrentSP()+restore) }
 
     data class ResourcesData (
-            val hp: DynamicValue = DynamicValue(150, 150),
-            val sp: DynamicValue = DynamicValue(150, 150),
-            val mp: DynamicValue = DynamicValue(150, 150)
+            val hp: DynamicValue = DynamicValue(),
+            val sp: DynamicValue = DynamicValue(),
+            val mp: DynamicValue = DynamicValue()
     )
     fun getData(): ResourcesData {
         return this.data

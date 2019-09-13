@@ -9,5 +9,4 @@ class Player {
     val accessory: Accessory = Accessory()
     val abilities: Abilities = Abilities()
     val inventory: Inventory = Inventory()
-
 }
