@@ -94,16 +94,6 @@ object FileHandler {
     }
 
     private fun assignLoadedData(json: Json, player: Player) {
-        //val resources = Resources()
-        //val baseStats = BaseStats()
-        //val skills: MutableList<Skill> = mutableListOf()
-        //val weapon = Weapon()
-        //val armor = Armor()
-        //val accessory = Accessory()
-        //val spells: MutableList<Spell> = mutableListOf()
-        //val specials: MutableList<Special> = mutableListOf()
-        //val classAbilities: MutableList<ClassAbility> = mutableListOf()
-        //val inventory = Inventory()
 
         /*
         js("""
@@ -134,11 +124,11 @@ object FileHandler {
         player.armor.setData(json["armor"].unsafeCast<Wearable.WearableData>())
         player.accessory.setData(json["accessory"].unsafeCast<Wearable.WearableData>())
 
-        player.skills.setSkillList(json["skills"].unsafeCast<MutableList<Skills.SkillData>>())
+        player.skills.setSkillList(json["skills"].unsafeCast<Array<Skills.SkillData>>())
 
-        player.abilities.setSpellList(json["spells"].unsafeCast<MutableList<Spell>>())
-        player.abilities.setSpecialList(json["spells"].unsafeCast<MutableList<Special>>())
-        player.abilities.setClassAbilityList(json["spells"].unsafeCast<MutableList<ClassAbility>>())
+        player.abilities.setSpellList(json["spells"].unsafeCast<Array<Spell>>())
+        player.abilities.setSpecialList(json["spells"].unsafeCast<Array<Special>>())
+        player.abilities.setClassAbilityList(json["spells"].unsafeCast<Array<ClassAbility>>())
 
         player.inventory.setData(json["inventory"].unsafeCast<Inventory.InventoryData>())
 
@@ -158,30 +148,29 @@ object FileHandler {
         console.log(player.resources.getMaxHP())
         console.log(player.resources.getMaxMP())
         console.log(player.resources.getMaxSP())
-        console.log(js("player.resources.getMaxHPModifiers()[0].value"))
-        console.log(js("player.resources.getMaxMPModifiers()[0].value"))
-        console.log(js("player.resources.getMaxSPModifiers()[0].value"))
-
+        console.log(player.resources.getMaxHPModifiers()[0].value)
+        console.log(player.resources.getMaxMPModifiers()[0].value)
+        console.log(player.resources.getMaxSPModifiers()[0].value)
         console.log(player.baseStats.getSTR())
         console.log(player.baseStats.getCON())
         console.log(player.baseStats.getINT())
         console.log(player.baseStats.getWIL())
         console.log(player.baseStats.getSPD())
         console.log(player.baseStats.getACC())
-        console.log(js("player.baseStats.getSTRModifiers()[0].value"))
-        console.log(js("player.baseStats.getCONModifiers()[0].value"))
-        console.log(js("player.baseStats.getINTModifiers()[0].value"))
-        console.log(js("player.baseStats.getWILModifiers()[0].value"))
-        console.log(js("player.baseStats.getSPDModifiers()[0].value"))
-        console.log(js("player.baseStats.getACCModifiers()[0].value"))
+        console.log(player.baseStats.getSTRModifiers()[0].value)
+        console.log(player.baseStats.getCONModifiers()[0].value)
+        console.log(player.baseStats.getINTModifiers()[0].value)
+        console.log(player.baseStats.getWILModifiers()[0].value)
+        console.log(player.baseStats.getSPDModifiers()[0].value)
+        console.log(player.baseStats.getACCModifiers()[0].value)
         console.log(player.baseStats.getAT())
         console.log(player.baseStats.getDF())
         console.log(player.baseStats.getMA())
         console.log(player.baseStats.getMD())
-        console.log(js("player.baseStats.getATModifiers()[0].value"))
-        console.log(js("player.baseStats.getDFModifiers()[0].value"))
-        console.log(js("player.baseStats.getMAModifiers()[0].value"))
-        console.log(js("player.baseStats.getMDModifiers()[0].value"))
+        console.log(player.baseStats.getATModifiers()[0].value)
+        console.log(player.baseStats.getDFModifiers()[0].value)
+        console.log(player.baseStats.getMAModifiers()[0].value)
+        console.log(player.baseStats.getMDModifiers()[0].value)
 
         console.log(player.weapon.description)
         console.log(player.armor.description)

@@ -259,15 +259,15 @@ fun initItems(player: Player, amount: Int) {
 
 
 fun insertSpellSlot(player: Player): Boolean {
-    player.abilities.getSpellList().add(Spell())
+    js("player.abilities.getSpellList().push(Spell())")
     return insertAbilitySlot(player, "spells", "Spell-Circle-Icon-Web-Dev80px.png", player.abilities.getSpellList().size)
 }
 fun insertSpecialSlot(player: Player): Boolean {
-    player.abilities.getSpecialList().add(Special())
+    js("player.abilities.getSpecialList().push(Special())")
     return insertAbilitySlot(player, "special", "Triangle Icon - Web Dev.png", player.abilities.getSpecialList().size)
 }
 fun insertClassSlot(player: Player): Boolean {
-    player.abilities.getClassAbilityList().add(ClassAbility())
+    js("player.abilities.getClassAbilityList().push(ClassAbility())")
     return insertAbilitySlot(player, "class-abilities", "class-abilities-demigod100px.png", player.abilities.getClassAbilityList().size)
 }
 fun insertAbilitySlot(
@@ -315,19 +315,19 @@ fun deleteSpellSlot(player: Player): Boolean {
 
     val table = document.getElementById("spells-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
-    player.abilities.getSpellList().removeAt(player.abilities.getSpellList().size -1)
+    js("player.abilities.getSpellList().pop()")
     return false
 }
 fun deleteSpecialSlot(player: Player): Boolean {
     val table = document.getElementById("special-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
-    player.abilities.getSpecialList().removeAt(player.abilities.getSpecialList().size -1)
+    js("player.abilities.getSpecialList().pop()")
     return false
 }
 fun deleteClassSlot(player: Player): Boolean {
     val table = document.getElementById("class-abilities-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
-    player.abilities.getClassAbilityList().removeAt(player.abilities.getClassAbilityList().size -1)
+    js("player.abilities.getClassAbilityList().pop()")
     return false
 }
 

@@ -4,7 +4,7 @@ data class Value(
         var base: Int = 0
 ) {
     val id: String = generateID()
-    val modifiers: MutableList<Modifier> = mutableListOf()
+    val modifiers: Array<Modifier> = arrayOf()
 }
 
 data class DynamicValue (
@@ -45,29 +45,47 @@ object ValueFunctions {
     }
 
     fun getModBySource(value: Value, SourceID: String): Modifier {
+        repeat(value.modifiers.size) {
+            if (value.modifiers[it].source == SourceID) {
+                return value.modifiers[it]
+            }
+        }
+        /*
         for (mod in value.modifiers) {
             if (mod.source == SourceID) {
                 return mod
             }
         }
+         */
         return Modifier("")
     }
     fun removeModBySource(value: Value, SourceID: String): Modifier {
         val mod = getModBySource(value, SourceID)
-        value.modifiers.remove(mod)
+        val index = value.modifiers.indexOf(mod)
+        js("value.modifiers.splice(index,1)")
+        //value.modifiers.drop(index)
         return mod
     }
     fun getModByID(value: Value, ID: String): Modifier {
+        repeat(value.modifiers.size) {
+            if (value.modifiers[it].source == ID) {
+                return value.modifiers[it]
+            }
+        }
+        /*
         for (mod in value.modifiers) {
             if (mod.id == ID) {
                 return mod
             }
         }
+
+         */
         return Modifier("")
     }
     fun removeModByID(value: Value, ID: String): Modifier {
         val mod = getModByID(value, ID)
-        value.modifiers.remove(mod)
+        val index = value.modifiers.indexOf(mod)
+        js("value.modifiers.splice(index,1)")
         return mod
     }
 }

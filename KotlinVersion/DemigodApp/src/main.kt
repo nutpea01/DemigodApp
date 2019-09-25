@@ -5,7 +5,7 @@ import kotlin.browser.document
  */
 fun main() {
     //simple testing player
-    var player = Player()
+    val player = Player()
     tempSheetLogic(player)
     setupPage(player)
     (document.getElementById("resource-stats__form"))!!.addEventListener("submit", {
@@ -14,20 +14,21 @@ fun main() {
 }
 
 fun tempSheetLogic(player: Player) {
+    player.resources
     //TODO: Init a single modifier that will be editable by the current sheet
-    player.baseStats.getSTRModifiers().add(Modifier(""))
-    player.baseStats.getCONModifiers().add(Modifier(""))
-    player.baseStats.getINTModifiers().add(Modifier(""))
-    player.baseStats.getWILModifiers().add(Modifier(""))
-    player.baseStats.getSPDModifiers().add(Modifier(""))
-    player.baseStats.getACCModifiers().add(Modifier(""))
-    player.baseStats.getATModifiers().add(Modifier(""))
-    player.baseStats.getDFModifiers().add(Modifier(""))
-    player.baseStats.getMAModifiers().add(Modifier(""))
-    player.baseStats.getMDModifiers().add(Modifier(""))
-    player.resources.getMaxHPModifiers().add(Modifier(""))
-    player.resources.getMaxMPModifiers().add(Modifier(""))
-    player.resources.getMaxSPModifiers().add(Modifier(""))
+    js("player.baseStats.getSTRModifiers().push(Modifier(\"\"))")
+    js("player.baseStats.getCONModifiers().push(Modifier(\"\"))")
+    js("player.baseStats.getINTModifiers().push(Modifier(\"\"))")
+    js("player.baseStats.getWILModifiers().push(Modifier(\"\"))")
+    js("player.baseStats.getSPDModifiers().push(Modifier(\"\"))")
+    js("player.baseStats.getACCModifiers().push(Modifier(\"\"))")
+    js("player.baseStats.getATModifiers().push(Modifier(\"\"))")
+    js("player.baseStats.getDFModifiers().push(Modifier(\"\"))")
+    js("player.baseStats.getMAModifiers().push(Modifier(\"\"))")
+    js("player.baseStats.getMDModifiers().push(Modifier(\"\"))")
+    js("player.resources.getMaxHPModifiers().push(Modifier(\"\"))")
+    js("player.resources.getMaxMPModifiers().push(Modifier(\"\"))")
+    js("player.resources.getMaxSPModifiers().push(Modifier(\"\"))")
 }
 
 fun generateID(): String {

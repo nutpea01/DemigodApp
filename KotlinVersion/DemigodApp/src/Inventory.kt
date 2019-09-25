@@ -2,7 +2,7 @@ class Inventory {
     private var data: InventoryData = InventoryData()
 
     fun addItem(item: Item) {
-        this.data.items.add(item)
+        js("this.data.items.push(item)")
     }
     fun getItem(ID: String): Item? {
         //TODO: functionality below, removeItem
@@ -14,46 +14,40 @@ class Inventory {
     fun removeItem(ID: String): Item? {
         for (item in this.data.items) {
             if (item.id == ID) {
-                this.data.items.remove(item)
+                item.amount--
+                val index = this.data.items.indexOf(item)
+                js("this.data.items.splice(index, 1)")
                 return item
             }
         }
         return null
     }
     fun removeLastItem(): Item {
-        return this.data.items.removeAt(this.data.items.size - 1)
+        return js("this.data.items.pop()") as Item
     }
     fun useItem(ID: String): Boolean {
-        for (item in this.data.items) {
-            if (item.id == ID) {
-                item.amount--
-                if (item.amount == 0) {
-                    this.data.items.remove(item)
-                }
-                //TODO: use item effect
-                //item.effect
-                return true
-            }
-        }
-        return false
+        val item = removeItem(ID) ?: return false
+        //TODO: use item effect
+        //item.effect
+        return true
     }
 
     fun getGold(): Int { return this.data.gold }
     fun getSize(): Int { return this.data.items.size }
-    fun getItems(): MutableList<Item> { return this.data.items }
+    fun getItems(): Array<Item> { return this.data.items }
     fun getBagType(): String { return this.data.bagType }
     fun getNotes(): String { return this.data.notes }
 
     fun setGold(gold: Int) { this.data.gold = gold}
     //fun setSize(size: Int) { this.data.items.size = size}
-    fun setItems(items: MutableList<Item>) { this.data.items = items}
+    fun setItems(items: Array<Item>) { this.data.items = items}
     fun setBagType(bagType: String) { this.data.bagType = bagType}
     fun setNotes(notes: String) { this.data.notes = notes}
 
     data class InventoryData (
             var gold: Int = 0
     ) {
-        var items: MutableList<Item> = mutableListOf()
+        var items: Array<Item> = arrayOf()
         var bagType: String = ""
         var notes: String = ""
     }

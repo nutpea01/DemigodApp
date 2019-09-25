@@ -11,27 +11,27 @@ class Special: Ability()
 class ClassAbility: Ability()
 
 class Abilities {
-    private var spellList: MutableList<Spell> = mutableListOf()
-    private var specialList: MutableList<Special> = mutableListOf()
-    private var classAbilityList: MutableList<ClassAbility> = mutableListOf()
+    private var spellList: Array<Spell> = arrayOf()
+    private var specialList: Array<Special> = arrayOf()
+    private var classAbilityList: Array<ClassAbility> = arrayOf()
 
-    fun getSpellList(): MutableList<Spell> {
+    fun getSpellList(): Array<Spell> {
         return this.spellList
     }
-    fun getSpecialList(): MutableList<Special> {
+    fun getSpecialList(): Array<Special> {
         return this.specialList
     }
-    fun getClassAbilityList(): MutableList<ClassAbility> {
+    fun getClassAbilityList(): Array<ClassAbility> {
         return this.classAbilityList
     }
 
-    fun setSpellList(list: MutableList<Spell>) {
+    fun setSpellList(list: Array<Spell>) {
         this.spellList = list
     }
-    fun setSpecialList(list: MutableList<Special>) {
+    fun setSpecialList(list: Array<Special>) {
         this.specialList = list
     }
-    fun setClassAbilityList(list: MutableList<ClassAbility>)  {
+    fun setClassAbilityList(list: Array<ClassAbility>)  {
         this.classAbilityList = list
     }
 }

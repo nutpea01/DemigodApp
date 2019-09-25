@@ -4,7 +4,6 @@ if (typeof kotlin === 'undefined') {
 var DemigodApp = function (_, Kotlin) {
   'use strict';
   var Kind_CLASS = Kotlin.Kind.CLASS;
-  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var Random = Kotlin.kotlin.random.Random;
   var throwCCE = Kotlin.throwCCE;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
@@ -15,21 +14,22 @@ var DemigodApp = function (_, Kotlin) {
   var IllegalStateException_init = Kotlin.kotlin.IllegalStateException_init_pdl1vj$;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
   var addClass = Kotlin.kotlin.dom.addClass_hhb33f$;
+  var indexOf = Kotlin.kotlin.collections.indexOf_mjy6jw$;
   var Math_0 = Math;
-  Spell.prototype = Object.create(Ability.prototype);
-  Spell.prototype.constructor = Spell;
-  Special.prototype = Object.create(Ability.prototype);
-  Special.prototype.constructor = Special;
-  ClassAbility.prototype = Object.create(Ability.prototype);
-  ClassAbility.prototype.constructor = ClassAbility;
+  Spell_0.prototype = Object.create(Ability.prototype);
+  Spell_0.prototype.constructor = Spell_0;
+  Special_0.prototype = Object.create(Ability.prototype);
+  Special_0.prototype.constructor = Special_0;
+  ClassAbility_0.prototype = Object.create(Ability.prototype);
+  ClassAbility_0.prototype.constructor = ClassAbility_0;
   Wearable.prototype = Object.create(Equipment.prototype);
   Wearable.prototype.constructor = Wearable;
   Upgrade.prototype = Object.create(Equipment.prototype);
   Upgrade.prototype.constructor = Upgrade;
   Glyph.prototype = Object.create(Upgrade.prototype);
   Glyph.prototype.constructor = Glyph;
-  Augment.prototype = Object.create(Upgrade.prototype);
-  Augment.prototype.constructor = Augment;
+  Augment_0.prototype = Object.create(Upgrade.prototype);
+  Augment_0.prototype.constructor = Augment_0;
   Weapon.prototype = Object.create(Wearable.prototype);
   Weapon.prototype.constructor = Weapon;
   Armor.prototype = Object.create(Wearable.prototype);
@@ -51,34 +51,34 @@ var DemigodApp = function (_, Kotlin) {
     simpleName: 'Ability',
     interfaces: []
   };
-  function Spell() {
+  function Spell_0() {
     Ability.call(this);
   }
-  Spell.$metadata$ = {
+  Spell_0.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Spell',
     interfaces: [Ability]
   };
-  function Special() {
+  function Special_0() {
     Ability.call(this);
   }
-  Special.$metadata$ = {
+  Special_0.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Special',
     interfaces: [Ability]
   };
-  function ClassAbility() {
+  function ClassAbility_0() {
     Ability.call(this);
   }
-  ClassAbility.$metadata$ = {
+  ClassAbility_0.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'ClassAbility',
     interfaces: [Ability]
   };
   function Abilities() {
-    this.spellList_0 = ArrayList_init();
-    this.specialList_0 = ArrayList_init();
-    this.classAbilityList_0 = ArrayList_init();
+    this.spellList_0 = [];
+    this.specialList_0 = [];
+    this.classAbilityList_0 = [];
   }
   Abilities.prototype.getSpellList = function () {
     return this.spellList_0;
@@ -89,13 +89,13 @@ var DemigodApp = function (_, Kotlin) {
   Abilities.prototype.getClassAbilityList = function () {
     return this.classAbilityList_0;
   };
-  Abilities.prototype.setSpellList_yr7jjo$ = function (list) {
+  Abilities.prototype.setSpellList_2a6ot6$ = function (list) {
     this.spellList_0 = list;
   };
-  Abilities.prototype.setSpecialList_fofpvn$ = function (list) {
+  Abilities.prototype.setSpecialList_7wy4xh$ = function (list) {
     this.specialList_0 = list;
   };
-  Abilities.prototype.setClassAbilityList_j490ge$ = function (list) {
+  Abilities.prototype.setClassAbilityList_8n0v8c$ = function (list) {
     this.classAbilityList_0 = list;
   };
   Abilities.$metadata$ = {
@@ -262,7 +262,7 @@ var DemigodApp = function (_, Kotlin) {
     this.name = name;
     this.description = description;
     this.id = generateID();
-    this.modifiers = ArrayList_init();
+    this.modifiers = [];
     this.icon = 0;
   }
   Equipment.$metadata$ = {
@@ -286,35 +286,35 @@ var DemigodApp = function (_, Kotlin) {
   };
   Wearable.prototype.equipAugment_gn419t$ = function (augment) {
     var i = 0;
-    while (i < this.data_u1be3f$_0.augments.size) {
-      if (equals(this.data_u1be3f$_0.augments.get_za3lpa$(i), new Augment())) {
-        this.data_u1be3f$_0.augments.set_wxm5ur$(i, augment);
+    while (i < this.data_u1be3f$_0.augments.length) {
+      if (equals(this.data_u1be3f$_0.augments[i], new Augment_0())) {
+        this.data_u1be3f$_0.augments[i] = augment;
         return;
       }
       i = i + 1 | 0;
     }
   };
   Wearable.prototype.linkAugSlots_vd9sq1$_0 = function () {
-    while (this.data_u1be3f$_0.augments.size < this.data_u1be3f$_0.augmentSlots) {
-      this.data_u1be3f$_0.augments.add_11rb$(new Augment());
+    while (this.data_u1be3f$_0.augments.length < this.data_u1be3f$_0.augmentSlots) {
+      this.data.augments.push(Augment());
     }
   };
   Wearable.prototype.getAugmentByID_61zpoe$ = function (ID) {
-    var tmp$;
-    tmp$ = this.data_u1be3f$_0.augments.iterator();
-    while (tmp$.hasNext()) {
-      var aug = tmp$.next();
+    var tmp$, tmp$_0;
+    tmp$ = this.data_u1be3f$_0.augments;
+    for (tmp$_0 = 0; tmp$_0 !== tmp$.length; ++tmp$_0) {
+      var aug = tmp$[tmp$_0];
       if (equals(aug.id, ID)) {
         return aug;
       }
     }
-    return new Augment();
+    return new Augment_0();
   };
   Wearable.prototype.geGlyphByID_61zpoe$ = function (ID) {
-    var tmp$;
-    tmp$ = this.data_u1be3f$_0.glyphs.iterator();
-    while (tmp$.hasNext()) {
-      var gly = tmp$.next();
+    var tmp$, tmp$_0;
+    tmp$ = this.data_u1be3f$_0.glyphs;
+    for (tmp$_0 = 0; tmp$_0 !== tmp$.length; ++tmp$_0) {
+      var gly = tmp$[tmp$_0];
       if (equals(gly.id, ID)) {
         return gly;
       }
@@ -328,9 +328,9 @@ var DemigodApp = function (_, Kotlin) {
     if (augmentSlots === void 0)
       augmentSlots = 0;
     this.augmentSlots = augmentSlots;
-    this.augments = ArrayList_init();
-    this.glyphs = ArrayList_init();
-    this.abilities = ArrayList_init();
+    this.augments = [];
+    this.glyphs = [];
+    this.abilities = [];
   }
   Wearable$WearableData.$metadata$ = {
     kind: Kind_CLASS,
@@ -383,10 +383,10 @@ var DemigodApp = function (_, Kotlin) {
     simpleName: 'Glyph',
     interfaces: [Upgrade]
   };
-  function Augment() {
+  function Augment_0() {
     Upgrade.call(this);
   }
-  Augment.$metadata$ = {
+  Augment_0.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Augment',
     interfaces: [Upgrade]
@@ -493,16 +493,16 @@ var DemigodApp = function (_, Kotlin) {
     player.weapon.setData_fofztk$(json['weapon']);
     player.armor.setData_fofztk$(json['armor']);
     player.accessory.setData_fofztk$(json['accessory']);
-    player.skills.setSkillList_b04d0x$(json['skills']);
-    player.abilities.setSpellList_yr7jjo$(json['spells']);
-    player.abilities.setSpecialList_fofpvn$(json['spells']);
-    player.abilities.setClassAbilityList_j490ge$(json['spells']);
+    player.skills.setSkillList_1mzfy9$(json['skills']);
+    player.abilities.setSpellList_2a6ot6$(json['spells']);
+    player.abilities.setSpecialList_7wy4xh$(json['spells']);
+    player.abilities.setClassAbilityList_8n0v8c$(json['spells']);
     player.inventory.setData_6ml7ak$(json['inventory']);
     this.updateDocument_0(player);
   };
   function FileHandler$updateDocument$lambda(closure$player) {
     return function (it) {
-      var skill = closure$player.skills.getSkillList().get_za3lpa$(it);
+      var skill = closure$player.skills.getSkillList()[it];
       console.log('1' + skill.name + ' ' + toString(skill.value) + ' ' + toString(skill.check));
       return Unit;
     };
@@ -552,24 +552,24 @@ var DemigodApp = function (_, Kotlin) {
     for (var index = 0; index < times; index++) {
       FileHandler$updateDocument$lambda(player)(index);
     }
-    var times_0 = player.abilities.getSpellList().size;
+    var times_0 = player.abilities.getSpellList().length;
     for (var index_0 = 0; index_0 < times_0; index_0++) {
-      var spell = player.abilities.getSpellList().get_za3lpa$(index_0);
+      var spell = player.abilities.getSpellList()[index_0];
       console.log(spell.description);
     }
-    var times_1 = player.abilities.getSpecialList().size;
+    var times_1 = player.abilities.getSpecialList().length;
     for (var index_1 = 0; index_1 < times_1; index_1++) {
-      var special = player.abilities.getSpecialList().get_za3lpa$(index_1);
+      var special = player.abilities.getSpecialList()[index_1];
       console.log(special.description);
     }
-    var times_2 = player.abilities.getClassAbilityList().size;
+    var times_2 = player.abilities.getClassAbilityList().length;
     for (var index_2 = 0; index_2 < times_2; index_2++) {
-      var classAbility = player.abilities.getClassAbilityList().get_za3lpa$(index_2);
+      var classAbility = player.abilities.getClassAbilityList()[index_2];
       console.log(classAbility.description);
     }
-    var times_3 = player.inventory.getItems().size;
+    var times_3 = player.inventory.getItems().length;
     for (var index_3 = 0; index_3 < times_3; index_3++) {
-      var item = player.inventory.getItems().get_za3lpa$(index_3);
+      var item = player.inventory.getItems()[index_3];
       console.log(item.description);
     }
     console.log(player.inventory.getGold());
@@ -597,13 +597,13 @@ var DemigodApp = function (_, Kotlin) {
     initNavigationBar(player);
   }
   function resetPage(player) {
-    while (player.abilities.getSpellList().size > 0) {
+    while (player.abilities.getSpellList().length > 0) {
       deleteSpellSlot(player);
     }
-    while (player.abilities.getSpecialList().size > 0) {
+    while (player.abilities.getSpecialList().length > 0) {
       deleteSpecialSlot(player);
     }
-    while (player.abilities.getClassAbilityList().size > 0) {
+    while (player.abilities.getClassAbilityList().length > 0) {
       deleteClassSlot(player);
     }
     while (player.inventory.getSize() > 0) {
@@ -668,13 +668,13 @@ var DemigodApp = function (_, Kotlin) {
           closure$player.resources.setMaxSP_za3lpa$(toInt(resource.value));
           break;
         case 'maxHP-MOD':
-          closure$player.resources.getMaxHPModifiers().get_za3lpa$(0).value = toInt(resource.value);
+          closure$player.resources.getMaxHPModifiers()[0].value = toInt(resource.value);
           break;
         case 'maxMP-MOD':
-          closure$player.resources.getMaxMPModifiers().get_za3lpa$(0).value = toInt(resource.value);
+          closure$player.resources.getMaxMPModifiers()[0].value = toInt(resource.value);
           break;
         case 'maxSP-MOD':
-          closure$player.resources.getMaxSPModifiers().get_za3lpa$(0).value = toInt(resource.value);
+          closure$player.resources.getMaxSPModifiers()[0].value = toInt(resource.value);
           break;
       }
       (Kotlin.isType(tmp$_0 = document.getElementById('maxHP'), HTMLInputElement) ? tmp$_0 : throwCCE()).value = closure$player.resources.getMaxHP().toString();
@@ -710,34 +710,34 @@ var DemigodApp = function (_, Kotlin) {
           closure$player.baseStats.setACC_za3lpa$(toInt(stat.value));
           break;
         case 'STR-MOD':
-          closure$player.baseStats.getSTRModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getSTRModifiers()[0].value = toInt(stat.value);
           break;
         case 'CON-MOD':
-          closure$player.baseStats.getCONModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getCONModifiers()[0].value = toInt(stat.value);
           break;
         case 'INT-MOD':
-          closure$player.baseStats.getINTModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getINTModifiers()[0].value = toInt(stat.value);
           break;
         case 'WILL-MOD':
-          closure$player.baseStats.getWILModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getWILModifiers()[0].value = toInt(stat.value);
           break;
         case 'SPD-MOD':
-          closure$player.baseStats.getSPDModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getSPDModifiers()[0].value = toInt(stat.value);
           break;
         case 'AC-MOD':
-          closure$player.baseStats.getACCModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getACCModifiers()[0].value = toInt(stat.value);
           break;
         case 'AT-MOD':
-          closure$player.baseStats.getATModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getATModifiers()[0].value = toInt(stat.value);
           break;
         case 'DF-MOD':
-          closure$player.baseStats.getDFModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getDFModifiers()[0].value = toInt(stat.value);
           break;
         case 'MA-MOD':
-          closure$player.baseStats.getMAModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getMAModifiers()[0].value = toInt(stat.value);
           break;
         case 'MD-MOD':
-          closure$player.baseStats.getMDModifiers().get_za3lpa$(0).value = toInt(stat.value);
+          closure$player.baseStats.getMDModifiers()[0].value = toInt(stat.value);
           break;
       }
       closure$player.baseStats.updateCombat();
@@ -941,11 +941,11 @@ var DemigodApp = function (_, Kotlin) {
     var tmp$;
     var table = Kotlin.isType(tmp$ = document.getElementById('skill-tree'), HTMLTableElement) ? tmp$ : throwCCE();
     var index = {v: 0};
-    while (index.v < player.skills.getSkillList().size) {
+    while (index.v < player.skills.getSkillList().length) {
       var row = table.insertRow();
       for (var index_0 = 0; index_0 < 2; index_0++) {
         var tmp$_0, tmp$_1;
-        var skillName = player.skills.getSkillList().get_za3lpa$(index.v).name;
+        var skillName = player.skills.getSkillList()[index.v].name;
         var label = row.insertCell();
         addClass(label, ['skill-tree__label']);
         label.innerText = skillName;
@@ -975,29 +975,29 @@ var DemigodApp = function (_, Kotlin) {
     }
   }
   function insertSpellSlot(player) {
-    player.abilities.getSpellList().add_11rb$(new Spell());
-    return insertAbilitySlot(player, 'spells', 'Spell-Circle-Icon-Web-Dev80px.png', player.abilities.getSpellList().size);
+    player.abilities.getSpellList().push(Spell());
+    return insertAbilitySlot(player, 'spells', 'Spell-Circle-Icon-Web-Dev80px.png', player.abilities.getSpellList().length);
   }
   function insertSpecialSlot(player) {
-    player.abilities.getSpecialList().add_11rb$(new Special());
-    return insertAbilitySlot(player, 'special', 'Triangle Icon - Web Dev.png', player.abilities.getSpecialList().size);
+    player.abilities.getSpecialList().push(Special());
+    return insertAbilitySlot(player, 'special', 'Triangle Icon - Web Dev.png', player.abilities.getSpecialList().length);
   }
   function insertClassSlot(player) {
-    player.abilities.getClassAbilityList().add_11rb$(new ClassAbility());
-    return insertAbilitySlot(player, 'class-abilities', 'class-abilities-demigod100px.png', player.abilities.getClassAbilityList().size);
+    player.abilities.getClassAbilityList().push(ClassAbility());
+    return insertAbilitySlot(player, 'class-abilities', 'class-abilities-demigod100px.png', player.abilities.getClassAbilityList().length);
   }
   function insertAbilitySlot$lambda(closure$type, closure$player, closure$size) {
     return function (it) {
       var tmp$, tmp$_0, tmp$_1;
       switch (closure$type) {
         case 'spells':
-          closure$player.abilities.getSpellList().get_za3lpa$(closure$size - 1 | 0).description = (Kotlin.isType(tmp$ = it.target, HTMLTextAreaElement) ? tmp$ : throwCCE()).value;
+          closure$player.abilities.getSpellList()[closure$size - 1 | 0].description = (Kotlin.isType(tmp$ = it.target, HTMLTextAreaElement) ? tmp$ : throwCCE()).value;
           break;
         case 'special':
-          closure$player.abilities.getSpecialList().get_za3lpa$(closure$size - 1 | 0).description = (Kotlin.isType(tmp$_0 = it.target, HTMLTextAreaElement) ? tmp$_0 : throwCCE()).value;
+          closure$player.abilities.getSpecialList()[closure$size - 1 | 0].description = (Kotlin.isType(tmp$_0 = it.target, HTMLTextAreaElement) ? tmp$_0 : throwCCE()).value;
           break;
         case 'class-abilities':
-          closure$player.abilities.getClassAbilityList().get_za3lpa$(closure$size - 1 | 0).description = (Kotlin.isType(tmp$_1 = it.target, HTMLTextAreaElement) ? tmp$_1 : throwCCE()).value;
+          closure$player.abilities.getClassAbilityList()[closure$size - 1 | 0].description = (Kotlin.isType(tmp$_1 = it.target, HTMLTextAreaElement) ? tmp$_1 : throwCCE()).value;
           break;
       }
       return Unit;
@@ -1029,21 +1029,21 @@ var DemigodApp = function (_, Kotlin) {
     var tmp$;
     var table = Kotlin.isType(tmp$ = document.getElementById('spells-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
     table.deleteRow(table.rows.length - 1 | 0);
-    player.abilities.getSpellList().removeAt_za3lpa$(player.abilities.getSpellList().size - 1 | 0);
+    player.abilities.getSpellList().pop();
     return false;
   }
   function deleteSpecialSlot(player) {
     var tmp$;
     var table = Kotlin.isType(tmp$ = document.getElementById('special-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
     table.deleteRow(table.rows.length - 1 | 0);
-    player.abilities.getSpecialList().removeAt_za3lpa$(player.abilities.getSpecialList().size - 1 | 0);
+    player.abilities.getSpecialList().pop();
     return false;
   }
   function deleteClassSlot(player) {
     var tmp$;
     var table = Kotlin.isType(tmp$ = document.getElementById('class-abilities-div__table'), HTMLTableElement) ? tmp$ : throwCCE();
     table.deleteRow(table.rows.length - 1 | 0);
-    player.abilities.getClassAbilityList().removeAt_za3lpa$(player.abilities.getClassAbilityList().size - 1 | 0);
+    player.abilities.getClassAbilityList().pop();
     return false;
   }
   function insertItemSlot(player) {
@@ -1100,49 +1100,46 @@ var DemigodApp = function (_, Kotlin) {
     this.data_0 = new Inventory$InventoryData();
   }
   Inventory.prototype.addItem_1d2k3$ = function (item) {
-    this.data_0.items.add_11rb$(item);
+    this.data.items.push(item);
   };
   Inventory.prototype.getItem_61zpoe$ = function (ID) {
     return null;
   };
   Inventory.prototype.getItem_za3lpa$ = function (index) {
-    return this.data_0.items.get_za3lpa$(index);
+    return this.data_0.items[index];
   };
   Inventory.prototype.removeItem_61zpoe$ = function (ID) {
-    var tmp$;
-    tmp$ = this.data_0.items.iterator();
-    while (tmp$.hasNext()) {
-      var item = tmp$.next();
+    var tmp$, tmp$_0;
+    tmp$ = this.data_0.items;
+    for (tmp$_0 = 0; tmp$_0 !== tmp$.length; ++tmp$_0) {
+      var item = tmp$[tmp$_0];
       if (equals(item.id, ID)) {
-        this.data_0.items.remove_11rb$(item);
+        item.amount = item.amount - 1 | 0;
+        var index = indexOf(this.data_0.items, item);
+        this.data.items.splice(index, 1);
         return item;
       }
     }
     return null;
   };
   Inventory.prototype.removeLastItem = function () {
-    return this.data_0.items.removeAt_za3lpa$(this.data_0.items.size - 1 | 0);
+    var tmp$;
+    return Kotlin.isType(tmp$ = this.data.items.pop(), Item) ? tmp$ : throwCCE();
   };
   Inventory.prototype.useItem_61zpoe$ = function (ID) {
     var tmp$;
-    tmp$ = this.data_0.items.iterator();
-    while (tmp$.hasNext()) {
-      var item = tmp$.next();
-      if (equals(item.id, ID)) {
-        item.amount = item.amount - 1 | 0;
-        if (item.amount === 0) {
-          this.data_0.items.remove_11rb$(item);
-        }
-        return true;
-      }
+    tmp$ = this.removeItem_61zpoe$(ID);
+    if (tmp$ == null) {
+      return false;
     }
-    return false;
+    var item = tmp$;
+    return true;
   };
   Inventory.prototype.getGold = function () {
     return this.data_0.gold;
   };
   Inventory.prototype.getSize = function () {
-    return this.data_0.items.size;
+    return this.data_0.items.length;
   };
   Inventory.prototype.getItems = function () {
     return this.data_0.items;
@@ -1156,7 +1153,7 @@ var DemigodApp = function (_, Kotlin) {
   Inventory.prototype.setGold_za3lpa$ = function (gold) {
     this.data_0.gold = gold;
   };
-  Inventory.prototype.setItems_jngbmb$ = function (items) {
+  Inventory.prototype.setItems_b8cx4r$ = function (items) {
     this.data_0.items = items;
   };
   Inventory.prototype.setBagType_61zpoe$ = function (bagType) {
@@ -1169,7 +1166,7 @@ var DemigodApp = function (_, Kotlin) {
     if (gold === void 0)
       gold = 0;
     this.gold = gold;
-    this.items = ArrayList_init();
+    this.items = [];
     this.bagType = '';
     this.notes = '';
   }
@@ -1237,19 +1234,20 @@ var DemigodApp = function (_, Kotlin) {
     ensureNotNull(document.getElementById('resource-stats__form')).addEventListener('submit', main$lambda);
   }
   function tempSheetLogic(player) {
-    player.baseStats.getSTRModifiers().add_11rb$(new Modifier(''));
-    player.baseStats.getCONModifiers().add_11rb$(new Modifier(''));
-    player.baseStats.getINTModifiers().add_11rb$(new Modifier(''));
-    player.baseStats.getWILModifiers().add_11rb$(new Modifier(''));
-    player.baseStats.getSPDModifiers().add_11rb$(new Modifier(''));
-    player.baseStats.getACCModifiers().add_11rb$(new Modifier(''));
-    player.baseStats.getATModifiers().add_11rb$(new Modifier(''));
-    player.baseStats.getDFModifiers().add_11rb$(new Modifier(''));
-    player.baseStats.getMAModifiers().add_11rb$(new Modifier(''));
-    player.baseStats.getMDModifiers().add_11rb$(new Modifier(''));
-    player.resources.getMaxHPModifiers().add_11rb$(new Modifier(''));
-    player.resources.getMaxMPModifiers().add_11rb$(new Modifier(''));
-    player.resources.getMaxSPModifiers().add_11rb$(new Modifier(''));
+    player.resources;
+    player.baseStats.getSTRModifiers().push(Modifier(''));
+    player.baseStats.getCONModifiers().push(Modifier(''));
+    player.baseStats.getINTModifiers().push(Modifier(''));
+    player.baseStats.getWILModifiers().push(Modifier(''));
+    player.baseStats.getSPDModifiers().push(Modifier(''));
+    player.baseStats.getACCModifiers().push(Modifier(''));
+    player.baseStats.getATModifiers().push(Modifier(''));
+    player.baseStats.getDFModifiers().push(Modifier(''));
+    player.baseStats.getMAModifiers().push(Modifier(''));
+    player.baseStats.getMDModifiers().push(Modifier(''));
+    player.resources.getMaxHPModifiers().push(Modifier(''));
+    player.resources.getMaxMPModifiers().push(Modifier(''));
+    player.resources.getMaxSPModifiers().push(Modifier(''));
   }
   function generateID() {
     var uuid = '';
@@ -1709,54 +1707,54 @@ var DemigodApp = function (_, Kotlin) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.name, other.name) && Kotlin.equals(this.check, other.check) && Kotlin.equals(this.value, other.value)))));
   };
   Skills.prototype.initSkills_0 = function () {
-    var list = ArrayList_init();
-    list.add_11rb$(new Skills$SkillData('Common Sense'));
-    list.add_11rb$(new Skills$SkillData('Spell-Craft'));
-    list.add_11rb$(new Skills$SkillData('Cartography'));
-    list.add_11rb$(new Skills$SkillData('Ancient World'));
-    list.add_11rb$(new Skills$SkillData('Study/Reading'));
-    list.add_11rb$(new Skills$SkillData('Magic Knowledge'));
-    list.add_11rb$(new Skills$SkillData('Herbology'));
-    list.add_11rb$(new Skills$SkillData('Advanced Medicine'));
-    list.add_11rb$(new Skills$SkillData('Detective'));
-    list.add_11rb$(new Skills$SkillData('Awareness'));
-    list.add_11rb$(new Skills$SkillData('Disguise'));
-    list.add_11rb$(new Skills$SkillData('Puzzle'));
-    list.add_11rb$(new Skills$SkillData('Sense Motive'));
-    list.add_11rb$(new Skills$SkillData('Escape Artist'));
-    list.add_11rb$(new Skills$SkillData('Stealth/Sneak'));
-    list.add_11rb$(new Skills$SkillData('Trickery/Stealing'));
-    list.add_11rb$(new Skills$SkillData('Lock Picking'));
-    list.add_11rb$(new Skills$SkillData('Free Running'));
-    list.add_11rb$(new Skills$SkillData('Tracking/Hunting'));
-    list.add_11rb$(new Skills$SkillData('Basic Survival'));
-    list.add_11rb$(new Skills$SkillData('Advanced Riding'));
-    list.add_11rb$(new Skills$SkillData('Cooking'));
-    list.add_11rb$(new Skills$SkillData('Beast Taming'));
-    list.add_11rb$(new Skills$SkillData('Pain Tolerance'));
-    list.add_11rb$(new Skills$SkillData('First Aid'));
-    list.add_11rb$(new Skills$SkillData('Inspiration'));
-    list.add_11rb$(new Skills$SkillData('Seduction'));
-    list.add_11rb$(new Skills$SkillData('Charm'));
-    list.add_11rb$(new Skills$SkillData('Speech'));
-    list.add_11rb$(new Skills$SkillData('Persuasion'));
-    list.add_11rb$(new Skills$SkillData('Intimidate'));
-    list.add_11rb$(new Skills$SkillData('Guile'));
-    list.add_11rb$(new Skills$SkillData('Composure/Calm'));
-    list.add_11rb$(new Skills$SkillData('War Tactics'));
-    list.add_11rb$(new Skills$SkillData('Group Management'));
-    list.add_11rb$(new Skills$SkillData('Hand To Hand Combat'));
-    list.add_11rb$(new Skills$SkillData('Weapons Play'));
-    list.add_11rb$(new Skills$SkillData('Specialty Weapon'));
-    list.add_11rb$(new Skills$SkillData('Swimming'));
-    list.add_11rb$(new Skills$SkillData('Climbing'));
+    var list = [];
+    list.push(SkillData('Common Sense'));
+    list.push(SkillData('Spell-Craft'));
+    list.push(SkillData('Cartography'));
+    list.push(SkillData('Ancient World'));
+    list.push(SkillData('Study/Reading'));
+    list.push(SkillData('Magic Knowledge'));
+    list.push(SkillData('Herbology'));
+    list.push(SkillData('Advanced Medicine'));
+    list.push(SkillData('Detective'));
+    list.push(SkillData('Awareness'));
+    list.push(SkillData('Disguise'));
+    list.push(SkillData('Puzzle'));
+    list.push(SkillData('Sense Motive'));
+    list.push(SkillData('Escape Artist'));
+    list.push(SkillData('Stealth/Sneak'));
+    list.push(SkillData('Trickery/Stealing'));
+    list.push(SkillData('Lock Picking'));
+    list.push(SkillData('Free Running'));
+    list.push(SkillData('Tracking/Hunting'));
+    list.push(SkillData('Basic Survival'));
+    list.push(SkillData('Advanced Riding'));
+    list.push(SkillData('Cooking'));
+    list.push(SkillData('Beast Taming'));
+    list.push(SkillData('Pain Tolerance'));
+    list.push(SkillData('First Aid'));
+    list.push(SkillData('Inspiration'));
+    list.push(SkillData('Seduction'));
+    list.push(SkillData('Charm'));
+    list.push(SkillData('Speech'));
+    list.push(SkillData('Persuasion'));
+    list.push(SkillData('Intimidate'));
+    list.push(SkillData('Guile'));
+    list.push(SkillData('Composure/Calm'));
+    list.push(SkillData('War Tactics'));
+    list.push(SkillData('Group Management'));
+    list.push(SkillData('Hand To Hand Combat'));
+    list.push(SkillData('Weapons Play'));
+    list.push(SkillData('Specialty Weapon'));
+    list.push(SkillData('Swimming'));
+    list.push(SkillData('Climbing'));
     return list;
   };
   Skills.prototype.getSkill_61zpoe$ = function (name) {
-    var tmp$;
-    tmp$ = this.skillList_0.iterator();
-    while (tmp$.hasNext()) {
-      var skill = tmp$.next();
+    var tmp$, tmp$_0;
+    tmp$ = this.skillList_0;
+    for (tmp$_0 = 0; tmp$_0 !== tmp$.length; ++tmp$_0) {
+      var skill = tmp$[tmp$_0];
       if (equals(skill.name, name)) {
         return skill;
       }
@@ -1766,7 +1764,7 @@ var DemigodApp = function (_, Kotlin) {
   Skills.prototype.getSkillList = function () {
     return this.skillList_0;
   };
-  Skills.prototype.setSkillList_b04d0x$ = function (skillList) {
+  Skills.prototype.setSkillList_1mzfy9$ = function (skillList) {
     this.skillList_0 = skillList;
   };
   Skills.$metadata$ = {
@@ -1912,7 +1910,7 @@ var DemigodApp = function (_, Kotlin) {
       base = 0;
     this.base = base;
     this.id = generateID();
-    this.modifiers = ArrayList_init();
+    this.modifiers = [];
   }
   Value.$metadata$ = {
     kind: Kind_CLASS,
@@ -1970,7 +1968,7 @@ var DemigodApp = function (_, Kotlin) {
   DynamicValue.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.current, other.current) && Kotlin.equals(this.max, other.max)))));
   };
-  function Modifier(source, value, turns) {
+  function Modifier_0(source, value, turns) {
     if (value === void 0)
       value = 0;
     if (turns === void 0)
@@ -1981,34 +1979,34 @@ var DemigodApp = function (_, Kotlin) {
     this.id = generateID();
     this.active = true;
   }
-  Modifier.$metadata$ = {
+  Modifier_0.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Modifier',
     interfaces: []
   };
-  Modifier.prototype.component1 = function () {
+  Modifier_0.prototype.component1 = function () {
     return this.source;
   };
-  Modifier.prototype.component2 = function () {
+  Modifier_0.prototype.component2 = function () {
     return this.value;
   };
-  Modifier.prototype.component3 = function () {
+  Modifier_0.prototype.component3 = function () {
     return this.turns;
   };
-  Modifier.prototype.copy_3m52m6$ = function (source, value, turns) {
-    return new Modifier(source === void 0 ? this.source : source, value === void 0 ? this.value : value, turns === void 0 ? this.turns : turns);
+  Modifier_0.prototype.copy_3m52m6$ = function (source, value, turns) {
+    return new Modifier_0(source === void 0 ? this.source : source, value === void 0 ? this.value : value, turns === void 0 ? this.turns : turns);
   };
-  Modifier.prototype.toString = function () {
+  Modifier_0.prototype.toString = function () {
     return 'Modifier(source=' + Kotlin.toString(this.source) + (', value=' + Kotlin.toString(this.value)) + (', turns=' + Kotlin.toString(this.turns)) + ')';
   };
-  Modifier.prototype.hashCode = function () {
+  Modifier_0.prototype.hashCode = function () {
     var result = 0;
     result = result * 31 + Kotlin.hashCode(this.source) | 0;
     result = result * 31 + Kotlin.hashCode(this.value) | 0;
     result = result * 31 + Kotlin.hashCode(this.turns) | 0;
     return result;
   };
-  Modifier.prototype.equals = function (other) {
+  Modifier_0.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.source, other.source) && Kotlin.equals(this.value, other.value) && Kotlin.equals(this.turns, other.turns)))));
   };
   function ValueFunctions() {
@@ -2029,43 +2027,41 @@ var DemigodApp = function (_, Kotlin) {
   };
   ValueFunctions.prototype.getModTotalValue_1d2jpt$ = function (value) {
     var temp = {v: 0};
-    var times = value.modifiers.size;
+    var times = value.modifiers.length;
     for (var index = 0; index < times; index++) {
-      if (value.modifiers.get_za3lpa$(index).active)
-        temp.v = temp.v + value.modifiers.get_za3lpa$(index).value | 0;
+      if (value.modifiers[index].active)
+        temp.v = temp.v + value.modifiers[index].value | 0;
     }
     return temp.v;
   };
   ValueFunctions.prototype.getModBySource_3pd7kz$ = function (value, SourceID) {
-    var tmp$;
-    tmp$ = value.modifiers.iterator();
-    while (tmp$.hasNext()) {
-      var mod = tmp$.next();
-      if (equals(mod.source, SourceID)) {
-        return mod;
+    var times = value.modifiers.length;
+    for (var index = 0; index < times; index++) {
+      if (equals(value.modifiers[index].source, SourceID)) {
+        return value.modifiers[index];
       }
     }
-    return new Modifier('');
+    return new Modifier_0('');
   };
   ValueFunctions.prototype.removeModBySource_3pd7kz$ = function (value, SourceID) {
     var mod = this.getModBySource_3pd7kz$(value, SourceID);
-    value.modifiers.remove_11rb$(mod);
+    var index = indexOf(value.modifiers, mod);
+    value.modifiers.splice(index, 1);
     return mod;
   };
   ValueFunctions.prototype.getModByID_3pd7kz$ = function (value, ID) {
-    var tmp$;
-    tmp$ = value.modifiers.iterator();
-    while (tmp$.hasNext()) {
-      var mod = tmp$.next();
-      if (equals(mod.id, ID)) {
-        return mod;
+    var times = value.modifiers.length;
+    for (var index = 0; index < times; index++) {
+      if (equals(value.modifiers[index].source, ID)) {
+        return value.modifiers[index];
       }
     }
-    return new Modifier('');
+    return new Modifier_0('');
   };
   ValueFunctions.prototype.removeModByID_3pd7kz$ = function (value, ID) {
     var mod = this.getModByID_3pd7kz$(value, ID);
-    value.modifiers.remove_11rb$(mod);
+    var index = indexOf(value.modifiers, mod);
+    value.modifiers.splice(index, 1);
     return mod;
   };
   ValueFunctions.$metadata$ = {
@@ -2081,9 +2077,9 @@ var DemigodApp = function (_, Kotlin) {
     return ValueFunctions_instance;
   }
   _.Ability = Ability;
-  _.Spell = Spell;
-  _.Special = Special;
-  _.ClassAbility = ClassAbility;
+  _.Spell = Spell_0;
+  _.Special = Special_0;
+  _.ClassAbility = ClassAbility_0;
   _.Abilities = Abilities;
   _.StatChecker = StatChecker;
   Object.defineProperty(_, 'DiceRoller', {
@@ -2094,7 +2090,7 @@ var DemigodApp = function (_, Kotlin) {
   _.Wearable = Wearable;
   _.Upgrade = Upgrade;
   _.Glyph = Glyph;
-  _.Augment = Augment;
+  _.Augment = Augment_0;
   _.Weapon = Weapon;
   _.Armor = Armor;
   _.Accessory = Accessory;
@@ -2143,7 +2139,7 @@ var DemigodApp = function (_, Kotlin) {
   _.Class = Class;
   _.Value = Value;
   _.DynamicValue = DynamicValue;
-  _.Modifier = Modifier;
+  _.Modifier = Modifier_0;
   Object.defineProperty(_, 'ValueFunctions', {
     get: ValueFunctions_getInstance
   });

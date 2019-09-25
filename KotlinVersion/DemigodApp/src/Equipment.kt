@@ -3,7 +3,7 @@ open class Equipment(
     var description: String = ""
 ) {
     val id: String = generateID()
-    val modifiers: MutableList<Modifier> = mutableListOf()
+    val modifiers: Array<Modifier> = arrayOf()
     var icon: Int = 0
 }
 
@@ -31,7 +31,7 @@ open class Wearable: Equipment() {
     }
     private fun linkAugSlots() {
         while (this.data.augments.size < this.data.augmentSlots) {
-            this.data.augments.add(Augment())
+            js("this.data.augments.push(Augment())")
         }
     }
     fun getAugmentByID(ID: String): Augment {
@@ -58,9 +58,9 @@ open class Wearable: Equipment() {
     data class WearableData (
             var augmentSlots: Int = 0
     ) {
-        val augments: MutableList<Augment> = mutableListOf()
-        val glyphs: MutableList<Glyph> = mutableListOf()
-        val abilities: MutableList<Ability> = mutableListOf()
+        val augments: Array<Augment> = arrayOf()
+        val glyphs: Array<Glyph> = arrayOf()
+        val abilities: Array<Ability> = arrayOf()
     }
     fun getData(): WearableData {
         return this.data

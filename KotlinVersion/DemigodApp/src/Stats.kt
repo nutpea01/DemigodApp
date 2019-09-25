@@ -43,16 +43,16 @@ class BaseStats (
     fun  getMA(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.combatStats.ma, includeMods) }
     fun  getMD(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.combatStats.md, includeMods) }
 
-    fun getSTRModifiers(): MutableList<Modifier> { return this.data.str.modifiers }
-    fun getCONModifiers(): MutableList<Modifier> { return this.data.con.modifiers }
-    fun getINTModifiers(): MutableList<Modifier> { return this.data.int.modifiers }
-    fun getWILModifiers(): MutableList<Modifier> { return this.data.wil.modifiers }
-    fun getSPDModifiers(): MutableList<Modifier> { return this.data.spd.modifiers }
-    fun getACCModifiers(): MutableList<Modifier> { return this.data.acc.modifiers }
-    fun  getATModifiers(): MutableList<Modifier> { return this.combatStats.at.modifiers }
-    fun  getDFModifiers(): MutableList<Modifier> { return this.combatStats.df.modifiers }
-    fun  getMAModifiers(): MutableList<Modifier> { return this.combatStats.ma.modifiers }
-    fun  getMDModifiers(): MutableList<Modifier> { return this.combatStats.md.modifiers }
+    fun getSTRModifiers(): Array<Modifier> { return this.data.str.modifiers }
+    fun getCONModifiers(): Array<Modifier> { return this.data.con.modifiers }
+    fun getINTModifiers(): Array<Modifier> { return this.data.int.modifiers }
+    fun getWILModifiers(): Array<Modifier> { return this.data.wil.modifiers }
+    fun getSPDModifiers(): Array<Modifier> { return this.data.spd.modifiers }
+    fun getACCModifiers(): Array<Modifier> { return this.data.acc.modifiers }
+    fun  getATModifiers(): Array<Modifier> { return this.combatStats.at.modifiers }
+    fun  getDFModifiers(): Array<Modifier> { return this.combatStats.df.modifiers }
+    fun  getMAModifiers(): Array<Modifier> { return this.combatStats.ma.modifiers }
+    fun  getMDModifiers(): Array<Modifier> { return this.combatStats.md.modifiers }
 
     data class BaseStatsData (
             val str: Value = Value(0),
@@ -122,12 +122,12 @@ class Resources {
     fun getCurrentMP(): Int { return ValueFunctions.getValue(this.data.mp.current) }
     fun getCurrentSP(): Int { return ValueFunctions.getValue(this.data.sp.current) }
 
-    fun getMaxHPModifiers(): MutableList<Modifier> { return this.data.hp.max.modifiers }
-    fun getMaxMPModifiers(): MutableList<Modifier> { return this.data.mp.max.modifiers }
-    fun getMaxSPModifiers(): MutableList<Modifier> { return this.data.sp.max.modifiers }
-    fun getCurrentHPModifiers(): MutableList<Modifier> { return this.data.hp.current.modifiers }
-    fun getCurrentMPModifiers(): MutableList<Modifier> { return this.data.mp.current.modifiers }
-    fun getCurrentSPModifiers(): MutableList<Modifier> { return this.data.sp.current.modifiers }
+    fun getMaxHPModifiers(): Array<Modifier> { return this.data.hp.max.modifiers }
+    fun getMaxMPModifiers(): Array<Modifier> { return this.data.mp.max.modifiers }
+    fun getMaxSPModifiers(): Array<Modifier> { return this.data.sp.max.modifiers }
+    fun getCurrentHPModifiers(): Array<Modifier> { return this.data.hp.current.modifiers }
+    fun getCurrentMPModifiers(): Array<Modifier> { return this.data.mp.current.modifiers }
+    fun getCurrentSPModifiers(): Array<Modifier> { return this.data.sp.current.modifiers }
 
     //TODO: most of these will become more interesting as we add abilities. eventually, they should likely be able to find damage themselves based on stats...?
     fun dealDamage(damage: Int, target: Player) {
@@ -171,55 +171,55 @@ class Resources {
 }
 
 class Skills {
-    private var skillList: MutableList<SkillData> = initSkills()
+    private var skillList: Array<SkillData> = initSkills()
 
     data class SkillData (
             val name: String,
             var check: Boolean = false,  // used for if the player succeeds roll
             val value: Value = Value(0)
     )
-    private fun initSkills(): MutableList<SkillData> {
-        val list: MutableList<SkillData> = mutableListOf()
-        list.add(SkillData("Common Sense"))
-        list.add(SkillData("Spell-Craft"))
-        list.add(SkillData("Cartography"))
-        list.add(SkillData("Ancient World"))
-        list.add(SkillData("Study/Reading"))
-        list.add(SkillData("Magic Knowledge"))
-        list.add(SkillData("Herbology"))
-        list.add(SkillData("Advanced Medicine"))
-        list.add(SkillData("Detective"))
-        list.add(SkillData("Awareness"))
-        list.add(SkillData("Disguise"))
-        list.add(SkillData("Puzzle"))
-        list.add(SkillData("Sense Motive"))
-        list.add(SkillData("Escape Artist"))
-        list.add(SkillData("Stealth/Sneak"))
-        list.add(SkillData("Trickery/Stealing"))
-        list.add(SkillData("Lock Picking"))
-        list.add(SkillData("Free Running"))
-        list.add(SkillData("Tracking/Hunting"))
-        list.add(SkillData("Basic Survival"))
-        list.add(SkillData("Advanced Riding"))
-        list.add(SkillData("Cooking"))
-        list.add(SkillData("Beast Taming"))
-        list.add(SkillData("Pain Tolerance"))
-        list.add(SkillData("First Aid"))
-        list.add(SkillData("Inspiration"))
-        list.add(SkillData("Seduction"))
-        list.add(SkillData("Charm"))
-        list.add(SkillData("Speech"))
-        list.add(SkillData("Persuasion"))
-        list.add(SkillData("Intimidate"))
-        list.add(SkillData("Guile"))
-        list.add(SkillData("Composure/Calm"))
-        list.add(SkillData("War Tactics"))
-        list.add(SkillData("Group Management"))
-        list.add(SkillData("Hand To Hand Combat"))
-        list.add(SkillData("Weapons Play"))
-        list.add(SkillData("Specialty Weapon"))
-        list.add(SkillData("Swimming"))
-        list.add(SkillData("Climbing"))
+    private fun initSkills(): Array<SkillData> {
+        val list: Array<SkillData> = arrayOf()
+        js("list.push(SkillData(\"Common Sense\"))")
+        js("list.push(SkillData(\"Spell-Craft\"))")
+        js("list.push(SkillData(\"Cartography\"))")
+        js("list.push(SkillData(\"Ancient World\"))")
+        js("list.push(SkillData(\"Study/Reading\"))")
+        js("list.push(SkillData(\"Magic Knowledge\"))")
+        js("list.push(SkillData(\"Herbology\"))")
+        js("list.push(SkillData(\"Advanced Medicine\"))")
+        js("list.push(SkillData(\"Detective\"))")
+        js("list.push(SkillData(\"Awareness\"))")
+        js("list.push(SkillData(\"Disguise\"))")
+        js("list.push(SkillData(\"Puzzle\"))")
+        js("list.push(SkillData(\"Sense Motive\"))")
+        js("list.push(SkillData(\"Escape Artist\"))")
+        js("list.push(SkillData(\"Stealth/Sneak\"))")
+        js("list.push(SkillData(\"Trickery/Stealing\"))")
+        js("list.push(SkillData(\"Lock Picking\"))")
+        js("list.push(SkillData(\"Free Running\"))")
+        js("list.push(SkillData(\"Tracking/Hunting\"))")
+        js("list.push(SkillData(\"Basic Survival\"))")
+        js("list.push(SkillData(\"Advanced Riding\"))")
+        js("list.push(SkillData(\"Cooking\"))")
+        js("list.push(SkillData(\"Beast Taming\"))")
+        js("list.push(SkillData(\"Pain Tolerance\"))")
+        js("list.push(SkillData(\"First Aid\"))")
+        js("list.push(SkillData(\"Inspiration\"))")
+        js("list.push(SkillData(\"Seduction\"))")
+        js("list.push(SkillData(\"Charm\"))")
+        js("list.push(SkillData(\"Speech\"))")
+        js("list.push(SkillData(\"Persuasion\"))")
+        js("list.push(SkillData(\"Intimidate\"))")
+        js("list.push(SkillData(\"Guile\"))")
+        js("list.push(SkillData(\"Composure/Calm\"))")
+        js("list.push(SkillData(\"War Tactics\"))")
+        js("list.push(SkillData(\"Group Management\"))")
+        js("list.push(SkillData(\"Hand To Hand Combat\"))")
+        js("list.push(SkillData(\"Weapons Play\"))")
+        js("list.push(SkillData(\"Specialty Weapon\"))")
+        js("list.push(SkillData(\"Swimming\"))")
+        js("list.push(SkillData(\"Climbing\"))")
         return list
     }
 
@@ -231,10 +231,10 @@ class Skills {
         }
         return null
     }
-    fun getSkillList(): MutableList<SkillData> {
+    fun getSkillList(): Array<SkillData> {
         return this.skillList
     }
-    fun setSkillList(skillList: MutableList<SkillData>) {
+    fun setSkillList(skillList: Array<SkillData>) {
         this.skillList = skillList
     }
 }
