@@ -1,6 +1,7 @@
 import org.w3c.dom.*
 import kotlin.browser.document
 import kotlin.dom.addClass
+import kotlin.reflect.typeOf
 
 fun setupPage(player: Player) {
     initCharacterSheetListeners(player)
@@ -15,37 +16,6 @@ fun resetPage(player: Player) {
     while (player.abilities.getSpecialList().size > 0) { deleteSpecialSlot(player.abilities) }
     while (player.abilities.getClassAbilityList().size > 0) { deleteClassSlot(player.abilities) }
     while (player.inventory.getItems().size > 0) { deleteItemSlot(player.inventory) }
-    /*
-    // remove spell slots
-    var table = document.getElementById("spells-div__table") as HTMLTableElement
-    while (table.rows.length > 0) {
-        table.deleteRow(table.rows.length-1)
-    }
-
-    // remove special slots
-    table = document.getElementById("special-div__table") as HTMLTableElement
-    while (table.rows.length > 0) {
-        table.deleteRow(table.rows.length-1)
-    }
-
-    // remove class ability slots
-    table = document.getElementById("class-abilities-div__table") as HTMLTableElement
-    while (table.rows.length > 0) {
-        table.deleteRow(table.rows.length-1)
-    }
-
-    // remove item slots
-    table = document.getElementById("inventory-div__slot-table") as HTMLTableElement
-    val row = table.rows[table.rows.length-1] as HTMLTableRowElement
-    while (table.rows.length > 0) {
-        // if there is only one cell in the table...
-        if (row.cells.length == 1) {
-            table.deleteRow(table.rows.length-1)
-        } else {
-            row.deleteCell(row.cells.length-1)
-        }
-    }
-     */
 }
 
 fun initCharacterSheetListeners(player: Player) {
@@ -57,89 +27,97 @@ fun initCharacterSheetListeners(player: Player) {
 }
 fun initTraitListener(player: Player) {
     document.addEventListener("change", {
-        val trait = it.target as HTMLInputElement
-        when (trait.id) {
-            "Name" -> player.traits.setName(trait.value)
-            "Age" -> player.traits.setAge(trait.value.toInt())
-            "Species" -> player.traits.setSpecies(trait.value)
-            "Class" -> player.traits.setClassName(trait.value)
-            "Level" -> player.traits.setLevel(trait.value.toInt())
-            //TODO: not in sheet (specifically) yet, also doesn't need to be int
-            //"Icon" -> player.traits.icon = trait.value.toInt()
-        }
+        val trait = it.target
+        if (trait is HTMLInputElement) {
+            when (trait.id) {
+                "Name" -> player.traits.setName(trait.value)
+                "Age" -> player.traits.setAge(trait.value.toInt())
+                "Species" -> player.traits.setSpecies(trait.value)
+                "Class" -> player.traits.setClassName(trait.value)
+                "Level" -> player.traits.setLevel(trait.value.toInt())
+                //TODO: not in sheet (specifically) yet, also doesn't need to be int
+                //"Icon" -> player.traits.icon = trait.value.toInt()
+            }
+         }
     })
 }
 fun initResourceListener(player: Player) {
     document.addEventListener("change", {
-        val resource = it.target as HTMLInputElement
-        when (resource.id) {
-            "currentHP" -> player.resources.setCurrentHP(resource.value.toInt())
-            "currentMP" -> player.resources.setCurrentMP(resource.value.toInt())
-            "currentSP" -> player.resources.setCurrentSP(resource.value.toInt())
-            "maxHP" -> player.resources.setMaxHP(resource.value.toInt())
-            "maxMP" -> player.resources.setMaxMP(resource.value.toInt())
-            "maxSP" -> player.resources.setMaxSP(resource.value.toInt())
-            "maxHP-MOD" -> player.resources.getMaxHPModifiers()[0].value = resource.value.toInt()
-            "maxMP-MOD" -> player.resources.getMaxMPModifiers()[0].value = resource.value.toInt()
-            "maxSP-MOD" -> player.resources.getMaxSPModifiers()[0].value = resource.value.toInt()
-        }
+        val resource = it.target
+        if (resource is HTMLInputElement) {
+            when (resource.id) {
+                "currentHP" -> player.resources.setCurrentHP(resource.value.toInt())
+                "currentMP" -> player.resources.setCurrentMP(resource.value.toInt())
+                "currentSP" -> player.resources.setCurrentSP(resource.value.toInt())
+                "maxHP" -> player.resources.setMaxHP(resource.value.toInt())
+                "maxMP" -> player.resources.setMaxMP(resource.value.toInt())
+                "maxSP" -> player.resources.setMaxSP(resource.value.toInt())
+                "maxHP-MOD" -> player.resources.getMaxHPModifiers()[0].value = resource.value.toInt()
+                "maxMP-MOD" -> player.resources.getMaxMPModifiers()[0].value = resource.value.toInt()
+                "maxSP-MOD" -> player.resources.getMaxSPModifiers()[0].value = resource.value.toInt()
+            }
 
-        // update document visuals
-        (document.getElementById("maxHP") as HTMLInputElement).value = player.resources.getMaxHP().toString()
-        (document.getElementById("maxMP") as HTMLInputElement).value = player.resources.getMaxMP().toString()
-        (document.getElementById("maxSP") as HTMLInputElement).value = player.resources.getMaxSP().toString()
+            // update document visuals
+            (document.getElementById("maxHP") as HTMLInputElement).value = player.resources.getMaxHP().toString()
+            (document.getElementById("maxMP") as HTMLInputElement).value = player.resources.getMaxMP().toString()
+            (document.getElementById("maxSP") as HTMLInputElement).value = player.resources.getMaxSP().toString()
+        }
     })
 }
 fun initStatListener(player: Player) {
     document.addEventListener("change", {
-        val stat = it.target as HTMLInputElement
-        when (stat.id) {
-            "STR-BASE" -> player.baseStats.setSTR(stat.value.toInt())
-            "CON-BASE" -> player.baseStats.setCON(stat.value.toInt())
-            "INT-BASE" -> player.baseStats.setINT(stat.value.toInt())
-            "WILL-BASE"-> player.baseStats.setWIL(stat.value.toInt())
-            "SPD-BASE" -> player.baseStats.setSPD(stat.value.toInt())
-            "AC-BASE"  -> player.baseStats.setACC(stat.value.toInt())
+        val stat = it.target
+        if (stat is HTMLInputElement) {
+            when (stat.id) {
+                "STR-BASE" -> player.baseStats.setSTR(stat.value.toInt())
+                "CON-BASE" -> player.baseStats.setCON(stat.value.toInt())
+                "INT-BASE" -> player.baseStats.setINT(stat.value.toInt())
+                "WILL-BASE" -> player.baseStats.setWIL(stat.value.toInt())
+                "SPD-BASE" -> player.baseStats.setSPD(stat.value.toInt())
+                "AC-BASE" -> player.baseStats.setACC(stat.value.toInt())
 
-            "STR-MOD" -> player.baseStats.getSTRModifiers()[0].value = stat.value.toInt()
-            "CON-MOD" -> player.baseStats.getCONModifiers()[0].value = stat.value.toInt()
-            "INT-MOD" -> player.baseStats.getINTModifiers()[0].value = stat.value.toInt()
-            "WILL-MOD"-> player.baseStats.getWILModifiers()[0].value = stat.value.toInt()
-            "SPD-MOD" -> player.baseStats.getSPDModifiers()[0].value = stat.value.toInt()
-            "AC-MOD"  -> player.baseStats.getACCModifiers()[0].value = stat.value.toInt()
+                "STR-MOD" -> player.baseStats.getSTRModifiers()[0].value = stat.value.toInt()
+                "CON-MOD" -> player.baseStats.getCONModifiers()[0].value = stat.value.toInt()
+                "INT-MOD" -> player.baseStats.getINTModifiers()[0].value = stat.value.toInt()
+                "WILL-MOD" -> player.baseStats.getWILModifiers()[0].value = stat.value.toInt()
+                "SPD-MOD" -> player.baseStats.getSPDModifiers()[0].value = stat.value.toInt()
+                "AC-MOD" -> player.baseStats.getACCModifiers()[0].value = stat.value.toInt()
 
-            "AT-MOD" -> player.baseStats.getATModifiers()[0].value = stat.value.toInt()
-            "DF-MOD" -> player.baseStats.getDFModifiers()[0].value = stat.value.toInt()
-            "MA-MOD" -> player.baseStats.getMAModifiers()[0].value = stat.value.toInt()
-            "MD-MOD" -> player.baseStats.getMDModifiers()[0].value = stat.value.toInt()
+                "AT-MOD" -> player.baseStats.getATModifiers()[0].value = stat.value.toInt()
+                "DF-MOD" -> player.baseStats.getDFModifiers()[0].value = stat.value.toInt()
+                "MA-MOD" -> player.baseStats.getMAModifiers()[0].value = stat.value.toInt()
+                "MD-MOD" -> player.baseStats.getMDModifiers()[0].value = stat.value.toInt()
+            }
+            // update document visuals
+            player.baseStats.updateCombat()
+            (document.getElementById("AT-BASE") as HTMLTableCellElement).innerText = player.baseStats.getAT(false).toString()
+            (document.getElementById("DF-BASE") as HTMLTableCellElement).innerText = player.baseStats.getDF(false).toString()
+            (document.getElementById("MA-BASE") as HTMLTableCellElement).innerText = player.baseStats.getMA(false).toString()
+            (document.getElementById("MD-BASE") as HTMLTableCellElement).innerText = player.baseStats.getMD(false).toString()
+
+            (document.getElementById("AT-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getAT().toString()
+            (document.getElementById("DF-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getDF().toString()
+            (document.getElementById("MA-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getMA().toString()
+            (document.getElementById("MD-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getMD().toString()
+
+            (document.getElementById("STR-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getSTR().toString()
+            (document.getElementById("CON-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getCON().toString()
+            (document.getElementById("INT-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getINT().toString()
+            (document.getElementById("WILL-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getWIL().toString()
+            (document.getElementById("SPD-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getSPD().toString()
+            (document.getElementById("AC-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getACC().toString()
         }
-        // update document visuals
-        player.baseStats.updateCombat()
-        (document.getElementById("AT-BASE") as HTMLTableCellElement).innerText = player.baseStats.getAT(false).toString()
-        (document.getElementById("DF-BASE") as HTMLTableCellElement).innerText = player.baseStats.getDF(false).toString()
-        (document.getElementById("MA-BASE") as HTMLTableCellElement).innerText = player.baseStats.getMA(false).toString()
-        (document.getElementById("MD-BASE") as HTMLTableCellElement).innerText = player.baseStats.getMD(false).toString()
-
-        (document.getElementById("AT-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getAT().toString()
-        (document.getElementById("DF-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getDF().toString()
-        (document.getElementById("MA-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getMA().toString()
-        (document.getElementById("MD-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getMD().toString()
-
-        (document.getElementById("STR-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getSTR().toString()
-        (document.getElementById("CON-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getCON().toString()
-        (document.getElementById("INT-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getINT().toString()
-        (document.getElementById("WILL-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getWIL().toString()
-        (document.getElementById("SPD-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getSPD().toString()
-        (document.getElementById("AC-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getACC().toString()
     })
 }
 fun initEquipmentListener(player: Player) {
     document.addEventListener("change", {
-        val equipment = it.target as HTMLTextAreaElement
-        when (equipment.id) {
-            "weapon" -> player.weapon.getEquipmentData().description = equipment.value
-            "armor" -> player.armor.getEquipmentData().description = equipment.value
-            "accessory" -> player.accessory.getEquipmentData().description = equipment.value
+        val equipment = it.target
+        if (equipment is HTMLTextAreaElement) {
+            when (equipment.id) {
+                "weapon" -> player.weapon.getEquipmentData().description = equipment.value
+                "armor" -> player.armor.getEquipmentData().description = equipment.value
+                "accessory" -> player.accessory.getEquipmentData().description = equipment.value
+            }
         }
     })
 }
@@ -261,17 +239,29 @@ fun initItems(player: Player, amount: Int) {
 }
 
 
-fun insertSpellSlot(abilities: Abilities, spell: Spell = Spell()): Boolean {
+fun insertSpellSlot(
+        abilities: Abilities,
+        spell: Spell = Spell(),
+        image: String = "Spell-Circle-Icon-Web-Dev80px.png"
+): Boolean {
     abilities.getSpellList().add(spell)
-    return insertAbilitySlot(abilities, "spells", "Spell-Circle-Icon-Web-Dev80px.png", abilities.getSpellList().size)
+    return insertAbilitySlot(abilities, "spells", image, abilities.getSpellList().size)
 }
-fun insertSpecialSlot(abilities: Abilities, special: Special = Special()): Boolean {
+fun insertSpecialSlot(
+        abilities: Abilities,
+        special: Special = Special(),
+        image: String = "Triangle Icon - Web Dev.png"
+): Boolean {
     abilities.getSpecialList().add(special)
-    return insertAbilitySlot(abilities, "special", "Triangle Icon - Web Dev.png", abilities.getSpecialList().size)
+    return insertAbilitySlot(abilities, "special", image, abilities.getSpecialList().size)
 }
-fun insertClassSlot(abilities: Abilities, classAbility: ClassAbility = ClassAbility()): Boolean {
+fun insertClassSlot(
+        abilities: Abilities,
+        classAbility: ClassAbility = ClassAbility(),
+        image: String = "class-abilities-demigod100px.png"
+): Boolean {
     abilities.getClassAbilityList().add(classAbility)
-    return insertAbilitySlot(abilities, "class-abilities", "class-abilities-demigod100px.png", abilities.getClassAbilityList().size)
+    return insertAbilitySlot(abilities, "class-abilities", image, abilities.getClassAbilityList().size)
 }
 fun insertAbilitySlot(
         abilities: Abilities,
@@ -392,8 +382,19 @@ fun deleteItemSlot(inventory: Inventory): Boolean {
     if (row.cells.length == 1) {
         table.deleteRow(table.rows.length-1)
     } else {
-        row.deleteCell(row.cells.length-1)
+        console.log(row.deleteCell(row.cells.length-1))
     }
+
+    val cell = (table.rows[0] as HTMLTableRowElement).cells[0] as HTMLTableCellElement
+    cell.height = (cell.height.toInt()+1).toString()
+    cell.height = "0"
+
+    //0->100 works the first time but never again
+    // this is because the first time the cell ACTUALLY changes wicth
+    // afterward no real change happens
+
+    // if we want to keep this solution,
+    // we need to a way to make the cell become bigger once the textarea is fully gone, then go back to the original size
 
     // "false" keeps page from refreshing on button press
     return false

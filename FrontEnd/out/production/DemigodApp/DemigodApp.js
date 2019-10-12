@@ -201,7 +201,7 @@ var DemigodApp = function (_, Kotlin) {
         break;
     }
     var stat = tmp$_2;
-    this.rollID_0 = setInterval(DiceRoller$rollStatButton$lambda(this, stat, rollStatDisplay, rollRollDisplay), 8);
+    this.rollID_0 = setInterval(DiceRoller$rollStatButton$lambda(this, stat, rollStatDisplay, rollRollDisplay), 10);
     return false;
   };
   DiceRoller.prototype.endRoll_0 = function (stat, lastRoll) {
@@ -737,24 +737,25 @@ var DemigodApp = function (_, Kotlin) {
   }
   function initTraitListener$lambda(closure$player) {
     return function (it) {
-      var tmp$;
-      var trait = Kotlin.isType(tmp$ = it.target, HTMLInputElement) ? tmp$ : throwCCE();
-      switch (trait.id) {
-        case 'Name':
-          closure$player.traits.setName_61zpoe$(trait.value);
-          break;
-        case 'Age':
-          closure$player.traits.setAge_za3lpa$(toInt(trait.value));
-          break;
-        case 'Species':
-          closure$player.traits.setSpecies_61zpoe$(trait.value);
-          break;
-        case 'Class':
-          closure$player.traits.setClassName_61zpoe$(trait.value);
-          break;
-        case 'Level':
-          closure$player.traits.setLevel_za3lpa$(toInt(trait.value));
-          break;
+      var trait = it.target;
+      if (Kotlin.isType(trait, HTMLInputElement)) {
+        switch (trait.id) {
+          case 'Name':
+            closure$player.traits.setName_61zpoe$(trait.value);
+            break;
+          case 'Age':
+            closure$player.traits.setAge_za3lpa$(toInt(trait.value));
+            break;
+          case 'Species':
+            closure$player.traits.setSpecies_61zpoe$(trait.value);
+            break;
+          case 'Class':
+            closure$player.traits.setClassName_61zpoe$(trait.value);
+            break;
+          case 'Level':
+            closure$player.traits.setLevel_za3lpa$(toInt(trait.value));
+            break;
+        }
       }
       return Unit;
     };
@@ -764,40 +765,42 @@ var DemigodApp = function (_, Kotlin) {
   }
   function initResourceListener$lambda(closure$player) {
     return function (it) {
-      var tmp$, tmp$_0, tmp$_1, tmp$_2;
-      var resource = Kotlin.isType(tmp$ = it.target, HTMLInputElement) ? tmp$ : throwCCE();
-      switch (resource.id) {
-        case 'currentHP':
-          closure$player.resources.setCurrentHP_za3lpa$(toInt(resource.value));
-          break;
-        case 'currentMP':
-          closure$player.resources.setCurrentMP_za3lpa$(toInt(resource.value));
-          break;
-        case 'currentSP':
-          closure$player.resources.setCurrentSP_za3lpa$(toInt(resource.value));
-          break;
-        case 'maxHP':
-          closure$player.resources.setMaxHP_za3lpa$(toInt(resource.value));
-          break;
-        case 'maxMP':
-          closure$player.resources.setMaxMP_za3lpa$(toInt(resource.value));
-          break;
-        case 'maxSP':
-          closure$player.resources.setMaxSP_za3lpa$(toInt(resource.value));
-          break;
-        case 'maxHP-MOD':
-          closure$player.resources.getMaxHPModifiers()[0].value = toInt(resource.value);
-          break;
-        case 'maxMP-MOD':
-          closure$player.resources.getMaxMPModifiers()[0].value = toInt(resource.value);
-          break;
-        case 'maxSP-MOD':
-          closure$player.resources.getMaxSPModifiers()[0].value = toInt(resource.value);
-          break;
+      var tmp$, tmp$_0, tmp$_1;
+      var resource = it.target;
+      if (Kotlin.isType(resource, HTMLInputElement)) {
+        switch (resource.id) {
+          case 'currentHP':
+            closure$player.resources.setCurrentHP_za3lpa$(toInt(resource.value));
+            break;
+          case 'currentMP':
+            closure$player.resources.setCurrentMP_za3lpa$(toInt(resource.value));
+            break;
+          case 'currentSP':
+            closure$player.resources.setCurrentSP_za3lpa$(toInt(resource.value));
+            break;
+          case 'maxHP':
+            closure$player.resources.setMaxHP_za3lpa$(toInt(resource.value));
+            break;
+          case 'maxMP':
+            closure$player.resources.setMaxMP_za3lpa$(toInt(resource.value));
+            break;
+          case 'maxSP':
+            closure$player.resources.setMaxSP_za3lpa$(toInt(resource.value));
+            break;
+          case 'maxHP-MOD':
+            closure$player.resources.getMaxHPModifiers()[0].value = toInt(resource.value);
+            break;
+          case 'maxMP-MOD':
+            closure$player.resources.getMaxMPModifiers()[0].value = toInt(resource.value);
+            break;
+          case 'maxSP-MOD':
+            closure$player.resources.getMaxSPModifiers()[0].value = toInt(resource.value);
+            break;
+        }
+        (Kotlin.isType(tmp$ = document.getElementById('maxHP'), HTMLInputElement) ? tmp$ : throwCCE()).value = closure$player.resources.getMaxHP().toString();
+        (Kotlin.isType(tmp$_0 = document.getElementById('maxMP'), HTMLInputElement) ? tmp$_0 : throwCCE()).value = closure$player.resources.getMaxMP().toString();
+        (Kotlin.isType(tmp$_1 = document.getElementById('maxSP'), HTMLInputElement) ? tmp$_1 : throwCCE()).value = closure$player.resources.getMaxSP().toString();
       }
-      (Kotlin.isType(tmp$_0 = document.getElementById('maxHP'), HTMLInputElement) ? tmp$_0 : throwCCE()).value = closure$player.resources.getMaxHP().toString();
-      (Kotlin.isType(tmp$_1 = document.getElementById('maxMP'), HTMLInputElement) ? tmp$_1 : throwCCE()).value = closure$player.resources.getMaxMP().toString();
-      (Kotlin.isType(tmp$_2 = document.getElementById('maxSP'), HTMLInputElement) ? tmp$_2 : throwCCE()).value = closure$player.resources.getMaxSP().toString();
       return Unit;
     };
   }
@@ -806,73 +809,75 @@ var DemigodApp = function (_, Kotlin) {
   }
   function initStatListener$lambda(closure$player) {
     return function (it) {
-      var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6, tmp$_7, tmp$_8, tmp$_9, tmp$_10, tmp$_11, tmp$_12, tmp$_13;
-      var stat = Kotlin.isType(tmp$ = it.target, HTMLInputElement) ? tmp$ : throwCCE();
-      switch (stat.id) {
-        case 'STR-BASE':
-          closure$player.baseStats.setSTR_za3lpa$(toInt(stat.value));
-          break;
-        case 'CON-BASE':
-          closure$player.baseStats.setCON_za3lpa$(toInt(stat.value));
-          break;
-        case 'INT-BASE':
-          closure$player.baseStats.setINT_za3lpa$(toInt(stat.value));
-          break;
-        case 'WILL-BASE':
-          closure$player.baseStats.setWIL_za3lpa$(toInt(stat.value));
-          break;
-        case 'SPD-BASE':
-          closure$player.baseStats.setSPD_za3lpa$(toInt(stat.value));
-          break;
-        case 'AC-BASE':
-          closure$player.baseStats.setACC_za3lpa$(toInt(stat.value));
-          break;
-        case 'STR-MOD':
-          closure$player.baseStats.getSTRModifiers()[0].value = toInt(stat.value);
-          break;
-        case 'CON-MOD':
-          closure$player.baseStats.getCONModifiers()[0].value = toInt(stat.value);
-          break;
-        case 'INT-MOD':
-          closure$player.baseStats.getINTModifiers()[0].value = toInt(stat.value);
-          break;
-        case 'WILL-MOD':
-          closure$player.baseStats.getWILModifiers()[0].value = toInt(stat.value);
-          break;
-        case 'SPD-MOD':
-          closure$player.baseStats.getSPDModifiers()[0].value = toInt(stat.value);
-          break;
-        case 'AC-MOD':
-          closure$player.baseStats.getACCModifiers()[0].value = toInt(stat.value);
-          break;
-        case 'AT-MOD':
-          closure$player.baseStats.getATModifiers()[0].value = toInt(stat.value);
-          break;
-        case 'DF-MOD':
-          closure$player.baseStats.getDFModifiers()[0].value = toInt(stat.value);
-          break;
-        case 'MA-MOD':
-          closure$player.baseStats.getMAModifiers()[0].value = toInt(stat.value);
-          break;
-        case 'MD-MOD':
-          closure$player.baseStats.getMDModifiers()[0].value = toInt(stat.value);
-          break;
+      var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6, tmp$_7, tmp$_8, tmp$_9, tmp$_10, tmp$_11, tmp$_12;
+      var stat = it.target;
+      if (Kotlin.isType(stat, HTMLInputElement)) {
+        switch (stat.id) {
+          case 'STR-BASE':
+            closure$player.baseStats.setSTR_za3lpa$(toInt(stat.value));
+            break;
+          case 'CON-BASE':
+            closure$player.baseStats.setCON_za3lpa$(toInt(stat.value));
+            break;
+          case 'INT-BASE':
+            closure$player.baseStats.setINT_za3lpa$(toInt(stat.value));
+            break;
+          case 'WILL-BASE':
+            closure$player.baseStats.setWIL_za3lpa$(toInt(stat.value));
+            break;
+          case 'SPD-BASE':
+            closure$player.baseStats.setSPD_za3lpa$(toInt(stat.value));
+            break;
+          case 'AC-BASE':
+            closure$player.baseStats.setACC_za3lpa$(toInt(stat.value));
+            break;
+          case 'STR-MOD':
+            closure$player.baseStats.getSTRModifiers()[0].value = toInt(stat.value);
+            break;
+          case 'CON-MOD':
+            closure$player.baseStats.getCONModifiers()[0].value = toInt(stat.value);
+            break;
+          case 'INT-MOD':
+            closure$player.baseStats.getINTModifiers()[0].value = toInt(stat.value);
+            break;
+          case 'WILL-MOD':
+            closure$player.baseStats.getWILModifiers()[0].value = toInt(stat.value);
+            break;
+          case 'SPD-MOD':
+            closure$player.baseStats.getSPDModifiers()[0].value = toInt(stat.value);
+            break;
+          case 'AC-MOD':
+            closure$player.baseStats.getACCModifiers()[0].value = toInt(stat.value);
+            break;
+          case 'AT-MOD':
+            closure$player.baseStats.getATModifiers()[0].value = toInt(stat.value);
+            break;
+          case 'DF-MOD':
+            closure$player.baseStats.getDFModifiers()[0].value = toInt(stat.value);
+            break;
+          case 'MA-MOD':
+            closure$player.baseStats.getMAModifiers()[0].value = toInt(stat.value);
+            break;
+          case 'MD-MOD':
+            closure$player.baseStats.getMDModifiers()[0].value = toInt(stat.value);
+            break;
+        }
+        closure$player.baseStats.updateCombat();
+        (Kotlin.isType(tmp$ = document.getElementById('AT-BASE'), HTMLTableCellElement) ? tmp$ : throwCCE()).innerText = closure$player.baseStats.getAT_6taknv$(false).toString();
+        (Kotlin.isType(tmp$_0 = document.getElementById('DF-BASE'), HTMLTableCellElement) ? tmp$_0 : throwCCE()).innerText = closure$player.baseStats.getDF_6taknv$(false).toString();
+        (Kotlin.isType(tmp$_1 = document.getElementById('MA-BASE'), HTMLTableCellElement) ? tmp$_1 : throwCCE()).innerText = closure$player.baseStats.getMA_6taknv$(false).toString();
+        (Kotlin.isType(tmp$_2 = document.getElementById('MD-BASE'), HTMLTableCellElement) ? tmp$_2 : throwCCE()).innerText = closure$player.baseStats.getMD_6taknv$(false).toString();
+        (Kotlin.isType(tmp$_3 = document.getElementById('AT-TOTAL'), HTMLTableCellElement) ? tmp$_3 : throwCCE()).innerText = closure$player.baseStats.getAT_6taknv$().toString();
+        (Kotlin.isType(tmp$_4 = document.getElementById('DF-TOTAL'), HTMLTableCellElement) ? tmp$_4 : throwCCE()).innerText = closure$player.baseStats.getDF_6taknv$().toString();
+        (Kotlin.isType(tmp$_5 = document.getElementById('MA-TOTAL'), HTMLTableCellElement) ? tmp$_5 : throwCCE()).innerText = closure$player.baseStats.getMA_6taknv$().toString();
+        (Kotlin.isType(tmp$_6 = document.getElementById('MD-TOTAL'), HTMLTableCellElement) ? tmp$_6 : throwCCE()).innerText = closure$player.baseStats.getMD_6taknv$().toString();
+        (Kotlin.isType(tmp$_7 = document.getElementById('STR-TOTAL'), HTMLTableCellElement) ? tmp$_7 : throwCCE()).innerText = closure$player.baseStats.getSTR_6taknv$().toString();
+        (Kotlin.isType(tmp$_8 = document.getElementById('CON-TOTAL'), HTMLTableCellElement) ? tmp$_8 : throwCCE()).innerText = closure$player.baseStats.getCON_6taknv$().toString();
+        (Kotlin.isType(tmp$_9 = document.getElementById('INT-TOTAL'), HTMLTableCellElement) ? tmp$_9 : throwCCE()).innerText = closure$player.baseStats.getINT_6taknv$().toString();
+        (Kotlin.isType(tmp$_10 = document.getElementById('WILL-TOTAL'), HTMLTableCellElement) ? tmp$_10 : throwCCE()).innerText = closure$player.baseStats.getWIL_6taknv$().toString();
+        (Kotlin.isType(tmp$_11 = document.getElementById('SPD-TOTAL'), HTMLTableCellElement) ? tmp$_11 : throwCCE()).innerText = closure$player.baseStats.getSPD_6taknv$().toString();
+        (Kotlin.isType(tmp$_12 = document.getElementById('AC-TOTAL'), HTMLTableCellElement) ? tmp$_12 : throwCCE()).innerText = closure$player.baseStats.getACC_6taknv$().toString();
       }
-      closure$player.baseStats.updateCombat();
-      (Kotlin.isType(tmp$_0 = document.getElementById('AT-BASE'), HTMLTableCellElement) ? tmp$_0 : throwCCE()).innerText = closure$player.baseStats.getAT_6taknv$(false).toString();
-      (Kotlin.isType(tmp$_1 = document.getElementById('DF-BASE'), HTMLTableCellElement) ? tmp$_1 : throwCCE()).innerText = closure$player.baseStats.getDF_6taknv$(false).toString();
-      (Kotlin.isType(tmp$_2 = document.getElementById('MA-BASE'), HTMLTableCellElement) ? tmp$_2 : throwCCE()).innerText = closure$player.baseStats.getMA_6taknv$(false).toString();
-      (Kotlin.isType(tmp$_3 = document.getElementById('MD-BASE'), HTMLTableCellElement) ? tmp$_3 : throwCCE()).innerText = closure$player.baseStats.getMD_6taknv$(false).toString();
-      (Kotlin.isType(tmp$_4 = document.getElementById('AT-TOTAL'), HTMLTableCellElement) ? tmp$_4 : throwCCE()).innerText = closure$player.baseStats.getAT_6taknv$().toString();
-      (Kotlin.isType(tmp$_5 = document.getElementById('DF-TOTAL'), HTMLTableCellElement) ? tmp$_5 : throwCCE()).innerText = closure$player.baseStats.getDF_6taknv$().toString();
-      (Kotlin.isType(tmp$_6 = document.getElementById('MA-TOTAL'), HTMLTableCellElement) ? tmp$_6 : throwCCE()).innerText = closure$player.baseStats.getMA_6taknv$().toString();
-      (Kotlin.isType(tmp$_7 = document.getElementById('MD-TOTAL'), HTMLTableCellElement) ? tmp$_7 : throwCCE()).innerText = closure$player.baseStats.getMD_6taknv$().toString();
-      (Kotlin.isType(tmp$_8 = document.getElementById('STR-TOTAL'), HTMLTableCellElement) ? tmp$_8 : throwCCE()).innerText = closure$player.baseStats.getSTR_6taknv$().toString();
-      (Kotlin.isType(tmp$_9 = document.getElementById('CON-TOTAL'), HTMLTableCellElement) ? tmp$_9 : throwCCE()).innerText = closure$player.baseStats.getCON_6taknv$().toString();
-      (Kotlin.isType(tmp$_10 = document.getElementById('INT-TOTAL'), HTMLTableCellElement) ? tmp$_10 : throwCCE()).innerText = closure$player.baseStats.getINT_6taknv$().toString();
-      (Kotlin.isType(tmp$_11 = document.getElementById('WILL-TOTAL'), HTMLTableCellElement) ? tmp$_11 : throwCCE()).innerText = closure$player.baseStats.getWIL_6taknv$().toString();
-      (Kotlin.isType(tmp$_12 = document.getElementById('SPD-TOTAL'), HTMLTableCellElement) ? tmp$_12 : throwCCE()).innerText = closure$player.baseStats.getSPD_6taknv$().toString();
-      (Kotlin.isType(tmp$_13 = document.getElementById('AC-TOTAL'), HTMLTableCellElement) ? tmp$_13 : throwCCE()).innerText = closure$player.baseStats.getACC_6taknv$().toString();
       return Unit;
     };
   }
@@ -881,18 +886,19 @@ var DemigodApp = function (_, Kotlin) {
   }
   function initEquipmentListener$lambda(closure$player) {
     return function (it) {
-      var tmp$;
-      var equipment = Kotlin.isType(tmp$ = it.target, HTMLTextAreaElement) ? tmp$ : throwCCE();
-      switch (equipment.id) {
-        case 'weapon':
-          closure$player.weapon.getEquipmentData().description = equipment.value;
-          break;
-        case 'armor':
-          closure$player.armor.getEquipmentData().description = equipment.value;
-          break;
-        case 'accessory':
-          closure$player.accessory.getEquipmentData().description = equipment.value;
-          break;
+      var equipment = it.target;
+      if (Kotlin.isType(equipment, HTMLTextAreaElement)) {
+        switch (equipment.id) {
+          case 'weapon':
+            closure$player.weapon.getEquipmentData().description = equipment.value;
+            break;
+          case 'armor':
+            closure$player.armor.getEquipmentData().description = equipment.value;
+            break;
+          case 'accessory':
+            closure$player.accessory.getEquipmentData().description = equipment.value;
+            break;
+        }
       }
       return Unit;
     };
@@ -1110,23 +1116,29 @@ var DemigodApp = function (_, Kotlin) {
       insertItemSlot(player.inventory);
     }
   }
-  function insertSpellSlot(abilities, spell) {
+  function insertSpellSlot(abilities, spell, image) {
     if (spell === void 0)
       spell = new Spell();
+    if (image === void 0)
+      image = 'Spell-Circle-Icon-Web-Dev80px.png';
     abilities.getSpellList().add_11rb$(spell);
-    return insertAbilitySlot(abilities, 'spells', 'Spell-Circle-Icon-Web-Dev80px.png', abilities.getSpellList().size);
+    return insertAbilitySlot(abilities, 'spells', image, abilities.getSpellList().size);
   }
-  function insertSpecialSlot(abilities, special) {
+  function insertSpecialSlot(abilities, special, image) {
     if (special === void 0)
       special = new Special();
+    if (image === void 0)
+      image = 'Triangle Icon - Web Dev.png';
     abilities.getSpecialList().add_11rb$(special);
-    return insertAbilitySlot(abilities, 'special', 'Triangle Icon - Web Dev.png', abilities.getSpecialList().size);
+    return insertAbilitySlot(abilities, 'special', image, abilities.getSpecialList().size);
   }
-  function insertClassSlot(abilities, classAbility) {
+  function insertClassSlot(abilities, classAbility, image) {
     if (classAbility === void 0)
       classAbility = new ClassAbility();
+    if (image === void 0)
+      image = 'class-abilities-demigod100px.png';
     abilities.getClassAbilityList().add_11rb$(classAbility);
-    return insertAbilitySlot(abilities, 'class-abilities', 'class-abilities-demigod100px.png', abilities.getClassAbilityList().size);
+    return insertAbilitySlot(abilities, 'class-abilities', image, abilities.getClassAbilityList().size);
   }
   function insertAbilitySlot$lambda(closure$type, closure$abilities, closure$size) {
     return function (it) {
@@ -1225,7 +1237,7 @@ var DemigodApp = function (_, Kotlin) {
     return textarea;
   }
   function deleteItemSlot(inventory) {
-    var tmp$, tmp$_0;
+    var tmp$, tmp$_0, tmp$_1, tmp$_2;
     if (inventory.getSize() === 0) {
       return false;
     }
@@ -1236,8 +1248,11 @@ var DemigodApp = function (_, Kotlin) {
       table.deleteRow(table.rows.length - 1 | 0);
     }
      else {
-      row.deleteCell(row.cells.length - 1 | 0);
+      console.log((row.deleteCell(row.cells.length - 1 | 0), Unit));
     }
+    var cell = Kotlin.isType(tmp$_2 = (Kotlin.isType(tmp$_1 = table.rows[0], HTMLTableRowElement) ? tmp$_1 : throwCCE()).cells[0], HTMLTableCellElement) ? tmp$_2 : throwCCE();
+    cell.height = (toInt(cell.height) + 1 | 0).toString();
+    cell.height = '0';
     return false;
   }
   function Inventory() {
@@ -2265,9 +2280,9 @@ var DemigodApp = function (_, Kotlin) {
   _.initSlots_m4me0d$ = initSlots;
   _.initSkills_vgc0e7$ = initSkills;
   _.initItems_ejyyoj$ = initItems;
-  _.insertSpellSlot_ya930$ = insertSpellSlot;
-  _.insertSpecialSlot_86mhw5$ = insertSpecialSlot;
-  _.insertClassSlot_8gh3na$ = insertClassSlot;
+  _.insertSpellSlot_c2cup6$ = insertSpellSlot;
+  _.insertSpecialSlot_z95207$ = insertSpecialSlot;
+  _.insertClassSlot_m0lkjs$ = insertClassSlot;
   _.insertAbilitySlot_pvcpxe$ = insertAbilitySlot;
   _.deleteSpellSlot_agn7bs$ = deleteSpellSlot;
   _.deleteSpecialSlot_agn7bs$ = deleteSpecialSlot;
