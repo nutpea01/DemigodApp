@@ -46,14 +46,19 @@ class Inventory {
 
     fun setGold(gold: Int) { this.data.gold = gold}
     //fun setSize(size: Int) { this.data.items.size = size}
-    fun setItems(items: MutableList<Item>) { this.data.items = items}
+    fun setItems(list: Array<Item>) {
+        this.data.items.clear()
+        for (item in list) {
+            insertItemSlot(this, item)
+        }
+    }
     fun setBagType(bagType: String) { this.data.bagType = bagType}
     fun setNotes(notes: String) { this.data.notes = notes}
 
     data class InventoryData (
             var gold: Int = 0
     ) {
-        var items: MutableList<Item> = mutableListOf()
+        val items: MutableList<Item> = mutableListOf()
         var bagType: String = ""
         var notes: String = ""
     }
@@ -61,8 +66,11 @@ class Inventory {
     fun getData():InventoryData {
         return this.data
     }
-    fun setData(data: InventoryData) {
-        this.data = data
+    fun setData(gold: Int, items: Array<Item>, bagType: String, notes: String) {
+        setGold(gold)
+        setItems(items)
+        setBagType(bagType)
+        setNotes(notes)
     }
 }
 

@@ -1,10 +1,27 @@
-open class Equipment(
-    var name: String = "",
-    var description: String = ""
-) {
-    val id: String = generateID()
-    val modifiers: MutableList<Modifier> = mutableListOf()
-    var icon: Int = 0
+open class Equipment {
+    private var data: EquipmentData = EquipmentData()
+
+    fun getEquipmentData(): EquipmentData {
+        return this.data
+    }
+
+    fun setEquipmentData(data: EquipmentData) {
+        this.data = data
+    }
+
+    data class EquipmentData(
+            var name: String = "",
+            var description: String = "",
+            var icon: Int = 0
+    ) {
+        val id: String = generateID()
+        var modifiers: Array<Modifier> = arrayOf(
+                Modifier(), Modifier(), Modifier(), Modifier(), Modifier(),
+                Modifier(), Modifier(), Modifier(), Modifier(), Modifier(),
+                Modifier(), Modifier(), Modifier(), Modifier(), Modifier(),
+                Modifier(), Modifier(), Modifier(), Modifier(), Modifier()
+        )
+    }
 }
 
 open class Wearable: Equipment() {
@@ -36,7 +53,7 @@ open class Wearable: Equipment() {
     }
     fun getAugmentByID(ID: String): Augment {
         for (aug in this.data.augments) {
-            if (aug.id == ID) {
+            if (aug.getEquipmentData().id == ID) {
                 return aug
             }
         }
@@ -44,7 +61,7 @@ open class Wearable: Equipment() {
     }
     fun geGlyphByID(ID: String): Glyph {
         for (gly in this.data.glyphs) {
-            if (gly.id == ID) {
+            if (gly.getEquipmentData().id == ID) {
                 return gly
             }
         }
@@ -65,8 +82,23 @@ open class Wearable: Equipment() {
     fun getData(): WearableData {
         return this.data
     }
-    fun setData(data: WearableData) {
-        this.data = data
+    fun setData(augmentList: Array<Augment>, glyphList: Array<Glyph>, abilityList: Array<Ability>) {
+        setAugments(augmentList)
+        setGlyphs(glyphList)
+        setAbilities(abilityList)
+    }
+    fun setAugments(list: Array<Augment>) {
+        this.data.augments.clear()
+        for (augment in list) { this.data.augments.add(augment) }
+        linkAugSlots()
+    }
+    fun setGlyphs(list: Array<Glyph>) {
+        this.data.glyphs.clear()
+        for (glyph in list) { this.data.glyphs.add(glyph) }
+    }
+    fun setAbilities(list: Array<Ability>) {
+        this.data.abilities.clear()
+        for (ability in list) { this.data.abilities.add(ability) }
     }
 }
 

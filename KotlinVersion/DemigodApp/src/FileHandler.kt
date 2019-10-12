@@ -4,6 +4,8 @@ import org.w3c.files.Blob
 import org.w3c.files.FileReader
 import org.w3c.files.get
 import kotlin.browser.document
+import kotlin.collections.Map.*
+import kotlin.coroutines.CoroutineContext
 import kotlin.js.Json
 import kotlin.reflect.typeOf
 import kotlin.js.iterator
@@ -12,28 +14,23 @@ object FileHandler {
     var fileID: Int = 0
 
     fun save(player: Player) {
-        val name = player.traits.getName()
+        val playerName = player.traits.getName()
         val clazz = player.traits.getClassName()
-        val file = "$name-$clazz.demi"
+        val file = "$playerName-$clazz.demi"
 
         var text = "{"
         text += "\"traits\":" + JSON.stringify(player.traits.getData()) + ","
         text += "\"resources\":" + JSON.stringify(player.resources.getData()) + ","
         text += "\"baseStats\":" + JSON.stringify(player.baseStats.getData()) + ","
         text += "\"combatStats\":" + JSON.stringify(player.baseStats.getCombatStats()) + ","
-        text += "\"weapon\":" + JSON.stringify(player.weapon.getData()) + ","
-        text += "\"armor\":" + JSON.stringify(player.armor.getData()) + ","
-        text += "\"accessory\":" + JSON.stringify(player.accessory.getData()) + ","
 
-        /*
-        text += "\"skills\": {"
-        val skills = document.getElementsByClassName("skill-tree__number")
-        repeat(skills.length) {
-            val skill = skills[it] as HTMLInputElement
-            text += JSON.stringify(skill.value) + ","
-        }
-        text += "}"
-        */
+        text += "\"weaponE\":" + JSON.stringify(player.weapon.getEquipmentData()) + ","
+        text += "\"weaponW\":" + JSON.stringify(player.weapon.getData()) + ","
+        text += "\"armorE\":" + JSON.stringify(player.armor.getEquipmentData()) + ","
+        text += "\"armorW\":" + JSON.stringify(player.armor.getData()) + ","
+        text += "\"accessoryE\":" + JSON.stringify(player.accessory.getEquipmentData()) + ","
+        text += "\"accessoryW\":" + JSON.stringify(player.accessory.getData()) + ","
+
         text += "\"skills\":" + JSON.stringify(player.skills.getSkillList()) + ","
 
         text += "\"spells\":" + JSON.stringify(player.abilities.getSpellList()) + ","
@@ -94,124 +91,154 @@ object FileHandler {
     }
 
     private fun assignLoadedData(json: Json, player: Player) {
-        //val resources = Resources()
-        //val baseStats = BaseStats()
-        //val skills: MutableList<Skill> = mutableListOf()
-        //val weapon = Weapon()
-        //val armor = Armor()
-        //val accessory = Accessory()
-        //val spells: MutableList<Spell> = mutableListOf()
-        //val specials: MutableList<Special> = mutableListOf()
-        //val classAbilities: MutableList<ClassAbility> = mutableListOf()
-        //val inventory = Inventory()
-
-        /*
-        js("""
-            player.traits.name = json['traits'].name
-            player.traits.age = json['traits'].age
-            player.traits.species = json['traits'].species
-            player.traits._class.name = json['traits']._class.name
-            player.traits.level = json['traits'].level
-            
-            player.resources.hp
-        """)
-        */
-        player.traits.setData(json["traits"].unsafeCast<Traits.TraitsData>())
-
-        /*
-        val skills = document.getElementsByClassName("skill-tree__number")
-        repeat(skills.length) {
-            val skill = skills[it] as HTMLInputElement
-            player.skills.getSkillList()[it].value.setBase(skill.value.toInt())
-        }
-        */
-
-        player.resources.setData(json["resources"].unsafeCast<Resources.ResourcesData>())
-        player.baseStats.setData(json["baseStats"].unsafeCast<BaseStats.BaseStatsData>())
-        player.baseStats.setCombatStats(json["combatStats"].unsafeCast<BaseStats.CombatStats>())
-
-        player.weapon.setData(json["weapon"].unsafeCast<Wearable.WearableData>())
-        player.armor.setData(json["armor"].unsafeCast<Wearable.WearableData>())
-        player.accessory.setData(json["accessory"].unsafeCast<Wearable.WearableData>())
-
-        player.skills.setSkillList(json["skills"].unsafeCast<MutableList<Skills.SkillData>>())
-
-        player.abilities.setSpellList(json["spells"].unsafeCast<MutableList<Spell>>())
-        player.abilities.setSpecialList(json["spells"].unsafeCast<MutableList<Special>>())
-        player.abilities.setClassAbilityList(json["spells"].unsafeCast<MutableList<ClassAbility>>())
-
-        player.inventory.setData(json["inventory"].unsafeCast<Inventory.InventoryData>())
-
-        updateDocument(player)
-    }
-    private fun updateDocument(player: Player) {
+        // reset page and player to default before replacing data
         resetPage(player)
+
+        // assign data and update sheet
+        assignTraits(json, player)
+        assignResources(json, player)
+        assignStats(json, player)
+        assignEquipment(json, player)
+        assignSkills(json, player)
+        assignAbilities(json, player)
+        assignInventory(json, player)
+    }
+
+    private fun assignTraits(json: Json, player: Player) {
+        player.traits.setData(json["traits"].unsafeCast<Traits.TraitsData>())
+        // input data to sheet
         (document.getElementById("Name") as HTMLInputElement).value = player.traits.getName()
         (document.getElementById("Age") as HTMLInputElement).value = player.traits.getAge().toString()
         (document.getElementById("Species") as HTMLInputElement).value = player.traits.getSpecies()
         (document.getElementById("Class") as HTMLInputElement).value = player.traits.getClassName()
         (document.getElementById("Level") as HTMLInputElement).value = player.traits.getLevel().toString()
+        //TODO: icon, doesn't need to be int
+        //(document.getElementById("Icon") as HTMLInputElement).value = player.traits.getIcon.toString()
+    }
+    private fun assignResources(json: Json, player: Player) {
+        player.resources.setData(json["resources"].unsafeCast<Resources.ResourcesData>())
+        // input data to sheet
+        (document.getElementById("currentHP") as HTMLInputElement).value = player.resources.getCurrentHP().toString()
+        (document.getElementById("currentMP") as HTMLInputElement).value = player.resources.getCurrentMP().toString()
+        (document.getElementById("currentSP") as HTMLInputElement).value = player.resources.getCurrentSP().toString()
+        (document.getElementById("maxHP") as HTMLInputElement).value = player.resources.getMaxHP().toString()
+        (document.getElementById("maxMP") as HTMLInputElement).value = player.resources.getMaxMP().toString()
+        (document.getElementById("maxSP") as HTMLInputElement).value = player.resources.getMaxSP().toString()
+        (document.getElementById("maxHP-MOD") as HTMLInputElement).value = player.resources.getMaxHPModifiers()[0].value.toString()
+        (document.getElementById("maxMP-MOD") as HTMLInputElement).value = player.resources.getMaxMPModifiers()[0].value.toString()
+        (document.getElementById("maxSP-MOD") as HTMLInputElement).value = player.resources.getMaxSPModifiers()[0].value.toString()
+    }
+    private fun assignStats(json: Json, player: Player) {
+        player.baseStats.setData(json["baseStats"].unsafeCast<BaseStats.BaseStatsData>())
+        player.baseStats.setCombatStats(json["combatStats"].unsafeCast<BaseStats.CombatStats>())
+        // input data to sheet
+        (document.getElementById("STR-BASE" ) as HTMLInputElement).value = player.baseStats.getSTR().toString()
+        (document.getElementById("CON-BASE" ) as HTMLInputElement).value = player.baseStats.getCON().toString()
+        (document.getElementById("INT-BASE" ) as HTMLInputElement).value = player.baseStats.getINT().toString()
+        (document.getElementById("WILL-BASE") as HTMLInputElement).value = player.baseStats.getWIL().toString()
+        (document.getElementById("SPD-BASE" ) as HTMLInputElement).value = player.baseStats.getSPD().toString()
+        (document.getElementById("AC-BASE"  ) as HTMLInputElement).value = player.baseStats.getACC().toString()
+        (document.getElementById("STR-MOD" ) as HTMLInputElement).value = player.baseStats.getSTRModifiers()[0].value.toString()
+        (document.getElementById("CON-MOD" ) as HTMLInputElement).value = player.baseStats.getCONModifiers()[0].value.toString()
+        (document.getElementById("INT-MOD" ) as HTMLInputElement).value = player.baseStats.getINTModifiers()[0].value.toString()
+        (document.getElementById("WILL-MOD") as HTMLInputElement).value = player.baseStats.getWILModifiers()[0].value.toString()
+        (document.getElementById("SPD-MOD" ) as HTMLInputElement).value = player.baseStats.getSPDModifiers()[0].value.toString()
+        (document.getElementById("AC-MOD"  ) as HTMLInputElement).value = player.baseStats.getACCModifiers()[0].value.toString()
+        (document.getElementById("AT-MOD") as HTMLInputElement).value = player.baseStats.getATModifiers()[0].value.toString()
+        (document.getElementById("DF-MOD") as HTMLInputElement).value = player.baseStats.getDFModifiers()[0].value.toString()
+        (document.getElementById("MA-MOD") as HTMLInputElement).value = player.baseStats.getMAModifiers()[0].value.toString()
+        (document.getElementById("MD-MOD") as HTMLInputElement).value = player.baseStats.getMDModifiers()[0].value.toString()
 
-        console.log(player.resources.getCurrentHP())
-        console.log(player.resources.getCurrentMP())
-        console.log(player.resources.getCurrentSP())
-        console.log(player.resources.getMaxHP())
-        console.log(player.resources.getMaxMP())
-        console.log(player.resources.getMaxSP())
-        console.log(js("player.resources.getMaxHPModifiers()[0].value"))
-        console.log(js("player.resources.getMaxMPModifiers()[0].value"))
-        console.log(js("player.resources.getMaxSPModifiers()[0].value"))
+        (document.getElementById("AT-BASE") as HTMLTableCellElement).innerText = player.baseStats.getAT(false).toString()
+        (document.getElementById("DF-BASE") as HTMLTableCellElement).innerText = player.baseStats.getDF(false).toString()
+        (document.getElementById("MA-BASE") as HTMLTableCellElement).innerText = player.baseStats.getMA(false).toString()
+        (document.getElementById("MD-BASE") as HTMLTableCellElement).innerText = player.baseStats.getMD(false).toString()
 
-        console.log(player.baseStats.getSTR())
-        console.log(player.baseStats.getCON())
-        console.log(player.baseStats.getINT())
-        console.log(player.baseStats.getWIL())
-        console.log(player.baseStats.getSPD())
-        console.log(player.baseStats.getACC())
-        console.log(js("player.baseStats.getSTRModifiers()[0].value"))
-        console.log(js("player.baseStats.getCONModifiers()[0].value"))
-        console.log(js("player.baseStats.getINTModifiers()[0].value"))
-        console.log(js("player.baseStats.getWILModifiers()[0].value"))
-        console.log(js("player.baseStats.getSPDModifiers()[0].value"))
-        console.log(js("player.baseStats.getACCModifiers()[0].value"))
-        console.log(player.baseStats.getAT())
-        console.log(player.baseStats.getDF())
-        console.log(player.baseStats.getMA())
-        console.log(player.baseStats.getMD())
-        console.log(js("player.baseStats.getATModifiers()[0].value"))
-        console.log(js("player.baseStats.getDFModifiers()[0].value"))
-        console.log(js("player.baseStats.getMAModifiers()[0].value"))
-        console.log(js("player.baseStats.getMDModifiers()[0].value"))
+        (document.getElementById("AT-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getAT().toString()
+        (document.getElementById("DF-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getDF().toString()
+        (document.getElementById("MA-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getMA().toString()
+        (document.getElementById("MD-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getMD().toString()
 
-        console.log(player.weapon.description)
-        console.log(player.armor.description)
-        console.log(player.accessory.description)
+        (document.getElementById("STR-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getSTR().toString()
+        (document.getElementById("CON-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getCON().toString()
+        (document.getElementById("INT-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getINT().toString()
+        (document.getElementById("WILL-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getWIL().toString()
+        (document.getElementById("SPD-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getSPD().toString()
+        (document.getElementById("AC-TOTAL") as HTMLTableCellElement).innerText = player.baseStats.getACC().toString()
 
-        console.log(player.skills.getSkillList())
-        repeat((player.skills.getSkillList() as Array<Skills.SkillData>).size) {
-            val skill = player.skills.getSkillList()[it]
-            console.log("1" + skill.name + " " + skill.value + " " + skill.check)
+        // update document visuals
+        player.baseStats.updateCombat()
+    }
+    private fun assignEquipment(json: Json, player: Player) {
+        // TODO: not the best setup, no checking done
+        //  not tested - base functionality works, but no lists exist to practically test yet
+        player.weapon.setEquipmentData(json["weaponE"].unsafeCast<Equipment.EquipmentData>())
+        player.weapon.setData(
+                js("json[\"weaponW\"][\"augments\"]"),
+                js("json[\"weaponW\"][\"glyphs\"]"),
+                js("json[\"weaponW\"][\"abilities\"]")
+        )
+        player.armor.setEquipmentData(json["armorE"].unsafeCast<Equipment.EquipmentData>())
+        player.armor.setData(
+                js("json[\"armorW\"][\"augments\"]"),
+                js("json[\"armorW\"][\"glyphs\"]"),
+                js("json[\"armorW\"][\"abilities\"]")
+        )
+        player.accessory.setEquipmentData(json["accessoryE"].unsafeCast<Equipment.EquipmentData>())
+        player.accessory.setData(
+                js("json[\"accessoryW\"][\"augments\"]"),
+                js("json[\"accessoryW\"][\"glyphs\"]"),
+                js("json[\"accessoryW\"][\"abilities\"]")
+        )
+        // input data to sheet
+        (document.getElementById("weapon") as HTMLTextAreaElement).value = player.weapon.getEquipmentData().description
+        (document.getElementById("armor") as HTMLTextAreaElement).value = player.armor.getEquipmentData().description
+        (document.getElementById("accessory") as HTMLTextAreaElement).value = player.accessory.getEquipmentData().description
+    }
+    private fun assignSkills(json: Json, player: Player) {
+        // assign Skills
+        player.skills.setSkillList(json["skills"].unsafeCast<Array<Skills.SkillData>>())
+        // input data to sheet
+        repeat(player.skills.getSkillList().size) {
+            val skill = player.skills.getSkill(it)
+            val name = skill.name
+            (document.getElementById("$name-Value") as HTMLInputElement).value = ValueFunctions.getValue(skill.value).toString()
+            (document.getElementById("$name-Check") as HTMLInputElement).checked = skill.check
         }
+    }
+    private fun assignAbilities(json: Json, player: Player) {
+        player.abilities.setSpellList(json["spells"].unsafeCast<Array<Spell>>())
+        player.abilities.setSpecialList(json["specials"].unsafeCast<Array<Special>>())
+        player.abilities.setClassAbilityList(json["classAbilities"].unsafeCast<Array<ClassAbility>>())
+        // input data to sheet
         repeat(player.abilities.getSpellList().size) {
-            val spell = player.abilities.getSpellList()[it]
-            console.log(spell.description)
+            (document.getElementById("spells-textarea-${it+1}") as HTMLTextAreaElement)
+                    .value = player.abilities.getSpellList()[it].description
         }
         repeat(player.abilities.getSpecialList().size) {
-            val special = player.abilities.getSpecialList()[it]
-            console.log(special.description)
+            (document.getElementById("special-textarea-${it+1}") as HTMLTextAreaElement)
+                    .value = player.abilities.getSpecialList()[it].description
         }
         repeat(player.abilities.getClassAbilityList().size) {
-            val classAbility = player.abilities.getClassAbilityList()[it]
-            console.log(classAbility.description)
+            (document.getElementById("class-abilities-textarea-${it+1}") as HTMLTextAreaElement)
+                    .value = player.abilities.getClassAbilityList()[it].description
         }
-
+    }
+    private fun assignInventory(json: Json, player: Player) {
+        //player.inventory.setData(json["inventory"].unsafeCast<Inventory.InventoryData>())
+        player.inventory.setData(
+                js("json[\"inventory\"][\"gold\"]"),
+                js("json[\"inventory\"][\"items\"]"),
+                js("json[\"inventory\"][\"bagType\"]"),
+                js("json[\"inventory\"][\"notes\"]")
+        )
+        // input data to sheet
         repeat(player.inventory.getItems().size) {
-            val item = player.inventory.getItems()[it]
-            console.log(item.description)
+            (document.getElementById("inventory-slot-${it+1}") as HTMLTextAreaElement)
+                    .value = player.inventory.getItem(it).description
         }
-        console.log(player.inventory.getGold())
-        console.log(player.inventory.getBagType())
-        console.log(player.inventory.getNotes())
-
+        (document.getElementById("gold__textarea") as HTMLTextAreaElement).value = player.inventory.getGold().toString()
+        (document.getElementById("bag-type__textarea") as HTMLTextAreaElement).value = player.inventory.getBagType()
+        (document.getElementById("notes-div__textarea") as HTMLTextAreaElement).value = player.inventory.getNotes()
     }
 }

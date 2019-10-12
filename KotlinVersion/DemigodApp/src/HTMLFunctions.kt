@@ -9,21 +9,51 @@ fun setupPage(player: Player) {
     initSkills(player)
     initButtons(player)
     initNavigationBar(player)
-    //resetPage(player)
 }
 fun resetPage(player: Player) {
-    //TODO: not working anymore, size stays at 0?
-    while (player.abilities.getSpellList().size > 0) { deleteSpellSlot(player) }
-    while (player.abilities.getSpecialList().size > 0) { deleteSpecialSlot(player) }
-    while (player.abilities.getClassAbilityList().size > 0) { deleteClassSlot(player) }
-    while (player.inventory.getSize() > 0) { deleteItemSlot(player) }
+    while (player.abilities.getSpellList().size > 0) { deleteSpellSlot(player.abilities) }
+    while (player.abilities.getSpecialList().size > 0) { deleteSpecialSlot(player.abilities) }
+    while (player.abilities.getClassAbilityList().size > 0) { deleteClassSlot(player.abilities) }
+    while (player.inventory.getItems().size > 0) { deleteItemSlot(player.inventory) }
+    /*
+    // remove spell slots
+    var table = document.getElementById("spells-div__table") as HTMLTableElement
+    while (table.rows.length > 0) {
+        table.deleteRow(table.rows.length-1)
+    }
+
+    // remove special slots
+    table = document.getElementById("special-div__table") as HTMLTableElement
+    while (table.rows.length > 0) {
+        table.deleteRow(table.rows.length-1)
+    }
+
+    // remove class ability slots
+    table = document.getElementById("class-abilities-div__table") as HTMLTableElement
+    while (table.rows.length > 0) {
+        table.deleteRow(table.rows.length-1)
+    }
+
+    // remove item slots
+    table = document.getElementById("inventory-div__slot-table") as HTMLTableElement
+    val row = table.rows[table.rows.length-1] as HTMLTableRowElement
+    while (table.rows.length > 0) {
+        // if there is only one cell in the table...
+        if (row.cells.length == 1) {
+            table.deleteRow(table.rows.length-1)
+        } else {
+            row.deleteCell(row.cells.length-1)
+        }
+    }
+     */
 }
+
 fun initCharacterSheetListeners(player: Player) {
     initTraitListener(player)
     initResourceListener(player)
     initStatListener(player)
     initEquipmentListener(player)
-    initNotesListener(player)
+    initInventoryListener(player)
 }
 fun initTraitListener(player: Player) {
     document.addEventListener("change", {
@@ -107,54 +137,26 @@ fun initEquipmentListener(player: Player) {
     document.addEventListener("change", {
         val equipment = it.target as HTMLTextAreaElement
         when (equipment.id) {
-            "weapon" -> player.weapon.description = equipment.value
-            "armor" -> player.armor.description = equipment.value
-            "accessory" -> player.accessory.description = equipment.value
+            "weapon" -> player.weapon.getEquipmentData().description = equipment.value
+            "armor" -> player.armor.getEquipmentData().description = equipment.value
+            "accessory" -> player.accessory.getEquipmentData().description = equipment.value
         }
     })
 }
-fun initNotesListener(player: Player) {
+fun initInventoryListener(player: Player) {
+    val gold = document.getElementById("gold__textarea") as HTMLTextAreaElement
+    gold.addEventListener("change", {
+        player.inventory.setGold(gold.value.toInt())
+    })
+    val bagType = document.getElementById("bag-type__textarea") as HTMLTextAreaElement
+    bagType.addEventListener("change", {
+        player.inventory.setBagType(bagType.value)
+    })
     val notes = document.getElementById("notes-div__textarea") as HTMLTextAreaElement
     notes.addEventListener("change", {
         player.inventory.setNotes(notes.value)
     })
 }
-/* TODO: saved just in case
-fun initAbilityListener(player: Player) {
-
-    val spell = document.getElementById("spells-textarea-1") as HTMLTextAreaElement
-    val special = document.getElementById("special-textarea-1") as HTMLTextAreaElement
-    val classAbility = document.getElementById("class-abilities-textarea-1") as HTMLTextAreaElement
-    spell.addEventListener("change", {
-        player.spells[0].description = (it.target as HTMLTextAreaElement).value
-    })
-    special.addEventListener("change", {
-        player.specials[0].description = (it.target as HTMLTextAreaElement).value
-    })
-    classAbility.addEventListener("change", {
-        player.classAbilities[0].description = (it.target as HTMLTextAreaElement).value
-    })
-}
-*/
-/* TODO: saved just in case
-fun initItemListener(player: Player) {
-    repeat(3) {
-        val textarea = document.getElementById("inventory-slot-" + (it+1)) as HTMLTextAreaElement
-        val index = it
-        textarea.addEventListener("change", {
-            player.inventory.getItem(index).description = (it.target as HTMLTextAreaElement).value
-        })
-    }
-    val bagType = document.getElementById("bag-type__textarea") as HTMLTextAreaElement
-    bagType.addEventListener("change", {
-        player.inventory.bagType = bagType.value
-    })
-    val notes = document.getElementById("notes-div__textarea") as HTMLTextAreaElement
-    notes.addEventListener("change", {
-        player.inventory.notes = notes.value
-    })
-}
-*/
 
 
 
@@ -164,18 +166,18 @@ fun initNavigationBar(player: Player) {
 }
 fun initButtons(player: Player) {
     // initialize add buttons to insert a row
-    (document.getElementById("spells-div__button-add") as HTMLButtonElement).onclick = { insertSpellSlot(player) }
-    (document.getElementById("special-div__button-add") as HTMLButtonElement).onclick = { insertSpecialSlot(player) }
-    (document.getElementById("class-abilities-div__button-add") as HTMLButtonElement).onclick = { insertClassSlot(player) }
+    (document.getElementById("spells-div__button-add") as HTMLButtonElement).onclick = { insertSpellSlot(player.abilities) }
+    (document.getElementById("special-div__button-add") as HTMLButtonElement).onclick = { insertSpecialSlot(player.abilities) }
+    (document.getElementById("class-abilities-div__button-add") as HTMLButtonElement).onclick = { insertClassSlot(player.abilities) }
 
     // initialize delete buttons to remove a row
-    (document.getElementById("spells-div__button-del")   as HTMLButtonElement).onclick = { deleteSpellSlot(player) }
-    (document.getElementById("special-div__button-del") as HTMLButtonElement).onclick = { deleteSpecialSlot(player) }
-    (document.getElementById("class-abilities-div__button-del")   as HTMLButtonElement).onclick = { deleteClassSlot(player) }
+    (document.getElementById("spells-div__button-del")   as HTMLButtonElement).onclick = { deleteSpellSlot(player.abilities) }
+    (document.getElementById("special-div__button-del") as HTMLButtonElement).onclick = { deleteSpecialSlot(player.abilities) }
+    (document.getElementById("class-abilities-div__button-del")   as HTMLButtonElement).onclick = { deleteClassSlot(player.abilities) }
 
     // initialize inventory buttons
-    (document.getElementById("inventory-div__button-add") as HTMLButtonElement).onclick = { insertItemSlot(player) }
-    (document.getElementById("inventory-div__button-del") as HTMLButtonElement).onclick = { deleteItemSlot(player) }
+    (document.getElementById("inventory-div__button-add") as HTMLButtonElement).onclick = { insertItemSlot(player.inventory) }
+    (document.getElementById("inventory-div__button-del") as HTMLButtonElement).onclick = { deleteItemSlot(player.inventory) }
 
     // initialize stat roll button
     val rollStatButton = document.getElementById("roll") as HTMLButtonElement
@@ -202,9 +204,9 @@ fun initButtons(player: Player) {
     })
 }
 fun initSlots(player: Player, spellSlots: Int, specialSlots: Int, classSlots: Int) {
-    repeat(spellSlots) { insertSpellSlot(player) }
-    repeat(specialSlots) { insertSpecialSlot(player) }
-    repeat(classSlots) { insertClassSlot(player) }
+    repeat(spellSlots) { insertSpellSlot(player.abilities) }
+    repeat(specialSlots) { insertSpecialSlot(player.abilities) }
+    repeat(classSlots) { insertClassSlot(player.abilities) }
 }
 fun initSkills(player: Player) {
     val table = document.getElementById("skill-tree") as HTMLTableElement
@@ -226,6 +228,7 @@ fun initSkills(player: Player) {
             val input = document.createElement("input") as HTMLInputElement
             input.type = "number"
             input.name = "skill-number"
+            input.id = "$skillName-Value"
             input.placeholder = "0"
             input.addClass("skill-tree__number")
             input.addEventListener("change", {
@@ -233,13 +236,13 @@ fun initSkills(player: Player) {
             })
             value.appendChild(input)
 
-
             // third cell - skill checkbox
             val check = row.insertCell()
             check.addClass("skill-tree__td-checkbox")
             val checkbox = document.createElement("input") as HTMLInputElement
             checkbox.type = "checkbox"
             checkbox.name = "roll-check"
+            checkbox.id = "$skillName-Check"
             checkbox.addClass("skill-tree__checkbox")
             checkbox.addEventListener("change", {
                 player.skills.getSkill(skillName)!!.check = checkbox.checked
@@ -253,25 +256,25 @@ fun initSkills(player: Player) {
 }
 fun initItems(player: Player, amount: Int) {
     repeat(amount) {
-        insertItemSlot(player)
+        insertItemSlot(player.inventory)
     }
 }
 
 
-fun insertSpellSlot(player: Player): Boolean {
-    player.abilities.getSpellList().add(Spell())
-    return insertAbilitySlot(player, "spells", "Spell-Circle-Icon-Web-Dev80px.png", player.abilities.getSpellList().size)
+fun insertSpellSlot(abilities: Abilities, spell: Spell = Spell()): Boolean {
+    abilities.getSpellList().add(spell)
+    return insertAbilitySlot(abilities, "spells", "Spell-Circle-Icon-Web-Dev80px.png", abilities.getSpellList().size)
 }
-fun insertSpecialSlot(player: Player): Boolean {
-    player.abilities.getSpecialList().add(Special())
-    return insertAbilitySlot(player, "special", "Triangle Icon - Web Dev.png", player.abilities.getSpecialList().size)
+fun insertSpecialSlot(abilities: Abilities, special: Special = Special()): Boolean {
+    abilities.getSpecialList().add(special)
+    return insertAbilitySlot(abilities, "special", "Triangle Icon - Web Dev.png", abilities.getSpecialList().size)
 }
-fun insertClassSlot(player: Player): Boolean {
-    player.abilities.getClassAbilityList().add(ClassAbility())
-    return insertAbilitySlot(player, "class-abilities", "class-abilities-demigod100px.png", player.abilities.getClassAbilityList().size)
+fun insertClassSlot(abilities: Abilities, classAbility: ClassAbility = ClassAbility()): Boolean {
+    abilities.getClassAbilityList().add(classAbility)
+    return insertAbilitySlot(abilities, "class-abilities", "class-abilities-demigod100px.png", abilities.getClassAbilityList().size)
 }
 fun insertAbilitySlot(
-        player: Player,
+        abilities: Abilities,
         type: String,
         image: String = "Hold Primary Logo 240px.png",
         size: Int
@@ -299,9 +302,9 @@ fun insertAbilitySlot(
     // add eventListener based on which type it is
     textarea.addEventListener("change", {
         when (type) {
-            "spells" -> player.abilities.getSpellList()[size-1].description = (it.target as HTMLTextAreaElement).value
-            "special" -> player.abilities.getSpecialList()[size-1].description = (it.target as HTMLTextAreaElement).value
-            "class-abilities" -> player.abilities.getClassAbilityList()[size-1].description = (it.target as HTMLTextAreaElement).value
+            "spells" -> abilities.getSpellList()[size-1].description = (it.target as HTMLTextAreaElement).value
+            "special" -> abilities.getSpecialList()[size-1].description = (it.target as HTMLTextAreaElement).value
+            "class-abilities" -> abilities.getClassAbilityList()[size-1].description = (it.target as HTMLTextAreaElement).value
         }
     })
 
@@ -311,29 +314,29 @@ fun insertAbilitySlot(
     // "false" keeps page from refreshing on button press
     return false
 }
-fun deleteSpellSlot(player: Player): Boolean {
+fun deleteSpellSlot(abilities: Abilities): Boolean {
 
     val table = document.getElementById("spells-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
-    player.abilities.getSpellList().removeAt(player.abilities.getSpellList().size -1)
+    abilities.getSpellList().removeAt(abilities.getSpellList().size -1)
     return false
 }
-fun deleteSpecialSlot(player: Player): Boolean {
+fun deleteSpecialSlot(abilities: Abilities): Boolean {
     val table = document.getElementById("special-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
-    player.abilities.getSpecialList().removeAt(player.abilities.getSpecialList().size -1)
+    abilities.getSpecialList().removeAt(abilities.getSpecialList().size -1)
     return false
 }
-fun deleteClassSlot(player: Player): Boolean {
+fun deleteClassSlot(abilities: Abilities): Boolean {
     val table = document.getElementById("class-abilities-div__table") as HTMLTableElement
     table.deleteRow(table.rows.length-1)
-    player.abilities.getClassAbilityList().removeAt(player.abilities.getClassAbilityList().size -1)
+    abilities.getClassAbilityList().removeAt(abilities.getClassAbilityList().size -1)
     return false
 }
 
 
 
-fun insertItemSlot(player: Player): Boolean {
+fun insertItemSlot(inventory: Inventory, item: Item = Item()): Boolean {
     val table = document.getElementById("inventory-div__slot-table") as HTMLTableElement
     var row: HTMLTableRowElement
     // check for empty table exception
@@ -350,38 +353,37 @@ fun insertItemSlot(player: Player): Boolean {
         }
     }
 
-    row.insertCell().appendChild(createItemSlot(player))
+    row.insertCell().appendChild(createItemSlot(inventory, item))
 
     // "false" keeps page from refreshing on button press
     return false
 }
-fun createItemSlot(player: Player): HTMLTextAreaElement {
+fun createItemSlot(inventory: Inventory, item: Item): HTMLTextAreaElement {
     // update player
-    player.inventory.addItem(Item())
+    inventory.addItem(item)
 
     // create textarea cell
     val textarea = document.createElement("textarea") as HTMLTextAreaElement
     textarea.name = "inventory-slot"
     textarea.addClass("inventory-div__slot")
-    textarea.id = "inventory-slot-" + player.inventory.getSize()
+    textarea.id = "inventory-slot-" + inventory.getSize()
 
     // add EventListener
-    val index = player.inventory.getSize()-1
+    val index = inventory.getSize()-1
     textarea.addEventListener("change", {
         // index must be declared outside the eventListener to stay constant
-        player.inventory.getItem(index).description = (it.target as HTMLTextAreaElement).value
+        inventory.getItem(index).description = (it.target as HTMLTextAreaElement).value
     })
 
     return textarea
 }
-fun deleteItemSlot(player: Player): Boolean {
+fun deleteItemSlot(inventory: Inventory): Boolean {
     // update player, cancel out if 0
-    if (player.inventory.getSize() == 0) {
-
+    if (inventory.getSize() == 0) {
         return false
     }
 
-    player.inventory.removeLastItem()
+    inventory.removeLastItem()
 
     val table = document.getElementById("inventory-div__slot-table") as HTMLTableElement
     val row = table.rows[table.rows.length-1] as HTMLTableRowElement

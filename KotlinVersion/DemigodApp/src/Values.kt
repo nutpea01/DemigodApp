@@ -3,8 +3,14 @@ import kotlin.math.min
 data class Value(
         var base: Int = 0
 ) {
-    val id: String = generateID()
-    val modifiers: MutableList<Modifier> = mutableListOf()
+    var id: String = generateID()
+    // nasty solution but it gets the job done
+    var modifiers: Array<Modifier> = arrayOf(
+            Modifier(), Modifier(), Modifier(), Modifier(), Modifier(),
+            Modifier(), Modifier(), Modifier(), Modifier(), Modifier(),
+            Modifier(), Modifier(), Modifier(), Modifier(), Modifier(),
+            Modifier(), Modifier(), Modifier(), Modifier(), Modifier()
+    )
 }
 
 data class DynamicValue (
@@ -13,12 +19,13 @@ data class DynamicValue (
 )
 
 data class Modifier (
-    val source: String,
+    val source: String? = null,
     var value: Int = 0,
     var turns: Int = 9999999
 ) {
     val id: String = generateID()
     var active = true
+    var exists = false
 }
 
 object ValueFunctions {
@@ -32,15 +39,9 @@ object ValueFunctions {
 
     fun getModTotalValue(value: Value): Int {
         var temp = 0
-        repeat(value.modifiers.size) {
-            if (value.modifiers[it].active) temp += value.modifiers[it].value
-        }
-        /*
         for (mod in value.modifiers) {
             if (mod.active) temp += mod.value
         }
-
-         */
         return temp
     }
 
@@ -54,7 +55,7 @@ object ValueFunctions {
     }
     fun removeModBySource(value: Value, SourceID: String): Modifier {
         val mod = getModBySource(value, SourceID)
-        value.modifiers.remove(mod)
+        //value.modifiers.remove(mod)
         return mod
     }
     fun getModByID(value: Value, ID: String): Modifier {
@@ -67,7 +68,7 @@ object ValueFunctions {
     }
     fun removeModByID(value: Value, ID: String): Modifier {
         val mod = getModByID(value, ID)
-        value.modifiers.remove(mod)
+        //value.modifiers.remove(mod)
         return mod
     }
 }

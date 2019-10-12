@@ -43,16 +43,16 @@ class BaseStats (
     fun  getMA(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.combatStats.ma, includeMods) }
     fun  getMD(includeMods: Boolean = true): Int { return ValueFunctions.getValue(this.combatStats.md, includeMods) }
 
-    fun getSTRModifiers(): MutableList<Modifier> { return this.data.str.modifiers }
-    fun getCONModifiers(): MutableList<Modifier> { return this.data.con.modifiers }
-    fun getINTModifiers(): MutableList<Modifier> { return this.data.int.modifiers }
-    fun getWILModifiers(): MutableList<Modifier> { return this.data.wil.modifiers }
-    fun getSPDModifiers(): MutableList<Modifier> { return this.data.spd.modifiers }
-    fun getACCModifiers(): MutableList<Modifier> { return this.data.acc.modifiers }
-    fun  getATModifiers(): MutableList<Modifier> { return this.combatStats.at.modifiers }
-    fun  getDFModifiers(): MutableList<Modifier> { return this.combatStats.df.modifiers }
-    fun  getMAModifiers(): MutableList<Modifier> { return this.combatStats.ma.modifiers }
-    fun  getMDModifiers(): MutableList<Modifier> { return this.combatStats.md.modifiers }
+    fun getSTRModifiers(): Array<Modifier> { return this.data.str.modifiers }
+    fun getCONModifiers(): Array<Modifier> { return this.data.con.modifiers }
+    fun getINTModifiers(): Array<Modifier> { return this.data.int.modifiers }
+    fun getWILModifiers(): Array<Modifier> { return this.data.wil.modifiers }
+    fun getSPDModifiers(): Array<Modifier> { return this.data.spd.modifiers }
+    fun getACCModifiers(): Array<Modifier> { return this.data.acc.modifiers }
+    fun  getATModifiers(): Array<Modifier> { return this.combatStats.at.modifiers }
+    fun  getDFModifiers(): Array<Modifier> { return this.combatStats.df.modifiers }
+    fun  getMAModifiers(): Array<Modifier> { return this.combatStats.ma.modifiers }
+    fun  getMDModifiers(): Array<Modifier> { return this.combatStats.md.modifiers }
 
     data class BaseStatsData (
             val str: Value = Value(0),
@@ -122,12 +122,12 @@ class Resources {
     fun getCurrentMP(): Int { return ValueFunctions.getValue(this.data.mp.current) }
     fun getCurrentSP(): Int { return ValueFunctions.getValue(this.data.sp.current) }
 
-    fun getMaxHPModifiers(): MutableList<Modifier> { return this.data.hp.max.modifiers }
-    fun getMaxMPModifiers(): MutableList<Modifier> { return this.data.mp.max.modifiers }
-    fun getMaxSPModifiers(): MutableList<Modifier> { return this.data.sp.max.modifiers }
-    fun getCurrentHPModifiers(): MutableList<Modifier> { return this.data.hp.current.modifiers }
-    fun getCurrentMPModifiers(): MutableList<Modifier> { return this.data.mp.current.modifiers }
-    fun getCurrentSPModifiers(): MutableList<Modifier> { return this.data.sp.current.modifiers }
+    fun getMaxHPModifiers(): Array<Modifier> { return this.data.hp.max.modifiers }
+    fun getMaxMPModifiers(): Array<Modifier> { return this.data.mp.max.modifiers }
+    fun getMaxSPModifiers(): Array<Modifier> { return this.data.sp.max.modifiers }
+    fun getCurrentHPModifiers(): Array<Modifier> { return this.data.hp.current.modifiers }
+    fun getCurrentMPModifiers(): Array<Modifier> { return this.data.mp.current.modifiers }
+    fun getCurrentSPModifiers(): Array<Modifier> { return this.data.sp.current.modifiers }
 
     //TODO: most of these will become more interesting as we add abilities. eventually, they should likely be able to find damage themselves based on stats...?
     fun dealDamage(damage: Int, target: Player) {
@@ -167,11 +167,19 @@ class Resources {
     }
     fun setData(data: ResourcesData) {
         this.data = data
+        //data.hp.current.modifiers = mutableListOf()
+        //data.hp.max.modifiers = mutableListOf()
+        //data.mp.current.modifiers = mutableListOf()
+        //data.mp.max.modifiers = mutableListOf()
+        //data.sp.current.modifiers = mutableListOf()
+        //data.sp.max.modifiers = mutableListOf()
+
     }
 }
 
+
 class Skills {
-    private var skillList: MutableList<SkillData> = initSkills()
+    private val skillList: MutableList<SkillData> = initSkills()
 
     data class SkillData (
             val name: String,
@@ -231,11 +239,15 @@ class Skills {
         }
         return null
     }
+    fun getSkill(index: Int): SkillData {
+        return this.skillList[index]
+    }
     fun getSkillList(): MutableList<SkillData> {
         return this.skillList
     }
-    fun setSkillList(skillList: MutableList<SkillData>) {
-        this.skillList = skillList
+    fun setSkillList(list: Array<SkillData>) {
+        this.skillList.clear()
+        for (skill in list) { this.skillList.add(skill) }
     }
 }
 class Traits {

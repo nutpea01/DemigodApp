@@ -3,7 +3,7 @@ open class Ability (
     var description: String = ""
 ) {
     val id: String = generateID()
-    val icon: Int = 0
+    var icon: Int = 0
 }
 
 class Spell: Ability()
@@ -11,9 +11,9 @@ class Special: Ability()
 class ClassAbility: Ability()
 
 class Abilities {
-    private var spellList: MutableList<Spell> = mutableListOf()
-    private var specialList: MutableList<Special> = mutableListOf()
-    private var classAbilityList: MutableList<ClassAbility> = mutableListOf()
+    private val spellList: MutableList<Spell> = mutableListOf()
+    private val specialList: MutableList<Special> = mutableListOf()
+    private val classAbilityList: MutableList<ClassAbility> = mutableListOf()
 
     fun getSpellList(): MutableList<Spell> {
         return this.spellList
@@ -25,13 +25,22 @@ class Abilities {
         return this.classAbilityList
     }
 
-    fun setSpellList(list: MutableList<Spell>) {
-        this.spellList = list
+    fun setSpellList(list: Array<Spell>) {
+        this.spellList.clear()
+        for (spell in list) {
+            insertSpellSlot(this, spell)
+        }
     }
-    fun setSpecialList(list: MutableList<Special>) {
-        this.specialList = list
+    fun setSpecialList(list: Array<Special>) {
+        this.specialList.clear()
+        for (special in list) {
+            insertSpecialSlot(this, special)
+        }
     }
-    fun setClassAbilityList(list: MutableList<ClassAbility>)  {
-        this.classAbilityList = list
+    fun setClassAbilityList(list: Array<ClassAbility>)  {
+        this.classAbilityList.clear()
+        for (classAbility in list) {
+            insertClassSlot(this, classAbility)
+        }
     }
 }
