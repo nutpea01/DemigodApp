@@ -43,7 +43,7 @@
 
 				<tr class="personal-info__table-row">
 					<td><label for="Age">Age :</label></td>
-					<td><input type="text" id="Age" name="Age" placeholder="Age" class="personal-info__user-input"></td>
+					<td><input type="number" id="Age" name="Age" placeholder="Age" class="personal-info__user-input"></td>
 				</tr>
 
 				<tr class="personal-info__table-row">
@@ -58,7 +58,7 @@
 
 				<tr class="personal-info__table-row">
 					<td><label for="Level">Level :</label></td>
-					<td><input type="text" id="Level" name="Level" placeholder="Level" class="personal-info__user-input"></td>
+					<td><input type="number" id="Level" name="Level" placeholder="Level" class="personal-info__user-input"></td>
 				</tr>
 
 			</table>
@@ -69,7 +69,7 @@
 	<!-- HP MP SP TABLE  -->
 	<div class="resource-stats">
 		<h4 class="resource-stats__title">Stats</h4>
-			<form class="resource-stats__form">
+			<form id = "resource-stats__form" class="resource-stats__form">
 				<table class="resource-stats__table">
 					<tr class="resource-stats__effect-row">
 						<td></td>
@@ -113,60 +113,88 @@
 					<th>
 						<tr class="base-stat-table__modifier-row">
 							<td></td>
-							<td></td>
+							<td>Total</td>
+							<td>Base</td>
 							<td>Modifier</td>
 							<td></td>
-							<td></td>
+							<td>Total</td>
+							<td>Base</td>
 							<td>Modifier</td>
 						</tr>
 					</th>
 					<tr>
-						<td class="base-stat-table__td-titles">STR  :</td>
-						<td><input type="number" id="STR" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td class="base-stat-table__td-titles">STR  : </td>
+						<td class="base-stat-table__total-value" id="STR-TOTAL">0</td>
+						<td><input type="number" id="STR-BASE" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
 						<td><input type="number" id="STR-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
-						<td class="base-stat-table__td-titles">AT  :</td>
-						<td><input type="number" id="AT" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td class="base-stat-table__td-titles">AT  : </td>
+						<td class="base-stat-table__total-value" id="AT-TOTAL">0</td>
+						<td class="base-stat-table__combat-base" id="AT-BASE">0</td>
 						<td><input type="number" id="AT-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 					</tr>
-
 					<tr>
-						<td class="base-stat-table__td-titles">CON  :</td>
-						<td><input type="number" id="CON" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td class="base-stat-table__td-titles">CON  : </td>
+						<td class="base-stat-table__total-value" id="CON-TOTAL">0</td>
+						<td><input type="number" id="CON-BASE" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
 						<td><input type="number" id="CON-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
-						<td class="base-stat-table__td-titles">DF  :</td>
-						<td><input type="number" id="DF" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td class="base-stat-table__td-titles">DF  : </td>
+						<td class="base-stat-table__total-value" id="DF-TOTAL">0</td>
+						<td class="base-stat-table__combat-base" id="DF-BASE">0</td>
 						<td><input type="number" id="DF-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 					</tr>
 
 					<tr>
-						<td class="base-stat-table__td-titles">INT  :</td>
-						<td><input type="number" id="INT" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td class="base-stat-table__td-titles">INT  : </td>
+						<td class="base-stat-table__total-value" id="INT-TOTAL">0</td>
+						<td><input type="number" id="INT-BASE" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
 						<td><input type="number" id="INT-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
-						<td class="base-stat-table__td-titles">MA  :</td>
-						<td><input type="number" id="MA" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td class="base-stat-table__td-titles">MA  : </td>
+						<td class="base-stat-table__total-value" id="MA-TOTAL">0</td>
+						<td class="base-stat-table__combat-base" id="MA-BASE">0</td>
 						<td><input type="number" id="MA-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 					</tr>
 
 					<tr>
-						<td class="base-stat-table__td-titles">WILL  :</td>
-						<td><input type="number" id="WILL" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td class="base-stat-table__td-titles">WILL  : </td>
+						<td class="base-stat-table__total-value" id="WILL-TOTAL">0</td>
+						<td><input type="number" id="WILL-BASE" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
 						<td><input type="number" id="WILL-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
-						<td class="base-stat-table__td-titles">MD  :</td>
-						<td><input type="number" id="MD" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td class="base-stat-table__td-titles">MD  : </td>
+						<td class="base-stat-table__total-value" id="MD-TOTAL">0</td>
+						<td class="base-stat-table__combat-base" id="MD-BASE">0</td>
 						<td><input type="number" id="MD-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 					</tr>
-
 					<tr>
-						<td class="base-stat-table__td-titles">SPD  :</td>
-						<td><input type="number" id="SPD" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+						<td class="base-stat-table__td-titles">SPD  : </td>
+						<td class="base-stat-table__total-value" id="SPD-TOTAL">0</td>
+						<td><input type="number" id="SPD-BASE" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
 						<td><input type="number" id="SPD-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
-						<td class="base-stat-table__td-titles">AC  :</td>
-						<td><input type="number" id="AC" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
+					</tr>
+					<tr>
+						<td class="base-stat-table__td-titles">AC  : </td>
+						<td class="base-stat-table__total-value" id="AC-TOTAL">0</td>
+						<td><input type="number" id="AC-BASE" name="base-stat-number" placeholder="0" class="base-stat-table__HPMPSP"></td>
 						<td><input type="number" id="AC-MOD" name="modifier" placeholder="0" class="base-stat-table__modifier"></td>
 					</tr>
 
 				</table>
-				<!--button>GO</button-->
+				<button id="roll">Roll</button>
+				<select id="roll-stat-select" class="base-stat-table__select">
+					<option value="AT">AT</option>
+					<option value="DF">DF</option>
+					<option value="MA">MA</option>
+					<option value="MD">MD</option>
+					<option value="STR">STR</option>
+					<option value="CON">CON</option>
+					<option value="INT">INT</option>
+					<option value="WILL">WILL</option>
+					<option value="SPD">SPD</option>
+					<option value="AC">AC</option>
+				</select>
+				<span id="roll-stat-display"  class="base-stat-table__roll-span">0</span>
+				<span id="roll-roll-display"  class="base-stat-table__roll-span"></span>
+				<span id="roll-total-display" class="base-stat-table__roll-span"></span>
+				<span id="roll-type-display"  class="base-stat-table__roll-span"></span>
 			</form>
 	</div>
 
@@ -227,8 +255,10 @@
 		<form>
 			<table class = "spells-div__table" id = "spells-div__table">
 				<tr>
+					<!--
 					<td class="spells-div__td-image"><img class="spells-div__image" src="Spell-Circle-Icon-Web-Dev80px.png" id = "spells-img-1"></td>
 					<td class="spells-div__td-textarea"><textarea class="spells-div__textarea" id = "spells-textarea-1"></textarea></td>
+					-->
 				</tr>
 			</table>
 			<button id = "spells-div__button-add">+</button>
@@ -240,8 +270,10 @@
 		<form>
 			<table class = "special-div__table" id = "special-div__table">
 				<tr>
+					<!--
 					<td class="special-div__td-image"><img class="special-div__image" src="Triangle Icon - Web Dev.png" id = "special-img-1"></td>
 					<td class="special-div__td-textarea"><textarea class="special-div__textarea" id = "special-textarea-1"></textarea></td>
+					-->
 				</tr>
 			</table>
 			<button id = "special-div__button-add">+</button>
@@ -253,8 +285,10 @@
 		<form>
 			<table class = "class-abilities-div__table" id = "class-abilities-div__table">
 				<tr>
+					<!--
 					<td class="class-abilities-div__td-image"><img class="class-abilities-div__image" src="class-abilities-demigod100px.png" id = "class-abilities-img-1"></td>
 					<td class="class-abilities-div__td-textarea"><textarea class="class-abilities-div__textarea" id = "class-abilities-textarea-1"></textarea></td>
+					-->
 				</tr>
 			</table>
 			<button id = "class-abilities-div__button-add">+</button>
@@ -268,8 +302,8 @@
 
 			<table class="inventory-div__total-slot-table">
 				<tr>
-					<!--td class="inventory-div__total-slot-table__td-label"> <label for="slot-number" name="Total Slots">Total Slots</label></td>
-					<td class="inventory-div__total-slot-table__td-textarea"><textarea></textarea></td-->
+					<td class="inventory-div__total-slot-table__td-label"> <label id="Gold">Gold</label></td>
+					<td class="inventory-div__total-slot-table__td-textarea"><textarea id = "gold__textarea"></textarea></td>
 					<td class="inventory-div__total-slot-table__td-label"><label for="bag-type" name="bag-type__label">Bag Type</label></td>
 					<td class="inventory-div__total-slot-table__td-textarea"><textarea id="bag-type__textarea"></textarea></td>
 				</tr>
@@ -277,9 +311,9 @@
 
 			<table class="inventory-div__slot-table" id = "inventory-div__slot-table">
 				<tr>
+					<!--
 					<td><textarea name="inventory-slot" class="inventory-div__slot" id="inventory-slot-1"></textarea></td>
-					<td><textarea name="inventory-slot" class="inventory-div__slot" id="inventory-slot-2"></textarea></td>
-					<td><textarea name="inventory-slot" class="inventory-div__slot" id="inventory-slot-3"></textarea></td>
+					-->
 				</tr>
 			</table>
 			<button id = "inventory-div__button-add">+</button>
