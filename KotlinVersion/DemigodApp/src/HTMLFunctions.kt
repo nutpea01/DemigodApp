@@ -381,20 +381,20 @@ fun deleteItemSlot(inventory: Inventory): Boolean {
     // if there is only one cell in the table...
     if (row.cells.length == 1) {
         table.deleteRow(table.rows.length-1)
-    } else {
-        console.log(row.deleteCell(row.cells.length-1))
+    } else if (row.cells.length == 3) {
+        row.deleteCell(row.cells.length-1)
     }
+    // If we want to delete the 2nd cell, we need do something a bit weird.
+    // This is due to a visual bug; only deleting the cell results in the border not leaving.
+    else {
+        val item = inventory.removeLastItem() // remove item in FIRST cell and SAVE it
+        table.deleteRow(table.rows.length-1) // delete entire row
+        insertItemSlot(inventory, item)             // create new row/cell and replace the FIRST item
 
-    val cell = (table.rows[0] as HTMLTableRowElement).cells[0] as HTMLTableCellElement
-    cell.height = (cell.height.toInt()+1).toString()
-    cell.height = "0"
-
-    //0->100 works the first time but never again
-    // this is because the first time the cell ACTUALLY changes wicth
-    // afterward no real change happens
-
-    // if we want to keep this solution,
-    // we need to a way to make the cell become bigger once the textarea is fully gone, then go back to the original size
+        // update document value
+        val size = inventory.getSize()
+        (document.getElementById("inventory-slot-$size") as HTMLTextAreaElement).value = inventory.getItem(size-1).description
+    }
 
     // "false" keeps page from refreshing on button press
     return false

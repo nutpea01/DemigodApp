@@ -1237,7 +1237,7 @@ var DemigodApp = function (_, Kotlin) {
     return textarea;
   }
   function deleteItemSlot(inventory) {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2;
+    var tmp$, tmp$_0, tmp$_1;
     if (inventory.getSize() === 0) {
       return false;
     }
@@ -1247,12 +1247,16 @@ var DemigodApp = function (_, Kotlin) {
     if (row.cells.length === 1) {
       table.deleteRow(table.rows.length - 1 | 0);
     }
-     else {
-      console.log((row.deleteCell(row.cells.length - 1 | 0), Unit));
+     else if (row.cells.length === 3) {
+      row.deleteCell(row.cells.length - 1 | 0);
     }
-    var cell = Kotlin.isType(tmp$_2 = (Kotlin.isType(tmp$_1 = table.rows[0], HTMLTableRowElement) ? tmp$_1 : throwCCE()).cells[0], HTMLTableCellElement) ? tmp$_2 : throwCCE();
-    cell.height = (toInt(cell.height) + 1 | 0).toString();
-    cell.height = '0';
+     else {
+      var item = inventory.removeLastItem();
+      table.deleteRow(table.rows.length - 1 | 0);
+      insertItemSlot(inventory, item);
+      var size = inventory.getSize();
+      (Kotlin.isType(tmp$_1 = document.getElementById('inventory-slot-' + size), HTMLTextAreaElement) ? tmp$_1 : throwCCE()).value = inventory.getItem_za3lpa$(size - 1 | 0).description;
+    }
     return false;
   }
   function Inventory() {
