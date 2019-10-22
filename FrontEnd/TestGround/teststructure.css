@@ -1,0 +1,35 @@
+.box{
+    display: flex;
+    position: relative;
+}
+
+.row {
+    text-decoration: none;
+    border: solid black 1px;
+}
+
+.cell {
+    margin: 0;
+}
+
+/* V2 table */
+
+.box-v2 {
+    margin-top: 30px;
+}
+.table-v2 {
+    border-collapse: collapse;
+}
+
+.second-cell {
+    font-weight: bold;
+    background-color: aqua;
+}
+
+#first-cell {
+    border: none;
+}
+
+.cell-v2 {
+    border: 1px solid black;
+}
