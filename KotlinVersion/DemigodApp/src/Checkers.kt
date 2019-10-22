@@ -59,7 +59,7 @@ object DiceRoller {
 
             if (rollCounter++ > 100) endRoll(stat, lastRoll)
             return@setInterval null
-        }, 8)
+        }, 10)
 
         // "false" keeps page from refreshing on button press
         return false
